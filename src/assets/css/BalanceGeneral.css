@@ -17,6 +17,19 @@
     color: #213547; /* Color del texto de los encabezados */
 }
 
+.balance-general-container p {
+    color: #213547; /* Color del texto */
+    font-size: 16px; /* Tamaño de fuente */
+    margin: 15px 0; /* Espaciado vertical */
+    text-align: center; /* Centra el texto */
+    font-weight: bold; /* Negritas para destacar el mensaje */
+    background-color: #f9f9f9; /* Fondo suave */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde sutil */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
 /* Estilos para los labels */
 .balance-general-container label {
     display: block;
