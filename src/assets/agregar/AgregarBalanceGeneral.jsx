@@ -30,10 +30,29 @@ function AgregarBalanceGeneral({ onSave }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value === "" ? 0 : parseFloat(value), // Si el valor está vacío, establece 0
-    });
+
+    // Si se selecciona el año, verificamos si hay datos en localStorage para ese año
+    if (name === 'año') {
+      const balances = JSON.parse(localStorage.getItem('balances')) || {};
+      
+      // Si hay un balance guardado para el año seleccionado, lo cargamos
+      const dataForYear = balances[value];
+      if (dataForYear) {
+        setFormData(dataForYear);
+      } else {
+        // Si no hay datos para ese año, restablecemos el formulario con el año seleccionado
+        setFormData((prev) => ({
+          ...prev,
+          año: value, // Solo actualiza el año
+        }));
+      }
+    } else {
+      // Para cualquier otro campo, actualizamos el valor
+      setFormData({
+        ...formData,
+        [name]: value === "" || isNaN(value) ? 0 : parseFloat(value), // Si el valor está vacío o no es un número, establece 0
+      });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -45,6 +64,34 @@ function AgregarBalanceGeneral({ onSave }) {
     alert('Balance guardado exitosamente');
     // Llamar la función onSave para actualizar el balance en el componente padre
     onSave(formData.año);
+  };
+
+  const handleClear = () => {
+    setFormData((prev) => ({
+      ...prev,
+      efectivo: 0,
+      inversionesCortoPlazo: 0,
+      deudoresComerciales: 0,
+      inventarios: 0,
+      pagosAnticipados: 0,
+      propiedadPlantaEquipo: 0,
+      activoBiologico: 0,
+      intangibles: 0,
+      inversionesLargoPlazo: 0,
+      proyectosProceso: 0,
+      deudasCortoPlazo: 0,
+      deudasComerciales: 0,
+      beneficiosEmpleados: 0,
+      impuestosPorPagar: 0,
+      dividendosPorPagar: 0,
+      deudasLargoPlazo: 0,
+      provisiones: 0,
+      capitalSocial: 0,
+      reservas: 0,
+      resultadosAcumulados: 0,
+      resultadosEjercicio: 0,
+      ajustesEfectosValuacion: 0,
+    }));
   };
 
   // Cálculo de totales
@@ -83,6 +130,9 @@ function AgregarBalanceGeneral({ onSave }) {
     formData.resultadosAcumulados +
     formData.resultadosEjercicio +
     formData.ajustesEfectosValuacion;
+
+  // Total Pasivos + Patrimonio
+  const totalPasivosPatrimonio = totalPasivos + totalPatrimonio;
 
   return (
     <div className="agregar-balance-container">
@@ -170,11 +220,11 @@ function AgregarBalanceGeneral({ onSave }) {
           <input type="number" name="deudasCortoPlazo" onChange={handleChange} value={formData.deudasCortoPlazo} />
         </label>
         <label>
-          Deudas Comerciales y Otras Cuentas por Pagar a Corto Plazo:
+          Deudas Comerciales y Otras Cuentas por Pagar:
           <input type="number" name="deudasComerciales" onChange={handleChange} value={formData.deudasComerciales} />
         </label>
         <label>
-          Beneficios a Empleados a Corto Plazo:
+          Beneficios a Empleados:
           <input type="number" name="beneficiosEmpleados" onChange={handleChange} value={formData.beneficiosEmpleados} />
         </label>
         <label>
@@ -197,7 +247,7 @@ function AgregarBalanceGeneral({ onSave }) {
           <input type="number" name="deudasLargoPlazo" onChange={handleChange} value={formData.deudasLargoPlazo} />
         </label>
         <label>
-          Provisiones y Otros Pasivos a Largo Plazo:
+          Provisiones:
           <input type="number" name="provisiones" onChange={handleChange} value={formData.provisiones} />
         </label>
 
@@ -206,7 +256,7 @@ function AgregarBalanceGeneral({ onSave }) {
           <h5>TOTAL PASIVO NO CORRIENTE: {totalPasivoNoCorriente}</h5>
         </div>
 
-        {/* Total Pasivo */}
+        {/* Total Pasivos */}
         <div className="totales">
           <h5>TOTAL PASIVOS: {totalPasivos}</h5>
         </div>
@@ -238,7 +288,13 @@ function AgregarBalanceGeneral({ onSave }) {
           <h5>TOTAL PATRIMONIO: {totalPatrimonio}</h5>
         </div>
 
+        {/* Total Pasivos + Patrimonio */}
+        <div className="totales">
+          <h5>TOTAL PASIVOS + PATRIMONIO: {totalPasivosPatrimonio}</h5>
+        </div>
+
         <button type="submit">Guardar Balance</button>
+        <button type="button" onClick={handleClear}>Limpiar</button> {/* Botón de limpieza */}
       </form>
     </div>
   );

@@ -125,3 +125,6 @@ input[type="number"] {
     transition: border-color 0.3s, background-color 0.3s; /* Efecto de transición */
   }
 
+  button {
+    margin-right: 10px; /* Separación entre los botones */
+  }
