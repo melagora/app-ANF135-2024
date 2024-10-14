@@ -1,12 +1,13 @@
 import React from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import Inicio from "../components/inicio";
+import Inicio from "../components/Inicio";
 import BalanceGeneral from "../components/BalanceGeneral";
 import EstadoDeResultado from "../components/EstadoDeResultado";
 import AnalisisDupont from "../components/AnalisisDupont";
 import AnalisisVertical from "../components/AnalisisVertical";
 import AnalisisHorizontal from "../components/AnalisisHorizontal";
 import IndicadoresFinancieros from "../components/IndicadoresFinancieros";
+import AgregarBalanceGeneral from "../agregar/AgregarBalanceGeneral";
 
 export default function Menu() {
   return (
@@ -20,11 +21,14 @@ export default function Menu() {
             <li>
               <Link to="/">Inicio</Link>
             </li>
-            <li class="dropdown">
+            <li className="dropdown">
               <li>
                 <Link>Estado Financiero</Link>
               </li>
-              <div class="dropdown-content">
+              <div className="dropdown-content">
+              <li>
+                  <Link to="/agregar-balance-general">Agregar</Link>
+                </li>
                 <li>
                   <Link to="/balance-general">Balance General</Link>
                 </li>
@@ -33,11 +37,11 @@ export default function Menu() {
                 </li>
               </div>
             </li>
-            <li class="dropdown">
+            <li className="dropdown">
               <li>
                 <Link>Análisis Financiero</Link>
               </li>
-              <div class="dropdown-content">
+              <div className="dropdown-content">
                 <li>
                   <Link to="/analisis-dupont">Análisis Dupont</Link>
                 </li>
@@ -59,6 +63,7 @@ export default function Menu() {
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/balance-general" element={<BalanceGeneral />} />
+        <Route path="/agregar-balance-general" element={<AgregarBalanceGeneral />} />
         <Route path="/estado-de-resultado" element={<EstadoDeResultado />} />
         <Route
           path="/indicadores-financieros"

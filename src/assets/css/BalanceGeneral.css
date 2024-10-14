@@ -1,0 +1,69 @@
+/* Estilos generales para el contenedor del balance general */
+.balance-general-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif; 
+}
+
+/* Estilo para los encabezados */
+.balance-general-container h3,
+.balance-general-container h4,
+.balance-general-container h5 {
+    color: #213547; /* Color del texto de los encabezados */
+}
+
+/* Estilos para los labels */
+.balance-general-container label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+    color: #555; /* Color gris para las etiquetas */
+}
+
+/* Estilos para los selectores */
+.balance-general-container select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 300px; /* Cambia el tamaño máximo según tus necesidades */
+    transition: border-color 0.3s;
+}
+
+/* Efecto al hacer hover en el selector */
+.balance-general-container select:hover {
+    border-color: #007bff; /* Color del borde al pasar el mouse */
+}
+
+/* Estilo para las opciones */
+.balance-general-container select option {
+    padding: 10px; /* Aumenta el padding de las opciones */
+    background-color: #f9f9f9; /* Fondo de las opciones */
+}
+
+/* Estilo para la opción seleccionada */
+.balance-general-container select option:checked {
+    background-color: #007bff; /* Fondo de la opción seleccionada */
+    color: #ffffff; /* Color del texto de la opción seleccionada */
+}
+
+/* Estilo para las opciones al hacer hover */
+.balance-general-container select option:hover {
+    background-color: #0056b3; /* Fondo al pasar el mouse sobre una opción */
+    color: #ffffff; /* Color del texto al pasar el mouse sobre una opción */
+}
+
+/* Estilos para las listas */
+.balance-general-container ul {
+    padding-left: 20px; /* Agrega un margen izquierdo para las listas */
+}
+
+.balance-general-container li {
+    color: #555; /* Color gris para el texto de los elementos de la lista */
+    margin-bottom: 5px; /* Espaciado entre los elementos de la lista */
+}

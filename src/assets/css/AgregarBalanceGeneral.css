@@ -1,0 +1,127 @@
+/* Estilos generales para el contenedor del formulario */
+.agregar-balance-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif; 
+}
+
+/* Estilo para los encabezados del formulario */
+.agregar-balance-container h3,
+.agregar-balance-container h4,
+.agregar-balance-container h5 {
+    color: #213547;
+    /* Color del texto de los encabezados */
+}
+
+/* Estilos para los labels */
+.agregar-balance-container label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+    color: #555;
+    /* Color gris para las etiquetas */
+}
+
+/* Estilos para los inputs */
+.agregar-balance-container input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Estilos para los botones */
+.agregar-balance-container button {
+    background-color: #213547;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.agregar-balance-container button:hover {
+    background-color: #1a2b38;
+}
+
+/* Estilos para los totales */
+.totales {
+    font-weight: bold;
+    margin: 20px 0;
+    color: #333;
+    /* Color gris para los totales */
+}
+
+.totales div {
+    margin: 5px 0;
+}
+
+/* Estilo para las etiquetas */
+label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Estilo para el selector */
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 300px;
+    /* Cambia el tamaño máximo según tus necesidades */
+    transition: border-color 0.3s;
+}
+
+/* Efecto al hacer hover en el selector */
+select:hover {
+    border-color: #007bff;
+    /* Color del borde al pasar el mouse */
+}
+
+/* Estilo para las opciones */
+select option {
+    padding: 10px;
+    /* Aumenta el padding de las opciones */
+    background-color: #f9f9f9;
+    /* Fondo de las opciones */
+}
+
+/* Estilo para la opción seleccionada */
+select option:checked {
+    background-color: #007bff;
+    /* Fondo de la opción seleccionada */
+    color: #ffffff;
+    /* Color del texto de la opción seleccionada */
+}
+
+/* Estilo para las opciones al hacer hover */
+select option:hover {
+    background-color: #0056b3;
+    /* Fondo al pasar el mouse sobre una opción */
+    color: #ffffff;
+    /* Color del texto al pasar el mouse sobre una opción */
+}
+
+input[type="number"] {
+    display: block; /* Asegura que el input ocupe toda la línea */
+    margin: 10px 0; /* Agrega un margen vertical para separación */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 300px; /* Cambia el tamaño máximo según tus necesidades */
+    font-size: 16px; /* Tamaño de fuente */
+    background-color: #f8f9fa; /* Fondo similar al select */
+    color: #495057; /* Color del texto */
+    transition: border-color 0.3s, background-color 0.3s; /* Efecto de transición */
+  }
+

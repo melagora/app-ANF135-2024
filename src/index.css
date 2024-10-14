@@ -110,23 +110,34 @@ button:focus-visible {
 }
 
 footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: #000000;
-  text-align: center;
-  font-size: 14px;
+  background-color: #213547; /* Fondo oscuro */
+  color: white; /* Texto en blanco */
+  padding: 20px 0; /* Espaciado vertical */
+  text-align: center; /* Centra todo el texto y contenido */
+  font-family: Arial, sans-serif;
+  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1); /* Sombra para dar un poco de relieve */
 }
 
-.integrantes ul {
-  list-style: none; /* Elimina los marcadores de la lista */
-  display: flex; /* Hace que los elementos se distribuyan en una línea */
-  justify-content: center; /* Distribuye los elementos de forma equitativa */
+footer .integrantes {
+  max-width: 800px; /* Ancho máximo para el contenido */
+  margin: 0 auto; /* Centra horizontalmente */
 }
 
-.integrantes ul li  {
-  display: inline-block; /* Hace que cada elemento se comporte como un bloque en línea */
-  margin: 0 10px; /* Añade un margen para separar los elementos */
+footer ul {
+  list-style-type: none; /* Quita el estilo de lista por defecto */
+  padding: 0; /* Sin padding */
+  margin: 0 0 15px 0; /* Margen inferior para separar de otros elementos */
 }
 
+footer ul li {
+  display: inline-block; /* Muestra los elementos en línea */
+  margin: 0 10px; /* Espaciado entre los elementos */
+  font-size: 16px; /* Tamaño de texto */
+}
+
+footer h5 {
+  margin: 10px 0 0 0; /* Espaciado superior */
+  font-size: 14px; /* Tamaño de texto del copyright */
+  font-weight: normal; /* Texto normal, sin negritas */
+  opacity: 0.8; /* Un poco de transparencia */
+}
