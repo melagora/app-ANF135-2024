@@ -8,6 +8,7 @@ import AnalisisVertical from "../components/AnalisisVertical";
 import AnalisisHorizontal from "../components/AnalisisHorizontal";
 import IndicadoresFinancieros from "../components/IndicadoresFinancieros";
 import AgregarBalanceGeneral from "../agregar/AgregarBalanceGeneral";
+import AgregarEstadoDeResultado from "../agregar/AgregarEstadoDeResultado";
 
 export default function Menu() {
   return (
@@ -26,11 +27,14 @@ export default function Menu() {
                 <Link>Estado Financiero</Link>
               </li>
               <div className="dropdown-content">
-              <li>
-                  <Link to="/agregar-balance-general">Agregar</Link>
+                <li>
+                  <Link to="/agregar-balance-general">Agregar Balance</Link>
                 </li>
                 <li>
                   <Link to="/balance-general">Balance General</Link>
+                </li>
+                <li>
+                  <Link to="/agregar-estado-resultado">Agregar Estado</Link>
                 </li>
                 <li>
                   <Link to="/estado-de-resultado">Estado de Resultado</Link>
@@ -62,8 +66,9 @@ export default function Menu() {
 
       <Routes>
         <Route path="/" element={<Inicio />} />
-        <Route path="/balance-general" element={<BalanceGeneral />} />
         <Route path="/agregar-balance-general" element={<AgregarBalanceGeneral />} />
+        <Route path="/balance-general" element={<BalanceGeneral />} />
+        <Route path="/agregar-estado-resultado" element={<AgregarEstadoDeResultado />} />
         <Route path="/estado-de-resultado" element={<EstadoDeResultado />} />
         <Route
           path="/indicadores-financieros"

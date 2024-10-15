@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../css/AgregarBalanceGeneral.css'; // Asegúrate de importar el CSS
+import '../css/Agregar.css'; // Asegúrate de importar el CSS
 
 function AgregarBalanceGeneral({ onSave }) {
   const [formData, setFormData] = useState({
@@ -135,7 +135,7 @@ function AgregarBalanceGeneral({ onSave }) {
   const totalPasivosPatrimonio = totalPasivos + totalPatrimonio;
 
   return (
-    <div className="agregar-balance-container">
+    <div className="agregar-container">
       <h3>Agregar Balance General</h3>
       <form onSubmit={handleSubmit}>
         {/* Selector de Año */}
