@@ -1,5 +1,5 @@
 /* Estilos generales para el contenedor del balance general */
-.balance-general-container {
+.estado-container {
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
@@ -11,13 +11,13 @@
 }
 
 /* Estilo para los encabezados */
-.balance-general-container h3,
-.balance-general-container h4,
-.balance-general-container h5 {
+.estado-container h3,
+.estado-container h4,
+.estado-container h5 {
     color: #213547; /* Color del texto de los encabezados */
 }
 
-.balance-general-container p {
+.estado-container p {
     color: #213547; /* Color del texto */
     font-size: 16px; /* Tamaño de fuente */
     margin: 15px 0; /* Espaciado vertical */
@@ -31,7 +31,7 @@
 }
 
 /* Estilos para los labels */
-.balance-general-container label {
+.estado-container label {
     display: block;
     margin: 10px 0 5px;
     font-weight: bold;
@@ -39,7 +39,7 @@
 }
 
 /* Estilos para los selectores */
-.balance-general-container select {
+.estado-container select {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -49,34 +49,34 @@
 }
 
 /* Efecto al hacer hover en el selector */
-.balance-general-container select:hover {
+.estado-container select:hover {
     border-color: #007bff; /* Color del borde al pasar el mouse */
 }
 
 /* Estilo para las opciones */
-.balance-general-container select option {
+.estado-container select option {
     padding: 10px; /* Aumenta el padding de las opciones */
     background-color: #f9f9f9; /* Fondo de las opciones */
 }
 
 /* Estilo para la opción seleccionada */
-.balance-general-container select option:checked {
+.estado-container select option:checked {
     background-color: #007bff; /* Fondo de la opción seleccionada */
     color: #ffffff; /* Color del texto de la opción seleccionada */
 }
 
 /* Estilo para las opciones al hacer hover */
-.balance-general-container select option:hover {
+.estado-container select option:hover {
     background-color: #0056b3; /* Fondo al pasar el mouse sobre una opción */
     color: #ffffff; /* Color del texto al pasar el mouse sobre una opción */
 }
 
 /* Estilos para las listas */
-.balance-general-container ul {
+.estado-container ul {
     padding-left: 20px; /* Agrega un margen izquierdo para las listas */
 }
 
-.balance-general-container li {
+.estado-container li {
     color: #555; /* Color gris para el texto de los elementos de la lista */
     margin-bottom: 5px; /* Espaciado entre los elementos de la lista */
 }

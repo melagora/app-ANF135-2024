@@ -24,11 +24,9 @@ function AgregarEstadoDeResultado({ onSave }) {
     utilidadDistribuible: 0,
   });
 
+  // Efecto para calcular valores cuando los campos relevantes cambian
   useEffect(() => {
-    // Calcular utilidad bruta
     const utilidadBruta = formData.ventas - formData.costoVenta;
-
-    // Calcular utilidad de operación (restando todos los gastos operativos de la utilidad bruta)
     const gastosOperacion =
       formData.administracion +
       formData.gerenciaFinanciera +
@@ -38,24 +36,14 @@ function AgregarEstadoDeResultado({ onSave }) {
       formData.direccion +
       formData.cadenaSuministros;
     const utilidadOperacion = utilidadBruta - gastosOperacion;
-
-    // Calcular utilidad antes de impuestos y reserva
     const gastosNoOperacionales =
       formData.gastosFinancieros + formData.otrosGastosNoOperacionales;
-    const utilidadAntesImpuestosReserva =
-      utilidadOperacion - gastosNoOperacionales;
-
-    // Calcular la reserva legal (7% de la utilidad antes de impuestos y reserva)
-    const reservaLegal = (utilidadAntesImpuestosReserva * 0.07).toFixed(2);
-
-    // Calcular utilidad antes de impuesto
-    const utilidadAntesImpuesto = utilidadAntesImpuestosReserva - reservaLegal; // Se resta la reserva legal
-
-    // Calcular utilidad distribuible (restando el impuesto sobre la renta)
+    const utilidadAntesImpuestosReserva = utilidadOperacion - gastosNoOperacionales;
+    const reservaLegal = utilidadAntesImpuestosReserva * 0.07;
+    const utilidadAntesImpuesto = utilidadAntesImpuestosReserva - reservaLegal;
     const utilidadDistribuible =
       utilidadAntesImpuesto - parseFloat(formData.impuestoRenta);
 
-    // Actualizar el estado con los cálculos
     setFormData((prevData) => ({
       ...prevData,
       utilidadBruta,
@@ -63,7 +51,7 @@ function AgregarEstadoDeResultado({ onSave }) {
       utilidadAntesImpuestosReserva,
       reservaLegal,
       utilidadAntesImpuesto,
-      utilidadDistribuible: utilidadDistribuible.toFixed(2), // Asegúrate de que tenga 2 decimales
+      utilidadDistribuible,
     }));
   }, [
     formData.ventas,
@@ -80,6 +68,18 @@ function AgregarEstadoDeResultado({ onSave }) {
     formData.impuestoRenta,
   ]);
 
+  // Efecto para cargar los datos guardados de un año seleccionado
+  useEffect(() => {
+    if (formData.año) {
+      const estados = JSON.parse(localStorage.getItem('estados')) || {};
+      if (estados[formData.año]) {
+        setFormData(estados[formData.año]); // Cargar datos si existen
+      } else {
+        handleClear(); // Limpiar si no existen datos para ese año
+      }
+    }
+  }, [formData.año]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -90,7 +90,6 @@ function AgregarEstadoDeResultado({ onSave }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Guardar en localStorage
     const estados = JSON.parse(localStorage.getItem('estados')) || {};
     estados[formData.año] = formData;
     localStorage.setItem('estados', JSON.stringify(estados));
@@ -100,7 +99,7 @@ function AgregarEstadoDeResultado({ onSave }) {
 
   const handleClear = () => {
     setFormData({
-      año: '',
+      año: formData.año, // Mantener el año seleccionado
       ventas: 0,
       costoVenta: 0,
       utilidadBruta: 0,
@@ -126,7 +125,6 @@ function AgregarEstadoDeResultado({ onSave }) {
     <div className="agregar-container">
       <h3>Agregar Estado de Resultado</h3>
       <form onSubmit={handleSubmit}>
-        {/* Selector de Año */}
         <div className="form-group">
           <label>Seleccionar Año:</label>
           <select name="año" onChange={handleChange} value={formData.año}>

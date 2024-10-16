@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import '../css/BalanceGeneral.css'; // Asegúrate de importar el CSS
-
+import '../css/Estado.css'; // Asegúrate de importar el CSS
 
 function BalanceGeneral() {
   const [añoSeleccionado, setAñoSeleccionado] = useState('');
@@ -16,6 +15,11 @@ function BalanceGeneral() {
     } else {
       setBalanceData(null);
     }
+  };
+
+  // Función para formatear los números
+  const formatearNumero = (numero) => {
+    return parseFloat(numero).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   };
 
   const calcularTotalActivoCorriente = () => {
@@ -64,13 +68,11 @@ function BalanceGeneral() {
   };
 
   return (
-    <div className="balance-general-container">
+    <div className="estado-container">
       <h3>Balance General</h3>
 
       <div className="form-group">
-        <label>
-          Seleccionar Año:
-        </label>
+        <label>Seleccionar Año:</label>
         <select onChange={handleAñoChange} value={añoSeleccionado}>
           <option value="">-- Seleccionar Año --</option>
           <option value="2023">2023</option>
@@ -86,57 +88,57 @@ function BalanceGeneral() {
           <h4>ACTIVOS</h4>
           <h5>ACTIVO CORRIENTE</h5>
           <ul>
-            <li>Efectivo y Equivalentes al Efectivo: {balanceData.efectivo}</li>
-            <li>Inversiones Financieras a Corto Plazo: {balanceData.inversionesCortoPlazo}</li>
-            <li>Deudores Comerciales y Otras Cuentas por Cobrar: {balanceData.deudoresComerciales}</li>
-            <li>Inventarios: {balanceData.inventarios}</li>
-            <li>Pagos Anticipados: {balanceData.pagosAnticipados}</li>
+            <li>Efectivo y Equivalentes al Efectivo: {formatearNumero(balanceData.efectivo)}</li>
+            <li>Inversiones Financieras a Corto Plazo: {formatearNumero(balanceData.inversionesCortoPlazo)}</li>
+            <li>Deudores Comerciales y Otras Cuentas por Cobrar: {formatearNumero(balanceData.deudoresComerciales)}</li>
+            <li>Inventarios: {formatearNumero(balanceData.inventarios)}</li>
+            <li>Pagos Anticipados: {formatearNumero(balanceData.pagosAnticipados)}</li>
           </ul>
-          <h5>TOTAL ACTIVO CORRIENTE: {calcularTotalActivoCorriente()}</h5>
+          <h5>TOTAL ACTIVO CORRIENTE: {formatearNumero(calcularTotalActivoCorriente())}</h5>
 
           <h5>ACTIVO NO CORRIENTE</h5>
           <ul>
-            <li>Propiedad, Planta y Equipo (neto): {balanceData.propiedadPlantaEquipo}</li>
-            <li>Activo Biológico: {balanceData.activoBiologico}</li>
-            <li>Intangibles: {balanceData.intangibles}</li>
-            <li>Inversiones Financieras a Largo Plazo: {balanceData.inversionesLargoPlazo}</li>
-            <li>Proyectos en Proceso: {balanceData.proyectosProceso}</li>
+            <li>Propiedad, Planta y Equipo (neto): {formatearNumero(balanceData.propiedadPlantaEquipo)}</li>
+            <li>Activo Biológico: {formatearNumero(balanceData.activoBiologico)}</li>
+            <li>Intangibles: {formatearNumero(balanceData.intangibles)}</li>
+            <li>Inversiones Financieras a Largo Plazo: {formatearNumero(balanceData.inversionesLargoPlazo)}</li>
+            <li>Proyectos en Proceso: {formatearNumero(balanceData.proyectosProceso)}</li>
           </ul>
-          <h5>TOTAL ACTIVO NO CORRIENTE: {calcularTotalActivoNoCorriente()}</h5>
+          <h5>TOTAL ACTIVO NO CORRIENTE: {formatearNumero(calcularTotalActivoNoCorriente())}</h5>
 
-          <h5>TOTAL ACTIVO: {calcularTotalActivos()}</h5>
+          <h5>TOTAL ACTIVO: {formatearNumero(calcularTotalActivos())}</h5>
 
           <h4>PASIVOS</h4>
           <h5>PASIVO CORRIENTE</h5>
           <ul>
-            <li>Deudas Financieras a Corto Plazo: {balanceData.deudasCortoPlazo}</li>
-            <li>Deudas Comerciales y Otras Cuentas por Pagar a Corto Plazo: {balanceData.deudasComerciales}</li>
-            <li>Beneficios a Empleados a Corto Plazo: {balanceData.beneficiosEmpleados}</li>
-            <li>Impuestos por Pagar: {balanceData.impuestosPorPagar}</li>
-            <li>Dividendos por Pagar: {balanceData.dividendosPorPagar}</li>
+            <li>Deudas Financieras a Corto Plazo: {formatearNumero(balanceData.deudasCortoPlazo)}</li>
+            <li>Deudas Comerciales y Otras Cuentas por Pagar a Corto Plazo: {formatearNumero(balanceData.deudasComerciales)}</li>
+            <li>Beneficios a Empleados a Corto Plazo: {formatearNumero(balanceData.beneficiosEmpleados)}</li>
+            <li>Impuestos por Pagar: {formatearNumero(balanceData.impuestosPorPagar)}</li>
+            <li>Dividendos por Pagar: {formatearNumero(balanceData.dividendosPorPagar)}</li>
           </ul>
-          <h5>TOTAL PASIVO CORRIENTE: {calcularTotalPasivoCorriente()}</h5>
+          <h5>TOTAL PASIVO CORRIENTE: {formatearNumero(calcularTotalPasivoCorriente())}</h5>
 
           <h5>PASIVO NO CORRIENTE</h5>
           <ul>
-            <li>Deudas Financieras a Largo Plazo: {balanceData.deudasLargoPlazo}</li>
-            <li>Provisiones y Otros Pasivos a Largo Plazo: {balanceData.provisiones}</li>
+            <li>Deudas Financieras a Largo Plazo: {formatearNumero(balanceData.deudasLargoPlazo)}</li>
+            <li>Provisiones y Otros Pasivos a Largo Plazo: {formatearNumero(balanceData.provisiones)}</li>
           </ul>
-          <h5>TOTAL PASIVO NO CORRIENTE: {calcularTotalPasivoNoCorriente()}</h5>
+          <h5>TOTAL PASIVO NO CORRIENTE: {formatearNumero(calcularTotalPasivoNoCorriente())}</h5>
 
-          <h5>TOTAL PASIVO: {calcularTotalPasivos()}</h5>
+          <h5>TOTAL PASIVO: {formatearNumero(calcularTotalPasivos())}</h5>
 
           <h4>PATRIMONIO</h4>
           <ul>
-            <li>Capital Social: {balanceData.capitalSocial}</li>
-            <li>Reservas: {balanceData.reservas}</li>
-            <li>Resultados Acumulados: {balanceData.resultadosAcumulados}</li>
-            <li>Resultados del Ejercicio: {balanceData.resultadosEjercicio}</li>
-            <li>Ajustes y Efectos por Valuación y Cambio de Valor: {balanceData.ajustesEfectosValuacion}</li>
+            <li>Capital Social: {formatearNumero(balanceData.capitalSocial)}</li>
+            <li>Reservas: {formatearNumero(balanceData.reservas)}</li>
+            <li>Resultados Acumulados: {formatearNumero(balanceData.resultadosAcumulados)}</li>
+            <li>Resultados del Ejercicio: {formatearNumero(balanceData.resultadosEjercicio)}</li>
+            <li>Ajustes y Efectos por Valuación y Cambio de Valor: {formatearNumero(balanceData.ajustesEfectosValuacion)}</li>
           </ul>
-          <h5>TOTAL PATRIMONIO: {calcularTotalPatrimonio()}</h5>
+          <h5>TOTAL PATRIMONIO: {formatearNumero(calcularTotalPatrimonio())}</h5>
 
-          <h5>TOTAL PASIVO Y PATRIMONIO: {calcularTotalPasivos() + calcularTotalPatrimonio()}</h5>
+          <h5>TOTAL PASIVO Y PATRIMONIO: {formatearNumero(calcularTotalPasivos() + calcularTotalPatrimonio())}</h5>
         </div>
       ) : (
         <p>Por favor, selecciona un año para ver el balance general.</p>
