@@ -104,8 +104,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.info{
-  padding: 0px 300px;
+.centrar{
   text-align: center;
 }
 

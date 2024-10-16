@@ -31,38 +31,31 @@ function AgregarBalanceGeneral({ onSave }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Si se selecciona el año, verificamos si hay datos en localStorage para ese año
     if (name === 'año') {
       const balances = JSON.parse(localStorage.getItem('balances')) || {};
-      
-      // Si hay un balance guardado para el año seleccionado, lo cargamos
       const dataForYear = balances[value];
       if (dataForYear) {
         setFormData(dataForYear);
       } else {
-        // Si no hay datos para ese año, restablecemos el formulario con el año seleccionado
         setFormData((prev) => ({
           ...prev,
-          año: value, // Solo actualiza el año
+          año: value,
         }));
       }
     } else {
-      // Para cualquier otro campo, actualizamos el valor
       setFormData({
         ...formData,
-        [name]: value === "" || isNaN(value) ? 0 : parseFloat(value), // Si el valor está vacío o no es un número, establece 0
+        [name]: value === "" || isNaN(value) ? 0 : parseFloat(value),
       });
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Guardar en localStorage
     const balances = JSON.parse(localStorage.getItem('balances')) || {};
     balances[formData.año] = formData;
     localStorage.setItem('balances', JSON.stringify(balances));
     alert('Balance guardado exitosamente');
-    // Llamar la función onSave para actualizar el balance en el componente padre
     onSave(formData.año);
   };
 
@@ -92,6 +85,11 @@ function AgregarBalanceGeneral({ onSave }) {
       resultadosEjercicio: 0,
       ajustesEfectosValuacion: 0,
     }));
+  };
+
+  // Función para formatear los números
+  const formatearNumero = (numero) => {
+    return parseFloat(numero).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   };
 
   // Cálculo de totales
@@ -131,7 +129,6 @@ function AgregarBalanceGeneral({ onSave }) {
     formData.resultadosEjercicio +
     formData.ajustesEfectosValuacion;
 
-  // Total Pasivos + Patrimonio
   const totalPasivosPatrimonio = totalPasivos + totalPatrimonio;
 
   return (
@@ -178,7 +175,7 @@ function AgregarBalanceGeneral({ onSave }) {
 
         {/* Total Activo Corriente */}
         <div className="totales">
-          <h5>TOTAL ACTIVO CORRIENTE: {totalActivoCorriente}</h5>
+          <h5>TOTAL ACTIVO CORRIENTE: {formatearNumero(totalActivoCorriente)}</h5>
         </div>
 
         <h5>ACTIVO NO CORRIENTE</h5>
@@ -205,12 +202,12 @@ function AgregarBalanceGeneral({ onSave }) {
 
         {/* Total Activo No Corriente */}
         <div className="totales">
-          <h5>TOTAL ACTIVO NO CORRIENTE: {totalActivoNoCorriente}</h5>
+          <h5>TOTAL ACTIVO NO CORRIENTE: {formatearNumero(totalActivoNoCorriente)}</h5>
         </div>
 
         {/* Total Activo */}
         <div className="totales">
-          <h5>TOTAL ACTIVO: {totalActivos}</h5>
+          <h5>TOTAL ACTIVO: {formatearNumero(totalActivos)}</h5>
         </div>
 
         <h4>PASIVOS</h4>
@@ -238,7 +235,7 @@ function AgregarBalanceGeneral({ onSave }) {
 
         {/* Total Pasivo Corriente */}
         <div className="totales">
-          <h5>TOTAL PASIVO CORRIENTE: {totalPasivoCorriente}</h5>
+          <h5>TOTAL PASIVO CORRIENTE: {formatearNumero(totalPasivoCorriente)}</h5>
         </div>
 
         <h5>PASIVO NO CORRIENTE</h5>
@@ -253,12 +250,12 @@ function AgregarBalanceGeneral({ onSave }) {
 
         {/* Total Pasivo No Corriente */}
         <div className="totales">
-          <h5>TOTAL PASIVO NO CORRIENTE: {totalPasivoNoCorriente}</h5>
+          <h5>TOTAL PASIVO NO CORRIENTE: {formatearNumero(totalPasivoNoCorriente)}</h5>
         </div>
 
         {/* Total Pasivos */}
         <div className="totales">
-          <h5>TOTAL PASIVOS: {totalPasivos}</h5>
+          <h5>TOTAL PASIVOS: {formatearNumero(totalPasivos)}</h5>
         </div>
 
         <h4>PATRIMONIO</h4>
@@ -285,16 +282,18 @@ function AgregarBalanceGeneral({ onSave }) {
 
         {/* Total Patrimonio */}
         <div className="totales">
-          <h5>TOTAL PATRIMONIO: {totalPatrimonio}</h5>
+          <h5>TOTAL PATRIMONIO: {formatearNumero(totalPatrimonio)}</h5>
         </div>
 
-        {/* Total Pasivos + Patrimonio */}
+        {/* Total Pasivos y Patrimonio */}
         <div className="totales">
-          <h5>TOTAL PASIVOS + PATRIMONIO: {totalPasivosPatrimonio}</h5>
+          <h5>TOTAL PASIVOS Y PATRIMONIO: {formatearNumero(totalPasivosPatrimonio)}</h5>
         </div>
 
-        <button type="submit">Guardar Balance</button>
-        <button type="button" onClick={handleClear}>Limpiar</button> {/* Botón de limpieza */}
+        <div className="botones">
+          <button type="submit">Guardar Balance</button>
+          <button type="button" onClick={handleClear}>Limpiar Campos</button>
+        </div>
       </form>
     </div>
   );

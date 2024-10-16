@@ -24,39 +24,39 @@ function BalanceGeneral() {
 
   const calcularTotalActivoCorriente = () => {
     return parseFloat(balanceData.efectivo || 0) +
-           parseFloat(balanceData.inversionesCortoPlazo || 0) +
-           parseFloat(balanceData.deudoresComerciales || 0) +
-           parseFloat(balanceData.inventarios || 0) +
-           parseFloat(balanceData.pagosAnticipados || 0);
+      parseFloat(balanceData.inversionesCortoPlazo || 0) +
+      parseFloat(balanceData.deudoresComerciales || 0) +
+      parseFloat(balanceData.inventarios || 0) +
+      parseFloat(balanceData.pagosAnticipados || 0);
   };
 
   const calcularTotalActivoNoCorriente = () => {
     return parseFloat(balanceData.propiedadPlantaEquipo || 0) +
-           parseFloat(balanceData.activoBiologico || 0) +
-           parseFloat(balanceData.intangibles || 0) +
-           parseFloat(balanceData.inversionesLargoPlazo || 0) +
-           parseFloat(balanceData.proyectosProceso || 0);
+      parseFloat(balanceData.activoBiologico || 0) +
+      parseFloat(balanceData.intangibles || 0) +
+      parseFloat(balanceData.inversionesLargoPlazo || 0) +
+      parseFloat(balanceData.proyectosProceso || 0);
   };
 
   const calcularTotalPasivoCorriente = () => {
     return parseFloat(balanceData.deudasCortoPlazo || 0) +
-           parseFloat(balanceData.deudasComerciales || 0) +
-           parseFloat(balanceData.beneficiosEmpleados || 0) +
-           parseFloat(balanceData.impuestosPorPagar || 0) +
-           parseFloat(balanceData.dividendosPorPagar || 0);
+      parseFloat(balanceData.deudasComerciales || 0) +
+      parseFloat(balanceData.beneficiosEmpleados || 0) +
+      parseFloat(balanceData.impuestosPorPagar || 0) +
+      parseFloat(balanceData.dividendosPorPagar || 0);
   };
 
   const calcularTotalPasivoNoCorriente = () => {
     return parseFloat(balanceData.deudasLargoPlazo || 0) +
-           parseFloat(balanceData.provisiones || 0);
+      parseFloat(balanceData.provisiones || 0);
   };
 
   const calcularTotalPatrimonio = () => {
     return parseFloat(balanceData.capitalSocial || 0) +
-           parseFloat(balanceData.reservas || 0) +
-           parseFloat(balanceData.resultadosAcumulados || 0) +
-           parseFloat(balanceData.resultadosEjercicio || 0) +
-           parseFloat(balanceData.ajustesEfectosValuacion || 0);
+      parseFloat(balanceData.reservas || 0) +
+      parseFloat(balanceData.resultadosAcumulados || 0) +
+      parseFloat(balanceData.resultadosEjercicio || 0) +
+      parseFloat(balanceData.ajustesEfectosValuacion || 0);
   };
 
   const calcularTotalActivos = () => {
@@ -69,7 +69,15 @@ function BalanceGeneral() {
 
   return (
     <div className="estado-container">
-      <h3>Balance General</h3>
+      <div className="centrar">
+        <h4>Saram S.A de C.V.</h4>
+        <h4>Balance General</h4>
+        <h5>Del 1 de enero hasta el 31 de diciembre del </h5>
+        {añoSeleccionado && (
+          <h5>{añoSeleccionado}</h5>
+        )}
+        <h5>Cifras expresadas en miles de dólares de los Estados Unidos de América</h5>
+      </div>
 
       <div className="form-group">
         <label>Seleccionar Año:</label>

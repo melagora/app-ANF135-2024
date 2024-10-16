@@ -24,7 +24,6 @@ function AgregarEstadoDeResultado({ onSave }) {
     utilidadDistribuible: 0,
   });
 
-  // Efecto para calcular valores cuando los campos relevantes cambian
   useEffect(() => {
     const utilidadBruta = formData.ventas - formData.costoVenta;
     const gastosOperacion =
@@ -41,8 +40,7 @@ function AgregarEstadoDeResultado({ onSave }) {
     const utilidadAntesImpuestosReserva = utilidadOperacion - gastosNoOperacionales;
     const reservaLegal = utilidadAntesImpuestosReserva * 0.07;
     const utilidadAntesImpuesto = utilidadAntesImpuestosReserva - reservaLegal;
-    const utilidadDistribuible =
-      utilidadAntesImpuesto - parseFloat(formData.impuestoRenta);
+    const utilidadDistribuible = utilidadAntesImpuesto - formData.impuestoRenta;
 
     setFormData((prevData) => ({
       ...prevData,
@@ -68,7 +66,6 @@ function AgregarEstadoDeResultado({ onSave }) {
     formData.impuestoRenta,
   ]);
 
-  // Efecto para cargar los datos guardados de un año seleccionado
   useEffect(() => {
     if (formData.año) {
       const estados = JSON.parse(localStorage.getItem('estados')) || {};
@@ -121,6 +118,10 @@ function AgregarEstadoDeResultado({ onSave }) {
     });
   };
 
+  const formatNumber = (num) => {
+    return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+
   return (
     <div className="agregar-container">
       <h3>Agregar Estado de Resultado</h3>
@@ -147,7 +148,7 @@ function AgregarEstadoDeResultado({ onSave }) {
           <input type="number" name="costoVenta" onChange={handleChange} value={formData.costoVenta} />
         </label>
         <div className="totales">
-          <h5>Utilidad Bruta: {formData.utilidadBruta.toFixed(2)}</h5>
+          <h5>Utilidad Bruta: {formatNumber(formData.utilidadBruta)}</h5>
         </div>
 
         <h4>GASTOS DE OPERACIÓN</h4>
@@ -181,7 +182,7 @@ function AgregarEstadoDeResultado({ onSave }) {
         </label>
 
         <div className="totales">
-          <h5>Utilidad de Operación: {formData.utilidadOperacion.toFixed(2)}</h5>
+          <h5>Utilidad de Operación: {formatNumber(formData.utilidadOperacion)}</h5>
         </div>
 
         <h4>GASTOS NO OPERACIONALES</h4>
@@ -195,17 +196,17 @@ function AgregarEstadoDeResultado({ onSave }) {
         </label>
 
         <div className="totales">
-          <h5>Utilidad Antes de Impuestos y Reserva: {formData.utilidadAntesImpuestosReserva.toFixed(2)}</h5>
+          <h5>Utilidad Antes de Impuestos y Reserva: {formatNumber(formData.utilidadAntesImpuestosReserva)}</h5>
         </div>
 
         <h4>RESERVA LEGAL</h4>
         <div className="totales">
-          <h5>Reserva Legal (7%): {formData.reservaLegal}</h5>
+          <h5>Reserva Legal (7%): {formatNumber(formData.reservaLegal)}</h5>
         </div>
 
         <h4>UTILIDAD ANTES DE IMPUESTO</h4>
         <div className="totales">
-          <h5>Utilidad Antes de Impuesto: {formData.utilidadAntesImpuesto.toFixed(2)}</h5>
+          <h5>Utilidad Antes de Impuesto: {formatNumber(formData.utilidadAntesImpuesto)}</h5>
         </div>
 
         <h4>IMPUESTO SOBRE LA RENTA</h4>
@@ -214,13 +215,11 @@ function AgregarEstadoDeResultado({ onSave }) {
           <input type="number" name="impuestoRenta" onChange={handleChange} value={formData.impuestoRenta} />
         </label>
         <div className="totales">
-          <h5>Utilidad Distribuible: {formData.utilidadDistribuible}</h5>
+          <h5>Utilidad Distribuible: {formatNumber(formData.utilidadDistribuible)}</h5>
         </div>
 
-        <div className="buttons">
-          <button type="submit">Guardar</button>
-          <button type="button" onClick={handleClear}>Limpiar</button>
-        </div>
+        <button type="submit">Guardar Estado de Resultado</button>
+        <button type="button" onClick={handleClear}>Limpiar</button>
       </form>
     </div>
   );
