@@ -138,7 +138,7 @@ const IndicadoresFinancieros = () => {
       item.razonDeDeudaACapitalPatrimonial = item.deudaTotal / item.capitalPatrimonial;
       item.razonDeLiquidez = item.activosCorrientes / item.pasivosCorrientes;
       item.margeDeUtilidadBruta = (utilidadBruta / item.ventasNetas) * 100;
-      item.margenUtilidadOperativa = (utilidadOperativa / item.ventasNetas) * 100;
+      item.margenDeUtilidadOperativa = (utilidadOperativa / item.ventasNetas) * 100;
       item.margeDeUtilidadNeta = (utilidadNeta / item.ventasNetas) * 100;
     });
   }
@@ -240,7 +240,7 @@ const IndicadoresFinancieros = () => {
               </p>
               <p>
                 Margen de utilidad operativa -{" "}
-                {selectedData.margeDeUtilidadOperativa}%
+                {selectedData.margenDeUtilidadOperativa}%
               </p>
               <p>
                 Margen de utilidad neta - {selectedData.margeDeUtilidadNeta}%
