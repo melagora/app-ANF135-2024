@@ -1,6 +1,7 @@
 import "../css/IndicadoresFinancieros.css";
 import React, { useState } from "react";
 
+
 const IndicadoresFinancieros = () => {
   const [year, setYear] = useState("seleccion");
 
@@ -8,6 +9,8 @@ const IndicadoresFinancieros = () => {
     {
       year: "2023",
       ventasNetas: 55944165.92,
+      ventasNetasACredito: 124234.89,
+      comprasACredito: 23234234.34,
       activosTotalesIniciales: 24489222.79,
       activosTotalesFinales: 21647909.15,
       deudaTotal: 100,
@@ -23,11 +26,13 @@ const IndicadoresFinancieros = () => {
       costosDeBienesVendidos: 46658627.01,
       gastosOperativos: 5162601.08,
       intereses: 0,
-      impuestos: 1332048.20,
+      impuestos: 1332048.2,
     },
     {
       year: "2022",
       ventasNetas: 52844893.13,
+      ventasNetasACredito: 124234.89,
+      comprasACredito: 23234234.34,
       activosTotalesIniciales: 10,
       activosTotalesFinales: 20,
       deudaTotal: 100,
@@ -48,6 +53,8 @@ const IndicadoresFinancieros = () => {
     {
       year: "2021",
       ventasNetas: 300000000,
+      ventasNetasACredito: 124234.89,
+      comprasACredito: 23234234.34,
       activosTotalesIniciales: 10,
       activosTotalesFinales: 20,
       deudaTotal: 100,
@@ -68,6 +75,8 @@ const IndicadoresFinancieros = () => {
     {
       year: "2020",
       ventasNetas: 4000000,
+      ventasNetasACredito: 124234.89,
+      comprasACredito: 23234234.34,
       activosTotalesIniciales: 10,
       activosTotalesFinales: 20,
       deudaTotal: 100,
@@ -89,6 +98,8 @@ const IndicadoresFinancieros = () => {
       year: "2019",
       ventasNetas: 900000,
       /**Ventas Netas=Ventas Brutas−Devoluciones−Descuentos*/
+      ventasNetasACredito: 124234.89,
+      comprasACredito: 23234234.34,
       activosTotalesIniciales: 10,
       activosTotalesFinales: 20,
       deudaTotal: 100,
@@ -107,88 +118,33 @@ const IndicadoresFinancieros = () => {
       impuestos: 30,
     },
   ];
-
-  //Rotación de activos totales
-  data.forEach((item) => {
-    item.activosTotalesPromedio =
-      (item.activosTotalesIniciales + item.activosTotalesFinales) / 2;
-
-    item.rotacionDeActivosTotales =
-      item.ventasNetas / item.activosTotalesPromedio;
-  });
-
-  //Período promedio de cobro
-  data.forEach((item) => {
-    item.cuentasPorCobrarPromedio =
-      item.cuentasPorCobrarIniciales / item.cuentasPorCobrarFinales / 2;
+  function calcularIndicadoresFinancieros(data) {
+    data.forEach(item => {
+      // Cálculos intermedios
+      const utilidadBruta = item.ventasNetas - item.costosDeBienesVendidos;
+      const utilidadOperativa = utilidadBruta - item.gastosOperativos;
+      const utilidadNeta = utilidadOperativa - item.intereses - item.impuestos;
   
-    item.ventasDiariasPromedio = item.ventasNetas / 365;
+      // Promedios
+      const activosTotalesPromedio = (item.activosTotalesIniciales + item.activosTotalesFinales) / 2;
+      const cuentasPorCobrarPromedio = (item.cuentasPorCobrarIniciales + item.cuentasPorCobrarFinales) / 2;
+      const cuentasPorPagarPromedio = (item.cuentasPorPagarIniciales + item.cuentasPorPagarFinales) / 2;
   
-    item.periodoPromedioDeCobro =
-      item.cuentasPorCobrarPromedio / item.ventasDiariasPromedio;
-  });
-
-  //Período promedio de pago
-  data.forEach((item) => {
-    item.cuentasPorPagarPromedio =
-      item.cuentasPorPagarIniciales / item.cuentasPorPagarFinales / 2;
-
-    item.comprasDiariasPromedio = item.comprasTotales / 365;
-
-    item.periodoPromedioDePago =
-      item.cuentasPorPagarPromedio / item.comprasDiariasPromedio;
-  });
-
-  //Razón de endeudamiento
-  data.forEach((item) => {
-    item.razonDeEndeudamiento = item.deudaTotal / item.activosTotales;
-  });
-
-  // Razón de deuda a Capital patrimonial
-  data.forEach((item) => {
-    item.razonDeDeudaACapitalPatrimonial =
-      item.deudaTotal / item.capitalPatrimonial;
-  });
-
-  //Razón de liquidez
-  data.forEach((item) => {
-    item.razonDeLiquidez = item.activosCorrientes / item.pasivosCorrientes;
-  });
-
-  //Margen de utilidad bruta
-  data.forEach((item) => {
-    item.utilidadBruta = item.ventasNetas - item.costosDeBienesVendidos;
-    item.margeDeUtilidadBruta = (item.utilidadBruta / item.ventasNetas) * 100;
-  });
-
-  // Margen de utilidad operativa
-  data.forEach((item) => {
-    const gastosOperativos = item.gastosOperativos || 0; // Si no existe, usa 0 como valor predeterminado
-
-    // Calcular utilidad operativa
-    item.utilidadOperativa =
-      (item.ventasNetas - item.costosDeBienesVendidos - gastosOperativos);
-
-    // Calcular margen de utilidad operativa
-    item.margenUtilidadOperativa =
-      (item.utilidadOperativa / item.ventasNetas) * 100;
-  });
-
-  //Margen de utilidad neta
-  data.forEach((item) => {
-    const gastosOperativos = item.gastosOperativos || 0;
-    const intereses = item.gastosOperativos || 0;
-    const impuestos = item.gastosOperativos || 0;
-
-    item.utilidadNeta =
-      item.ventasNetas -
-      item.costosDeBienesVendidos -
-      gastosOperativos -
-      intereses -
-      impuestos;
-
-    item.margeDeUtilidadNeta = (item.utilidadNeta / item.ventasNetas) * 100;
-  });
+      // Indicadores financieros
+      item.rotacionDeActivosTotales = item.ventasNetas / activosTotalesPromedio;
+      item.periodoPromedioDeCobro = (cuentasPorCobrarPromedio / item.ventasNetasACredito) * 365;
+      item.periodoPromedioDePago = (cuentasPorPagarPromedio / item.comprasACredito) * 365;
+      item.razonDeEndeudamiento = item.deudaTotal / item.activosTotales;
+      item.razonDeDeudaACapitalPatrimonial = item.deudaTotal / item.capitalPatrimonial;
+      item.razonDeLiquidez = item.activosCorrientes / item.pasivosCorrientes;
+      item.margeDeUtilidadBruta = (utilidadBruta / item.ventasNetas) * 100;
+      item.margenUtilidadOperativa = (utilidadOperativa / item.ventasNetas) * 100;
+      item.margeDeUtilidadNeta = (utilidadNeta / item.ventasNetas) * 100;
+    });
+  }
+  
+  // Llamada a la función con los datos
+  calcularIndicadoresFinancieros(data);
 
   //******************************* */
   // Función para manejar el cambio en el selector de año
