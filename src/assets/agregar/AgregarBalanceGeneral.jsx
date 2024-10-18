@@ -35,12 +35,33 @@ function AgregarBalanceGeneral({ onSave }) {
       const balances = JSON.parse(localStorage.getItem('balances')) || {};
       const dataForYear = balances[value];
       if (dataForYear) {
-        setFormData(dataForYear);
+        setFormData(dataForYear); // Carga los datos si existen
       } else {
-        setFormData((prev) => ({
-          ...prev,
+        setFormData({
           año: value,
-        }));
+          efectivo: 0,
+          inversionesCortoPlazo: 0,
+          deudoresComerciales: 0,
+          inventarios: 0,
+          pagosAnticipados: 0,
+          propiedadPlantaEquipo: 0,
+          activoBiologico: 0,
+          intangibles: 0,
+          inversionesLargoPlazo: 0,
+          proyectosProceso: 0,
+          deudasCortoPlazo: 0,
+          deudasComerciales: 0,
+          beneficiosEmpleados: 0,
+          impuestosPorPagar: 0,
+          dividendosPorPagar: 0,
+          deudasLargoPlazo: 0,
+          provisiones: 0,
+          capitalSocial: 0,
+          reservas: 0,
+          resultadosAcumulados: 0,
+          resultadosEjercicio: 0,
+          ajustesEfectosValuacion: 0,
+        }); // Resetea los datos si no existen
       }
     } else {
       setFormData({
@@ -61,7 +82,7 @@ function AgregarBalanceGeneral({ onSave }) {
 
   const handleClear = () => {
     setFormData((prev) => ({
-      ...prev,
+      año: prev.año, // Mantener el año seleccionado
       efectivo: 0,
       inversionesCortoPlazo: 0,
       deudoresComerciales: 0,
@@ -130,7 +151,6 @@ function AgregarBalanceGeneral({ onSave }) {
     formData.ajustesEfectosValuacion;
 
   const totalPasivosPatrimonio = totalPasivos + totalPatrimonio;
-
   return (
     <div className="agregar-container">
       <h3>Agregar Balance General</h3>
