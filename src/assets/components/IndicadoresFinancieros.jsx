@@ -31,7 +31,6 @@ const IndicadoresFinancieros = () => {
     ? (balanceData.totalActivoCorriente / balanceData.totalPasivoCorriente).toFixed(2) 
     : null;
 
-  
   const pruebaAcida = balanceData 
     ? ((balanceData.totalActivoCorriente - balanceData.inventarios) / balanceData.totalPasivoCorriente).toFixed(2) 
     : null;
@@ -60,6 +59,19 @@ const IndicadoresFinancieros = () => {
 
   const margenUtilidadNeta = estadoData
     ? (estadoData.utilidadDistribuible / estadoData.ventas).toFixed(2)
+    : null;
+
+  // Cálculos de los indicadores de actividad
+  const rotacionActivosTotales = estadoData && balanceData
+    ? (estadoData.ventas / balanceData.totalActivos).toFixed(2)
+    : null;
+
+  const periodoPromedioCobro = estadoData && balanceData
+    ? ((balanceData.deudoresComerciales / estadoData.ventas) * 365).toFixed(2)
+    : null;
+
+  const periodoPromedioPago = estadoData && balanceData
+    ? ((balanceData.deudasComerciales / estadoData.costoVenta) * 365).toFixed(2)
     : null;
 
   return (
@@ -120,6 +132,17 @@ const IndicadoresFinancieros = () => {
               <p>Margen de utilidad bruta: {margenUtilidadBruta}</p>
               <p>Margen de utilidad operativa: {margenUtilidadOperativa}</p>
               <p>Margen de utilidad neta: {margenUtilidadNeta}</p>
+            </div>
+          </div>
+
+          <div className="containerPorEstado">
+            <div className="tituloContainer">
+              <p>Indicadores de Actividad</p>
+            </div>
+            <div className="infoContainer">
+              <p>Rotación de activos totales: {rotacionActivosTotales}</p>
+              <p>Período promedio de cobro: {periodoPromedioCobro} días</p>
+              <p>Período promedio de pago: {periodoPromedioPago} días</p>
             </div>
           </div>
         </>
