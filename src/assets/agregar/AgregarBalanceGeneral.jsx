@@ -73,11 +73,64 @@ function AgregarBalanceGeneral({ onSave }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+  
+    // Calcular los totales antes de guardar
+    const totalActivoCorriente =
+      formData.efectivo +
+      formData.inversionesCortoPlazo +
+      formData.deudoresComerciales +
+      formData.inventarios +
+      formData.pagosAnticipados;
+  
+    const totalActivoNoCorriente =
+      formData.propiedadPlantaEquipo +
+      formData.activoBiologico +
+      formData.intangibles +
+      formData.inversionesLargoPlazo +
+      formData.proyectosProceso;
+  
+    const totalActivos = totalActivoCorriente + totalActivoNoCorriente;
+  
+    const totalPasivoCorriente =
+      formData.deudasCortoPlazo +
+      formData.deudasComerciales +
+      formData.beneficiosEmpleados +
+      formData.impuestosPorPagar +
+      formData.dividendosPorPagar;
+  
+    const totalPasivoNoCorriente =
+      formData.deudasLargoPlazo +
+      formData.provisiones;
+  
+    const totalPasivos = totalPasivoCorriente + totalPasivoNoCorriente;
+  
+    const totalPatrimonio =
+      formData.capitalSocial +
+      formData.reservas +
+      formData.resultadosAcumulados +
+      formData.resultadosEjercicio +
+      formData.ajustesEfectosValuacion;
+  
+    const totalPasivosPatrimonio = totalPasivos + totalPatrimonio;
+  
+    // Actualizar formData con los totales
+    const updatedFormData = {
+      ...formData,
+      totalActivoCorriente,
+      totalActivoNoCorriente,
+      totalActivos,
+      totalPasivoCorriente,
+      totalPasivoNoCorriente,
+      totalPasivos,
+      totalPatrimonio,
+      totalPasivosPatrimonio
+    };
+  
     const balances = JSON.parse(localStorage.getItem('balances')) || {};
-    balances[formData.año] = formData;
+    balances[updatedFormData.año] = updatedFormData;
     localStorage.setItem('balances', JSON.stringify(balances));
     alert('Balance guardado exitosamente');
-    onSave(formData.año);
+    onSave(updatedFormData.año);
   };
 
   const handleClear = () => {

@@ -1,171 +1,78 @@
 import "../css/IndicadoresFinancieros.css";
 import React, { useState } from "react";
 
-
 const IndicadoresFinancieros = () => {
-  const [year, setYear] = useState("seleccion");
+  const [añoSeleccionado, setAñoSeleccionado] = useState('');
+  const [balanceData, setBalanceData] = useState(null);
+  const [estadoData, setEstadoData] = useState(null);
 
-  const data = [
-    {
-      year: "2023",
-      ventasNetas: 55944165.92,
-      ventasNetasACredito: 124234.89,
-      comprasACredito: 23234234.34,
-      activosTotalesIniciales: 24489222.79,
-      activosTotalesFinales: 21647909.15,
-      deudaTotal: 100,
-      activosTotales: 21647909.15,
-      cuentasPorCobrarIniciales: 200,
-      cuentasPorCobrarFinales: 10,
-      cuentasPorPagarIniciales: 1360661.55,
-      cuentasPorPagarFinales: 1720989.69,
-      comprasTotales: 300,
-      capitalPatrimonial: 21647909.15,
-      activosCorrientes: 10676174.16,
-      pasivosCorrientes: 6529246.02,
-      costosDeBienesVendidos: 46658627.01,
-      gastosOperativos: 5162601.08,
-      intereses: 0,
-      impuestos: 1332048.2,
-    },
-    {
-      year: "2022",
-      ventasNetas: 52844893.13,
-      ventasNetasACredito: 124234.89,
-      comprasACredito: 23234234.34,
-      activosTotalesIniciales: 10,
-      activosTotalesFinales: 20,
-      deudaTotal: 100,
-      activosTotales: 24489222.79,
-      cuentasPorCobrarIniciales: 200,
-      cuentasPorCobrarFinales: 10,
-      cuentasPorPagarIniciales: 100,
-      cuentasPorPagarFinales: 20,
-      comprasTotales: 300,
-      capitalPatrimonial: 24489222.79,
-      activosCorrientes: 13835693.28,
-      pasivosCorrientes: 8833237.83,
-      costosDeBienesVendidos: 45215728.59,
-      gastosOperativos: 4490928.33,
-      intereses: 0,
-      impuestos: 899871.41,
-    },
-    {
-      year: "2021",
-      ventasNetas: 300000000,
-      ventasNetasACredito: 124234.89,
-      comprasACredito: 23234234.34,
-      activosTotalesIniciales: 10,
-      activosTotalesFinales: 20,
-      deudaTotal: 100,
-      activosTotales: 10,
-      cuentasPorCobrarIniciales: 200,
-      cuentasPorCobrarFinales: 10,
-      cuentasPorPagarIniciales: 100,
-      cuentasPorPagarFinales: 20,
-      comprasTotales: 300,
-      capitalPatrimonial: 200,
-      activosCorrientes: 600,
-      pasivosCorrientes: 200,
-      costosDeBienesVendidos: 20000,
-      gastosOperativos: 40,
-      intereses: 40,
-      impuestos: 30,
-    },
-    {
-      year: "2020",
-      ventasNetas: 4000000,
-      ventasNetasACredito: 124234.89,
-      comprasACredito: 23234234.34,
-      activosTotalesIniciales: 10,
-      activosTotalesFinales: 20,
-      deudaTotal: 100,
-      activosTotales: 10,
-      cuentasPorCobrarIniciales: 200,
-      cuentasPorCobrarFinales: 10,
-      cuentasPorPagarIniciales: 100,
-      cuentasPorPagarFinales: 20,
-      comprasTotales: 300,
-      capitalPatrimonial: 200,
-      activosCorrientes: 600,
-      pasivosCorrientes: 200,
-      costosDeBienesVendidos: 20000,
-      gastosOperativos: 40,
-      intereses: 40,
-      impuestos: 30,
-    },
-    {
-      year: "2019",
-      ventasNetas: 900000,
-      /**Ventas Netas=Ventas Brutas−Devoluciones−Descuentos*/
-      ventasNetasACredito: 124234.89,
-      comprasACredito: 23234234.34,
-      activosTotalesIniciales: 10,
-      activosTotalesFinales: 20,
-      deudaTotal: 100,
-      activosTotales: 10,
-      cuentasPorCobrarIniciales: 200,
-      cuentasPorCobrarFinales: 10,
-      cuentasPorPagarIniciales: 100,
-      cuentasPorPagarFinales: 20,
-      comprasTotales: 300,
-      capitalPatrimonial: 200,
-      activosCorrientes: 600,
-      pasivosCorrientes: 200,
-      costosDeBienesVendidos: 20000,
-      gastosOperativos: 40,
-      intereses: 40,
-      impuestos: 30,
-    },
-  ];
-  function calcularIndicadoresFinancieros(data) {
-    data.forEach(item => {
-      // Cálculos intermedios
-      const utilidadBruta = item.ventasNetas - item.costosDeBienesVendidos;
-      const utilidadOperativa = utilidadBruta - item.gastosOperativos;
-      const utilidadNeta = utilidadOperativa - item.intereses - item.impuestos;
-  
-      // Promedios
-      const activosTotalesPromedio = (item.activosTotalesIniciales + item.activosTotalesFinales) / 2;
-      const cuentasPorCobrarPromedio = (item.cuentasPorCobrarIniciales + item.cuentasPorCobrarFinales) / 2;
-      const cuentasPorPagarPromedio = (item.cuentasPorPagarIniciales + item.cuentasPorPagarFinales) / 2;
-  
-      // Indicadores financieros
-      item.rotacionDeActivosTotales = item.ventasNetas / activosTotalesPromedio;
-      item.periodoPromedioDeCobro = (cuentasPorCobrarPromedio / item.ventasNetasACredito) * 365;
-      item.periodoPromedioDePago = (cuentasPorPagarPromedio / item.comprasACredito) * 365;
-      item.razonDeEndeudamiento = item.deudaTotal / item.activosTotales;
-      item.razonDeDeudaACapitalPatrimonial = item.deudaTotal / item.capitalPatrimonial;
-      item.razonDeLiquidez = item.activosCorrientes / item.pasivosCorrientes;
-      item.margeDeUtilidadBruta = (utilidadBruta / item.ventasNetas) * 100;
-      item.margenDeUtilidadOperativa = (utilidadOperativa / item.ventasNetas) * 100;
-      item.margeDeUtilidadNeta = (utilidadNeta / item.ventasNetas) * 100;
-    });
-  }
-  
-  // Llamada a la función con los datos
-  calcularIndicadoresFinancieros(data);
+  const handleAñoChange = (e) => {
+    const año = e.target.value;
+    setAñoSeleccionado(año);
 
-  //******************************* */
-  // Función para manejar el cambio en el selector de año
-  const handleCalcularClick = (event) => {
-    const selectedYear = event.target.value; // Obtiene el valor del año seleccionado
-    setYear(selectedYear); // Actualiza el estado con el año seleccionado
+    const balances = JSON.parse(localStorage.getItem('balances'));
+    const estados = JSON.parse(localStorage.getItem('estados'));
+    
+    if (balances && balances[año]) {
+      setBalanceData(balances[año]);
+    } else {
+      setBalanceData(null);
+    }
+
+    if (estados && estados[año]) {
+      setEstadoData(estados[año]);
+    } else {
+      setEstadoData(null);
+    }
   };
 
-  const selectedData = data.find((item) => item.year === year);
+  // Cálculos de los indicadores de liquidez
+  const razonDeLiquidez = balanceData 
+    ? (balanceData.totalActivoCorriente / balanceData.totalPasivoCorriente).toFixed(2) 
+    : null;
+
+  
+  const pruebaAcida = balanceData 
+    ? ((balanceData.totalActivoCorriente - balanceData.inventarios) / balanceData.totalPasivoCorriente).toFixed(2) 
+    : null;
+
+  const capitalDeTrabajo = balanceData 
+    ? (balanceData.totalActivoCorriente - balanceData.totalPasivoCorriente).toFixed(2) 
+    : null;
+
+  // Cálculos de los índices de endeudamiento
+  const razonDeEndeudamiento = balanceData
+    ? (balanceData.totalPasivos / balanceData.totalActivos).toFixed(2)
+    : null;
+
+  const razonDeudaCapitalPatrimonial = balanceData
+    ? (balanceData.totalPasivos / balanceData.capitalSocial).toFixed(2)
+    : null;
+
+  // Cálculos de los índices de rentabilidad
+  const margenUtilidadBruta = estadoData
+    ? (estadoData.utilidadBruta / estadoData.ventas).toFixed(2)
+    : null;
+
+  const margenUtilidadOperativa = estadoData
+    ? (estadoData.utilidadOperacion / estadoData.ventas).toFixed(2)
+    : null;
+
+  const margenUtilidadNeta = estadoData
+    ? (estadoData.utilidadDistribuible / estadoData.ventas).toFixed(2)
+    : null;
 
   return (
     <div className="info">
       <div className="containerBotonesInfo">
         <div className="selector">
-          <h1>Seleccione un año para ver su respetivos Indicadores:</h1>
+          <h1>Seleccione un año para ver sus respectivos Indicadores:</h1>
           <select
             id="yearSelector"
-            onChange={handleCalcularClick}
-            defaultValue={year}
+            onChange={handleAñoChange}
+            value={añoSeleccionado}
           >
-            <option value="seleccion">Seleccionar año:</option>
+            <option value="">Seleccionar año:</option>
             <option value="2023">2023</option>
             <option value="2022">2022</option>
             <option value="2021">2021</option>
@@ -175,79 +82,49 @@ const IndicadoresFinancieros = () => {
         </div>
       </div>
 
-      {/* Solo mostrar la información si se ha seleccionado un año válido */}
-      {year !== "seleccion" && selectedData && (
+      {añoSeleccionado && balanceData && estadoData ? (
         <>
           <div className="infoIndicadorEmpresa">
             <p>Saram S.A de C.V.</p>
             <p>Indicadores Financieros</p>
-            <p>
-              Del 1 de enero hasta el 31 de diciembre del <span>{year}</span>
-            </p>
-            <p>
-              Cifras expresadas en miles de dólares de los Estados Unidos de
-              América
-            </p>
+            <p>Del 1 de enero hasta el 31 de diciembre del {añoSeleccionado}</p>
+            <p>Cifras expresadas en miles de dólares de los Estados Unidos de América</p>
           </div>
 
-          <div className="containerPorEstado">
-            <div className="tituloContainer">
-              <p>Indicadores de Actividad</p>
-            </div>
-            <div className="infoContainer">
-              <p>
-                Rotación de activos totales -{" "}
-                {selectedData.rotacionDeActivosTotales}
-              </p>
-              <p>
-                Período promedio de cobro -{" "}
-                {selectedData.periodoPromedioDeCobro}
-              </p>
-              <p>
-                Periodo promedio de pago - {selectedData.periodoPromedioDePago}
-              </p>
-            </div>
-          </div>
-          <div className="containerPorEstado">
-            <div className="tituloContainer">
-              <p>Indicadores de Deuda</p>
-            </div>
-            <div className="infoContainer">
-              <p>
-                Razón de endeudamiento - {selectedData.razonDeEndeudamiento}
-              </p>
-              <p>
-                Razón de deuda a Capital patrimonial -{" "}
-                {selectedData.razonDeDeudaACapitalPatrimonial}
-              </p>
-            </div>
-          </div>
           <div className="containerPorEstado">
             <div className="tituloContainer">
               <p>Indicadores de Liquidez</p>
             </div>
             <div className="infoContainer">
-              <p>Razón de liquidez - {selectedData.razonDeLiquidez}</p>
+              <p>Razón de liquidez: {razonDeLiquidez}</p>
+              <p>Prueba ácida: {pruebaAcida}</p>
+              <p>Capital de Trabajo: {capitalDeTrabajo}</p>
             </div>
           </div>
+
           <div className="containerPorEstado">
             <div className="tituloContainer">
-              <p>Indicadores de Rentabilidad</p>
+              <p>Índices de Endeudamiento o Apalancamiento</p>
             </div>
             <div className="infoContainer">
-              <p>
-                Margen de utilidad bruta - {selectedData.margeDeUtilidadBruta}%
-              </p>
-              <p>
-                Margen de utilidad operativa -{" "}
-                {selectedData.margenDeUtilidadOperativa}%
-              </p>
-              <p>
-                Margen de utilidad neta - {selectedData.margeDeUtilidadNeta}%
-              </p>
+              <p>Razón de endeudamiento: {razonDeEndeudamiento}</p>
+              <p>Razón deuda-capital patrimonial: {razonDeudaCapitalPatrimonial}</p>
+            </div>
+          </div>
+
+          <div className="containerPorEstado">
+            <div className="tituloContainer">
+              <p>Índices de Rentabilidad</p>
+            </div>
+            <div className="infoContainer">
+              <p>Margen de utilidad bruta: {margenUtilidadBruta}</p>
+              <p>Margen de utilidad operativa: {margenUtilidadOperativa}</p>
+              <p>Margen de utilidad neta: {margenUtilidadNeta}</p>
             </div>
           </div>
         </>
+      ) : (
+        <p>Por favor, selecciona un año para ver los indicadores financieros.</p>
       )}
     </div>
   );

@@ -27,10 +27,7 @@ function EstadoDeResultado() {
       <div className="centrar">
         <h4>Saram S.A de C.V.</h4>
         <h4>Estado de Resultado</h4>
-        <h5>Del 1 de enero hasta el 31 de diciembre del </h5>
-        {añoSeleccionado && (
-          <h5>{añoSeleccionado}</h5>
-        )}
+        <h5>Del 1 de enero hasta el 31 de diciembre del {añoSeleccionado}</h5>
         <h5>Cifras expresadas en miles de dólares de los Estados Unidos de América</h5>
       </div>
 
