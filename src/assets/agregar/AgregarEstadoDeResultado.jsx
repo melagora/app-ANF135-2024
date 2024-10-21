@@ -20,6 +20,7 @@ function AgregarEstadoDeResultado({ onSave }) {
     utilidadAntesImpuestosReserva: 0,
     reservaLegal: 0,
     impuestoRenta: 0,
+    cescGrandesContribuyentes: 0, // Nuevo campo agregado
     utilidadAntesImpuesto: 0,
     utilidadDistribuible: 0,
   });
@@ -38,8 +39,7 @@ function AgregarEstadoDeResultado({ onSave }) {
     const gastosNoOperacionales =
       formData.gastosFinancieros + formData.otrosGastosNoOperacionales;
     const utilidadAntesImpuestosReserva = utilidadOperacion - gastosNoOperacionales;
-    const reservaLegal = utilidadAntesImpuestosReserva * 0.07;
-    const utilidadAntesImpuesto = utilidadAntesImpuestosReserva - reservaLegal;
+    const utilidadAntesImpuesto = utilidadAntesImpuestosReserva - formData.reservaLegal - formData.cescGrandesContribuyentes; // Restar CESC
     const utilidadDistribuible = utilidadAntesImpuesto - formData.impuestoRenta;
 
     setFormData((prevData) => ({
@@ -47,8 +47,7 @@ function AgregarEstadoDeResultado({ onSave }) {
       utilidadBruta,
       utilidadOperacion,
       utilidadAntesImpuestosReserva,
-      reservaLegal,
-      utilidadAntesImpuesto,
+      utilidadAntesImpuesto, // Cambiado aquí
       utilidadDistribuible,
     }));
   }, [
@@ -64,6 +63,8 @@ function AgregarEstadoDeResultado({ onSave }) {
     formData.gastosFinancieros,
     formData.otrosGastosNoOperacionales,
     formData.impuestoRenta,
+    formData.reservaLegal,
+    formData.cescGrandesContribuyentes, // Agregado aquí
   ]);
 
   useEffect(() => {
@@ -113,6 +114,7 @@ function AgregarEstadoDeResultado({ onSave }) {
       utilidadAntesImpuestosReserva: 0,
       reservaLegal: 0,
       impuestoRenta: 0,
+      cescGrandesContribuyentes: 0, // Reiniciar también el nuevo campo
       utilidadAntesImpuesto: 0,
       utilidadDistribuible: 0,
     });
@@ -200,9 +202,10 @@ function AgregarEstadoDeResultado({ onSave }) {
         </div>
 
         <h4>RESERVA LEGAL</h4>
-        <div className="totales">
-          <h5>Reserva Legal (7%): {formatNumber(formData.reservaLegal)}</h5>
-        </div>
+        <label>
+          Reserva Legal:
+          <input type="number" name="reservaLegal" onChange={handleChange} value={formData.reservaLegal} />
+        </label>
 
         <h4>UTILIDAD ANTES DE IMPUESTO</h4>
         <div className="totales">
@@ -214,6 +217,12 @@ function AgregarEstadoDeResultado({ onSave }) {
           Impuesto sobre la Renta:
           <input type="number" name="impuestoRenta" onChange={handleChange} value={formData.impuestoRenta} />
         </label>
+
+        <label>
+          CESC GRANDES CONTRIBUYENTES: {/* Nuevo campo */}
+          <input type="number" name="cescGrandesContribuyentes" onChange={handleChange} value={formData.cescGrandesContribuyentes} />
+        </label>
+
         <div className="totales">
           <h5>Utilidad Distribuible: {formatNumber(formData.utilidadDistribuible)}</h5>
         </div>

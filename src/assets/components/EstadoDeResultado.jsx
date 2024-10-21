@@ -80,6 +80,7 @@ function EstadoDeResultado() {
           <h4>IMPUESTO SOBRE LA RENTA</h4>
           <ul>
             <li>Impuesto sobre la Renta: {formatearNumero(estadoData.impuestoRenta)}</li>
+            <li>CESC grandes contribuyentes: {formatearNumero(estadoData.cescGrandesContribuyentes)}</li>
           </ul>
           <h5>Utilidad Distribuible: {formatearNumero(estadoData.utilidadDistribuible)}</h5>
         </div>
