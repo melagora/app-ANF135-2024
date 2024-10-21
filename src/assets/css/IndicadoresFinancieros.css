@@ -1,80 +1,80 @@
-* p{
-color: #192937;
+* p {
+  color: #192937;
 }
 
-.info{
-display: flex;
-justify-content: center;
-flex-wrap: wrap;
+.info {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.containerBotonesInfo{
-    width: 75%;
-    display: flex;
-    justify-content: center;
+.containerBotonesInfo {
+  width: 75%;
+  display: flex;
+  justify-content: center;
 }
 
 .selector select {
-    width: 200px;           
-    padding: 10px;          
-    border-radius: 5px;     
-    background-color: white; 
-    border: 2px solid #213547; 
-    font-size: 16px;        
-    font-weight: bold;
-    color: #213547;     
-    outline: none;       
-    cursor: pointer;    
-  }
-  
-  .selector select:hover {
-    background-color: #e6e6e6;
-    border: 2px solid #213547; 
-  }
-  
-  .selector option {
-    background-color: #213547; 
-    color: white;          
-    padding: 10px;          
-  }
-  
-
-.infoIndicadorEmpresa{
-margin: 20px;
+  width: 200px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: white;
+  border: 2px solid #213547;
+  font-size: 16px;
+  font-weight: bold;
+  color: #213547;
+  outline: none;
+  cursor: pointer;
 }
 
-.infoIndicadorEmpresa p{
-margin: 0px;
-padding: 0px;
+.selector select:hover {
+  background-color: #e6e6e6;
+  border: 2px solid #213547;
 }
 
-.containerPorEstado{
-    width: 75%;
-    border: solid 5px #213547;
-    margin: 0px;
-    padding: 0px;
-    border-radius: 10px;
-    margin: 20px;
+.selector option {
+  background-color: #213547;
+  color: white;
+  padding: 10px;
 }
 
-.tituloContainer p{
-    background-color: #213547;
-    margin: 0px;
-    padding: 0px;
-    color: white;
-    text-align: left;
-    padding: 20px;
+
+.infoIndicadorEmpresa {
+  margin: 20px;
 }
 
-.infoContainer{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 10px;
+.infoIndicadorEmpresa p {
+  margin: 0px;
+  padding: 0px;
 }
 
-.infoContainer p{
-    margin: 20px;
-    color: #192937;
-    font-size: 15px;
+.containerPorEstado {
+  width: 75%;
+  border: solid 5px #213547;
+  margin: 0px;
+  padding: 0px;
+  border-radius: 10px;
+  margin: 20px;
+}
+
+.tituloContainer p {
+  background-color: #213547;
+  margin: 0px;
+  padding: 0px;
+  color: white;
+  text-align: left;
+  padding: 20px;
+}
+
+.infoContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 10px;
+}
+
+.infoContainer p {
+  margin: 20px;
+  color: #192937;
+  font-size: 15px;
 }
