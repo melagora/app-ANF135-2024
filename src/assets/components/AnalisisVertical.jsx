@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import '../css/Estado.css'; // Asegúrate de importar el mismo CSS
 
-function AnalisisFinanciero() {
+function AnalisisVertical() {
   const [añoSeleccionado, setAñoSeleccionado] = useState('');
   const [balanceData, setBalanceData] = useState(null);
   const [estadoData, setEstadoData] = useState(null);
@@ -161,4 +161,4 @@ function AnalisisFinanciero() {
   );
 }
 
-export default AnalisisFinanciero;
+export default AnalisisVertical;
