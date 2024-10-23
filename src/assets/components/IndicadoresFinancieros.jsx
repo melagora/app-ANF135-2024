@@ -1,5 +1,6 @@
 import "../css/IndicadoresFinancieros.css";
 import React, { useState } from "react";
+import { balances, estados } from "./Datos"; // Importa los datos desde Datos.jsx
 
 const IndicadoresFinancieros = () => {
   const [añoSeleccionado, setAñoSeleccionado] = useState('');
@@ -10,16 +11,13 @@ const IndicadoresFinancieros = () => {
     const año = e.target.value;
     setAñoSeleccionado(año);
 
-    const balances = JSON.parse(localStorage.getItem('balances'));
-    const estados = JSON.parse(localStorage.getItem('estados'));
-    
-    if (balances && balances[año]) {
+    if (balances[año]) {
       setBalanceData(balances[año]);
     } else {
       setBalanceData(null);
     }
 
-    if (estados && estados[año]) {
+    if (estados[año]) {
       setEstadoData(estados[año]);
     } else {
       setEstadoData(null);
