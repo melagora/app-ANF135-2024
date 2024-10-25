@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import '../css/Estado.css'; // Asegúrate de importar el mismo CSS
 
 function AnalisisVertical() {

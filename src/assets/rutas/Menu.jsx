@@ -1,4 +1,4 @@
-import React from "react";
+
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Inicio from "../components/Inicio";
 import BalanceGeneral from "../components/BalanceGeneral";
@@ -15,7 +15,7 @@ export default function Menu() {
     <BrowserRouter>
       <nav>
         <div className="titulo">
-          <p>App Análisis financiero - G9</p>
+          <p>Finanzas Facilita SV</p>
         </div>
         <div className="menu">
           <ul>
