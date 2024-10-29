@@ -1,5 +1,6 @@
 import { useState } from "react";
 import '../css/Estado.css'; // Asegúrate de importar el CSS
+import { balances, estados } from './Data';// Importa los datos
 
 function BalanceGeneral() {
   const [añoSeleccionado, setAñoSeleccionado] = useState('');
@@ -9,15 +10,32 @@ function BalanceGeneral() {
     const año = e.target.value;
     setAñoSeleccionado(año);
 
-    const balances = JSON.parse(localStorage.getItem('balances'));
-    if (balances && balances[año]) {
+    if (balances[año]) {
       setBalanceData(balances[año]);
     } else {
       setBalanceData(null);
     }
   };
 
-  // Función para formatear los números
+  const descargarJson = () => {
+    if (!balanceData) {
+      alert('Selecciona un año para descargar el balance.');
+      return;
+    }
+
+    const data = { balance: balanceData };
+    const dataStr = JSON.stringify(data, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `balance_general_${añoSeleccionado}.json`;
+    link.click();
+
+    URL.revokeObjectURL(url); // Liberar la URL del blob
+  };
+
   const formatearNumero = (numero) => {
     return parseFloat(numero).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   };
@@ -99,6 +117,8 @@ function BalanceGeneral() {
           <h5>TOTAL PATRIMONIO: {formatearNumero(balanceData.totalPatrimonio)}</h5>
 
           <h5>TOTAL PASIVO Y PATRIMONIO: {formatearNumero(balanceData.totalPasivosPatrimonio)}</h5>
+          
+          <button onClick={descargarJson}>Descargar JSON</button>
         </div>
       ) : (
         <p>Por favor, selecciona un año para ver el balance general.</p>

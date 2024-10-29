@@ -1,5 +1,6 @@
 import { useState } from "react";
 import '../css/Estado.css'; // Asegúrate de importar el mismo CSS
+import { balances, estados } from './Data';// Importa los datos
 
 function EstadoDeResultado() {
   const [añoSeleccionado, setAñoSeleccionado] = useState('');
@@ -9,12 +10,30 @@ function EstadoDeResultado() {
     const año = e.target.value;
     setAñoSeleccionado(año);
 
-    const estados = JSON.parse(localStorage.getItem('estados'));
-    if (estados && estados[año]) {
+    if (estados[año]) {
       setEstadoData(estados[año]);
     } else {
       setEstadoData(null);
     }
+  };
+
+  const descargarJson = () => {
+    if (!estadoData) {
+      alert('Selecciona un año para descargar el balance.');
+      return;
+    }
+
+    const data = { estados: estadoData };
+    const dataStr = JSON.stringify(data, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `estado_resultado_${añoSeleccionado}.json`;
+    link.click();
+
+    URL.revokeObjectURL(url); // Liberar la URL del blob
   };
 
   // Función para formatear los números
@@ -83,6 +102,8 @@ function EstadoDeResultado() {
             <li>CESC grandes contribuyentes: {formatearNumero(estadoData.cescGrandesContribuyentes)}</li>
           </ul>
           <h5>Utilidad Distribuible: {formatearNumero(estadoData.utilidadDistribuible)}</h5>
+
+          <button onClick={descargarJson}>Descargar JSON</button>
         </div>
       ) : (
         <p>Por favor, selecciona un año para ver el estado de resultado.</p>
