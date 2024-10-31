@@ -1,5 +1,5 @@
 import "../css/IndicadoresFinancieros.css";
-import React, { useState } from "react";
+import  { useState } from "react";
 import { balances, estados } from "./Datos"; // Importa los datos desde Datos.jsx
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";

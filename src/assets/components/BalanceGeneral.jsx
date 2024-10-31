@@ -1,6 +1,6 @@
 import { useState } from "react";
 import '../css/Estado.css'; // Asegúrate de importar el CSS
-import { balances, estados } from './Data';// Importa los datos
+import { balances } from './Datos';// Importa los datos
 
 function BalanceGeneral() {
   const [añoSeleccionado, setAñoSeleccionado] = useState('');

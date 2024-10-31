@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import '../css/Agregar.css'; // Reutilizando los mismos estilos
 
 function AgregarEstadoDeResultado({ onSave }) {

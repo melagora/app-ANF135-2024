@@ -1,5 +1,6 @@
 import { useState } from "react";
 import '../css/Estado.css'; // Asegúrate de importar el mismo CSS
+import { balances, estados } from './Datos';// Importa los datos
 
 function AnalisisVertical() {
   const [añoSeleccionado, setAñoSeleccionado] = useState('');
@@ -12,16 +13,14 @@ function AnalisisVertical() {
     setAñoSeleccionado(año);
 
     // Cargar datos del balance general
-    const balances = JSON.parse(localStorage.getItem('balances'));
-    if (balances && balances[año]) {
+    if (balances[año]) {
       setBalanceData(balances[año]);
     } else {
       setBalanceData(null);
     }
 
     // Cargar datos del estado de resultados
-    const estados = JSON.parse(localStorage.getItem('estados'));
-    if (estados && estados[año]) {
+    if (estados[año]) {
       setEstadoData(estados[año]);
     } else {
       setEstadoData(null);

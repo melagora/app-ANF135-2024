@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import '../css/Agregar.css'; // Asegúrate de importar el CSS
+import { balances } from "../components/Datos";
 
 function AgregarBalanceGeneral({ onSave }) {
   const [formData, setFormData] = useState({
@@ -68,6 +69,16 @@ function AgregarBalanceGeneral({ onSave }) {
         ...formData,
         [name]: value === "" || isNaN(value) ? 0 : parseFloat(value),
       });
+    }
+  };
+
+  const handleLoadData = () => {
+    // Cargar datos del archivo data.jsx según el año seleccionado
+    const yearData = balances[formData.año]; // Accede a data según el año
+    if (yearData) {
+      setFormData(yearData); // Establece los datos si existen
+    } else {
+      alert("No se encontraron datos para el año seleccionado en data.jsx.");
     }
   };
 
@@ -221,6 +232,7 @@ function AgregarBalanceGeneral({ onSave }) {
             <option value="2020">2020</option>
             <option value="2019">2019</option>
           </select>
+          <button type="button" onClick={handleLoadData}>Cargar datos</button>
         </div>
 
         <h4>ACTIVOS</h4>
