@@ -1,6 +1,8 @@
 import { useState } from "react";
 import '../css/Estado.css'; // Asegúrate de importar el mismo CSS
 import { estados } from './Datos';// Importa los datos
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 function EstadoDeResultado() {
   const [añoSeleccionado, setAñoSeleccionado] = useState('');
@@ -15,6 +17,31 @@ function EstadoDeResultado() {
     } else {
       setEstadoData(null);
     }
+  };
+
+  const generarPDF = () => {
+    const input = document.getElementById("pdfContent");
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      const imgWidth = 190;
+      const pageHeight = 295;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      pdf.save(`BalanceGeneral_SARAM_${añoSeleccionado}.pdf`);
+    });
   };
 
   const descargarJson = () => {
@@ -60,50 +87,56 @@ function EstadoDeResultado() {
           <option value="2020">2020</option>
           <option value="2019">2019</option>
         </select>
+        {/* Mostrar el botón solo si se ha seleccionado un año */}
+        {añoSeleccionado && (
+          <button onClick={generarPDF}>Generar PDF</button>
+        )}
       </div>
 
-      {estadoData ? (
-        <div>
-          <h4>INGRESOS</h4>
-          <ul>
-            <li>Ventas: {formatearNumero(estadoData.ventas)}</li>
-            <li>Costo de Venta: {formatearNumero(estadoData.costoVenta)}</li>
-          </ul>
-          <h5>Utilidad Bruta: {formatearNumero(estadoData.utilidadBruta)}</h5>
+      {añoSeleccionado && estadoData ? (
+        <div id="pdfContent">
+          <div>
+            <h4>INGRESOS</h4>
+            <ul>
+              <li>Ventas: {formatearNumero(estadoData.ventas)}</li>
+              <li>Costo de Venta: {formatearNumero(estadoData.costoVenta)}</li>
+            </ul>
+            <h5>Utilidad Bruta: {formatearNumero(estadoData.utilidadBruta)}</h5>
 
-          <h4>GASTOS DE OPERACIÓN</h4>
-          <ul>
-            <li>Administración: {formatearNumero(estadoData.administracion)}</li>
-            <li>Gerencia Financiera: {formatearNumero(estadoData.gerenciaFinanciera)}</li>
-            <li>Auditoría Interna: {formatearNumero(estadoData.auditoriaInterna)}</li>
-            <li>Gerencia Ventas y Mercadeo: {formatearNumero(estadoData.gerenciaVentasMercadeo)}</li>
-            <li>División Avícola: {formatearNumero(estadoData.divisionAvicola)}</li>
-            <li>Dirección: {formatearNumero(estadoData.direccion)}</li>
-            <li>Cadena de Suministros: {formatearNumero(estadoData.cadenaSuministros)}</li>
-          </ul>
-          <h5>Utilidad de Operación: {formatearNumero(estadoData.utilidadOperacion)}</h5>
+            <h4>GASTOS DE OPERACIÓN</h4>
+            <ul>
+              <li>Administración: {formatearNumero(estadoData.administracion)}</li>
+              <li>Gerencia Financiera: {formatearNumero(estadoData.gerenciaFinanciera)}</li>
+              <li>Auditoría Interna: {formatearNumero(estadoData.auditoriaInterna)}</li>
+              <li>Gerencia Ventas y Mercadeo: {formatearNumero(estadoData.gerenciaVentasMercadeo)}</li>
+              <li>División Avícola: {formatearNumero(estadoData.divisionAvicola)}</li>
+              <li>Dirección: {formatearNumero(estadoData.direccion)}</li>
+              <li>Cadena de Suministros: {formatearNumero(estadoData.cadenaSuministros)}</li>
+            </ul>
+            <h5>Utilidad de Operación: {formatearNumero(estadoData.utilidadOperacion)}</h5>
 
-          <h4>GASTOS NO OPERACIONALES</h4>
-          <ul>
-            <li>Gastos Financieros: {formatearNumero(estadoData.gastosFinancieros)}</li>
-            <li>Otros Gastos No Operacionales: {formatearNumero(estadoData.otrosGastosNoOperacionales)}</li>
-          </ul>
-          <h5>Utilidad Antes de Impuestos y Reserva: {formatearNumero(estadoData.utilidadAntesImpuestosReserva)}</h5>
+            <h4>GASTOS NO OPERACIONALES</h4>
+            <ul>
+              <li>Gastos Financieros: {formatearNumero(estadoData.gastosFinancieros)}</li>
+              <li>Otros Gastos No Operacionales: {formatearNumero(estadoData.otrosGastosNoOperacionales)}</li>
+            </ul>
+            <h5>Utilidad Antes de Impuestos y Reserva: {formatearNumero(estadoData.utilidadAntesImpuestosReserva)}</h5>
 
-          <h4>RESERVA LEGAL</h4>
-          <h5>Reserva Legal (7%): {formatearNumero(estadoData.reservaLegal)}</h5>
+            <h4>RESERVA LEGAL</h4>
+            <h5>Reserva Legal (7%): {formatearNumero(estadoData.reservaLegal)}</h5>
 
-          <h4>UTILIDAD ANTES DE IMPUESTO</h4>
-          <h5>Utilidad Antes de Impuesto: {formatearNumero(estadoData.utilidadAntesImpuesto)}</h5>
+            <h4>UTILIDAD ANTES DE IMPUESTO</h4>
+            <h5>Utilidad Antes de Impuesto: {formatearNumero(estadoData.utilidadAntesImpuesto)}</h5>
 
-          <h4>IMPUESTO SOBRE LA RENTA</h4>
-          <ul>
-            <li>Impuesto sobre la Renta: {formatearNumero(estadoData.impuestoRenta)}</li>
-            <li>CESC grandes contribuyentes: {formatearNumero(estadoData.cescGrandesContribuyentes)}</li>
-          </ul>
-          <h5>Utilidad Distribuible: {formatearNumero(estadoData.utilidadDistribuible)}</h5>
+            <h4>IMPUESTO SOBRE LA RENTA</h4>
+            <ul>
+              <li>Impuesto sobre la Renta: {formatearNumero(estadoData.impuestoRenta)}</li>
+              <li>CESC grandes contribuyentes: {formatearNumero(estadoData.cescGrandesContribuyentes)}</li>
+            </ul>
+            <h5>Utilidad Distribuible: {formatearNumero(estadoData.utilidadDistribuible)}</h5>
 
-          <button onClick={descargarJson}>Descargar JSON</button>
+            <button onClick={descargarJson}>Descargar JSON</button>
+          </div>
         </div>
       ) : (
         <p>Por favor, selecciona un año para ver el estado de resultado.</p>
