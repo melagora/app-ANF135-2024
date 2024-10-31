@@ -8,6 +8,31 @@
   flex-wrap: wrap;
 }
 
+#pdfContent{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.selector button{
+  margin-left: 10px;
+  width: 200px;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: white;
+  border: 2px solid #213547;
+  font-size: 16px;
+  font-weight: bold;
+  color: #213547;
+  outline: none;
+  cursor: pointer;
+}
+
+.selector button:hover{
+  background-color: #192937;
+  color: white;
+}
+
 .containerBotonesInfo {
   width: 75%;
   display: flex;

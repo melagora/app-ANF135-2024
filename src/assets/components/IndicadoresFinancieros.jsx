@@ -1,9 +1,11 @@
 import "../css/IndicadoresFinancieros.css";
 import React, { useState } from "react";
 import { balances, estados } from "./Datos"; // Importa los datos desde Datos.jsx
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const IndicadoresFinancieros = () => {
-  const [añoSeleccionado, setAñoSeleccionado] = useState('');
+  const [añoSeleccionado, setAñoSeleccionado] = useState("");
   const [balanceData, setBalanceData] = useState(null);
   const [estadoData, setEstadoData] = useState(null);
 
@@ -24,53 +26,77 @@ const IndicadoresFinancieros = () => {
     }
   };
 
-  // Cálculos de los indicadores de liquidez
-  const razonDeLiquidez = balanceData 
-    ? (balanceData.totalActivoCorriente / balanceData.totalPasivoCorriente).toFixed(2) 
-    : null;
+  const generarPDF = () => {
+    const input = document.getElementById("pdfContent");
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      const imgWidth = 190;
+      const pageHeight = 295;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
 
-  const pruebaAcida = balanceData 
-    ? ((balanceData.totalActivoCorriente - balanceData.inventarios) / balanceData.totalPasivoCorriente).toFixed(2) 
-    : null;
+      pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
 
-  const capitalDeTrabajo = balanceData 
-    ? (balanceData.totalActivoCorriente - balanceData.totalPasivoCorriente).toFixed(2) 
-    : null;
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
 
-  // Cálculos de los índices de endeudamiento
+      pdf.save(`IndicadoresFinancieros_SARAM_${añoSeleccionado}.pdf`);
+    });
+  };
+
+  // Cálculos de los indicadores
+  const razonDeLiquidez = balanceData
+    ? (
+        balanceData.totalActivoCorriente / balanceData.totalPasivoCorriente
+      ).toFixed(2)
+    : null;
+  const pruebaAcida = balanceData
+    ? (
+        (balanceData.totalActivoCorriente - balanceData.inventarios) /
+        balanceData.totalPasivoCorriente
+      ).toFixed(2)
+    : null;
+  const capitalDeTrabajo = balanceData
+    ? (
+        balanceData.totalActivoCorriente - balanceData.totalPasivoCorriente
+      ).toFixed(2)
+    : null;
   const razonDeEndeudamiento = balanceData
     ? (balanceData.totalPasivos / balanceData.totalActivos).toFixed(2)
     : null;
-
   const razonDeudaCapitalPatrimonial = balanceData
     ? (balanceData.totalPasivos / balanceData.capitalSocial).toFixed(2)
     : null;
-
-  // Cálculos de los índices de rentabilidad
   const margenUtilidadBruta = estadoData
     ? (estadoData.utilidadBruta / estadoData.ventas).toFixed(2)
     : null;
-
   const margenUtilidadOperativa = estadoData
     ? (estadoData.utilidadOperacion / estadoData.ventas).toFixed(2)
     : null;
-
   const margenUtilidadNeta = estadoData
     ? (estadoData.utilidadDistribuible / estadoData.ventas).toFixed(2)
     : null;
-
-  // Cálculos de los indicadores de actividad
-  const rotacionActivosTotales = estadoData && balanceData
-    ? (estadoData.ventas / balanceData.totalActivos).toFixed(2)
-    : null;
-
-  const periodoPromedioCobro = estadoData && balanceData
-    ? ((balanceData.deudoresComerciales / estadoData.ventas) * 365).toFixed(2)
-    : null;
-
-  const periodoPromedioPago = estadoData && balanceData
-    ? ((balanceData.deudasComerciales / estadoData.costoVenta) * 365).toFixed(2)
-    : null;
+  const rotacionActivosTotales =
+    estadoData && balanceData
+      ? (estadoData.ventas / balanceData.totalActivos).toFixed(2)
+      : null;
+  const periodoPromedioCobro =
+    estadoData && balanceData
+      ? ((balanceData.deudoresComerciales / estadoData.ventas) * 365).toFixed(2)
+      : null;
+  const periodoPromedioPago =
+    estadoData && balanceData
+      ? ((balanceData.deudasComerciales / estadoData.costoVenta) * 365).toFixed(
+          2
+        )
+      : null;
 
   return (
     <div className="info">
@@ -89,16 +115,23 @@ const IndicadoresFinancieros = () => {
             <option value="2020">2020</option>
             <option value="2019">2019</option>
           </select>
+          {/* Mostrar el botón solo si se ha seleccionado un año */}
+          {añoSeleccionado && (
+            <button onClick={generarPDF}>Generar PDF</button>
+          )}
         </div>
       </div>
 
       {añoSeleccionado && balanceData && estadoData ? (
-        <>
+        <div id="pdfContent">
           <div className="infoIndicadorEmpresa">
-            <p>Saram S.A de C.V.</p>
+            <p>SARAM S.A de C.V.</p>
             <p>Indicadores Financieros</p>
             <p>Del 1 de enero hasta el 31 de diciembre del {añoSeleccionado}</p>
-            <p>Cifras expresadas en miles de dólares de los Estados Unidos de América</p>
+            <p>
+              Cifras expresadas en miles de dólares de los Estados Unidos de
+              América
+            </p>
           </div>
 
           <div className="containerPorEstado">
@@ -106,9 +139,9 @@ const IndicadoresFinancieros = () => {
               <p>Indicadores de Liquidez</p>
             </div>
             <div className="infoContainer">
-              <p>Razón de liquidez: {razonDeLiquidez}</p>
+              <p>Razón de liquidez: {razonDeLiquidez}%</p>
               <p>Prueba ácida: {pruebaAcida}</p>
-              <p>Capital de Trabajo: {capitalDeTrabajo}</p>
+              <p>Capital de Trabajo: ${capitalDeTrabajo}</p>
             </div>
           </div>
 
@@ -118,7 +151,9 @@ const IndicadoresFinancieros = () => {
             </div>
             <div className="infoContainer">
               <p>Razón de endeudamiento: {razonDeEndeudamiento}</p>
-              <p>Razón deuda-capital patrimonial: {razonDeudaCapitalPatrimonial}</p>
+              <p>
+                Razón deuda-capital patrimonial: {razonDeudaCapitalPatrimonial}%
+              </p>
             </div>
           </div>
 
@@ -138,14 +173,16 @@ const IndicadoresFinancieros = () => {
               <p>Indicadores de Actividad</p>
             </div>
             <div className="infoContainer">
-              <p>Rotación de activos totales: {rotacionActivosTotales}</p>
+              <p>Rotación de activos totales: {rotacionActivosTotales}%</p>
               <p>Período promedio de cobro: {periodoPromedioCobro} días</p>
               <p>Período promedio de pago: {periodoPromedioPago} días</p>
             </div>
           </div>
-        </>
+        </div>
       ) : (
-        <p>Por favor, selecciona un año para ver los indicadores financieros.</p>
+        <p>
+          Por favor, selecciona un año para ver los indicadores financieros.
+        </p>
       )}
     </div>
   );

@@ -5,6 +5,11 @@
   font-size: 20px;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
+  padding-top: 50px;
+}
+
+.info{
+
 }
 
 a {
@@ -18,10 +23,16 @@ a:hover {
 }
 
 nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f0f0f0; 
+  z-index: 1;
   font-size: 30px;
   display: flex;
   background-color: #213547;
-  padding: 0px 50px;
+  padding: 20px  50px 0px 50px;
 }
 
 .titulo{
