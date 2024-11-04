@@ -1,122 +1,82 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import '../css/Agregar.css'; // Reutilizando los mismos estilos
+import { estados } from "../components/Datos";
 
 function AgregarEstadoDeResultado({ onSave }) {
   const [formData, setFormData] = useState({
     año: '',
-    ventas: 0,
-    costoVenta: 0,
-    utilidadBruta: 0,
-    administracion: 0,
-    gerenciaFinanciera: 0,
-    auditoriaInterna: 0,
-    gerenciaVentasMercadeo: 0,
-    divisionAvicola: 0,
-    direccion: 0,
-    cadenaSuministros: 0,
-    utilidadOperacion: 0,
-    gastosFinancieros: 0,
-    otrosGastosNoOperacionales: 0,
-    utilidadAntesImpuestosReserva: 0,
-    reservaLegal: 0,
-    impuestoRenta: 0,
-    cescGrandesContribuyentes: 0, // Nuevo campo agregado
-    utilidadAntesImpuesto: 0,
-    utilidadDistribuible: 0,
+    ventas: "",
+    costoVenta: "",
+    utilidadBruta: "",
+    administracion: "",
+    gerenciaFinanciera: "",
+    auditoriaInterna: "",
+    gerenciaVentasMercadeo: "",
+    divisionAvicola: "",
+    direccion: "",
+    cadenaSuministros: "",
+    utilidadOperacion: "",
+    gastosFinancieros: "",
+    otrosGastosNoOperacionales: "",
+    utilidadAntesImpuestosReserva: "",
+    reservaLegal: "",
+    impuestoRenta: "",
+    cescGrandesContribuyentes: "",
+    utilidadAntesImpuesto: "",
+    utilidadDistribuible: "",
   });
 
-  useEffect(() => {
-    const utilidadBruta = formData.ventas - formData.costoVenta;
-    const gastosOperacion =
-      formData.administracion +
-      formData.gerenciaFinanciera +
-      formData.auditoriaInterna +
-      formData.gerenciaVentasMercadeo +
-      formData.divisionAvicola +
-      formData.direccion +
-      formData.cadenaSuministros;
-    const utilidadOperacion = utilidadBruta - gastosOperacion;
-    const gastosNoOperacionales =
-      formData.gastosFinancieros + formData.otrosGastosNoOperacionales;
-    const utilidadAntesImpuestosReserva = utilidadOperacion - gastosNoOperacionales;
-    const utilidadAntesImpuesto = utilidadAntesImpuestosReserva - formData.reservaLegal - formData.cescGrandesContribuyentes; // Restar CESC
-    const utilidadDistribuible = utilidadAntesImpuesto - formData.impuestoRenta;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      utilidadBruta,
-      utilidadOperacion,
-      utilidadAntesImpuestosReserva,
-      utilidadAntesImpuesto, // Cambiado aquí
-      utilidadDistribuible,
-    }));
-  }, [
-    formData.ventas,
-    formData.costoVenta,
-    formData.administracion,
-    formData.gerenciaFinanciera,
-    formData.auditoriaInterna,
-    formData.gerenciaVentasMercadeo,
-    formData.divisionAvicola,
-    formData.direccion,
-    formData.cadenaSuministros,
-    formData.gastosFinancieros,
-    formData.otrosGastosNoOperacionales,
-    formData.impuestoRenta,
-    formData.reservaLegal,
-    formData.cescGrandesContribuyentes, // Agregado aquí
-  ]);
-
-  useEffect(() => {
-    if (formData.año) {
-      const estados = JSON.parse(localStorage.getItem('estados')) || {};
-      if (estados[formData.año]) {
-        setFormData(estados[formData.año]); // Cargar datos si existen
-      } else {
-        handleClear(); // Limpiar si no existen datos para ese año
-      }
+  const handleLoadData = () => {
+    const yearData = estados[formData.año];
+    if (yearData) {
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        ...yearData
+      }));
+    } else {
+      alert("No se encontraron datos para el año seleccionado en data.jsx.");
     }
-  }, [formData.año]);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value === "" || isNaN(value) ? 0 : parseFloat(value),
-    });
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [name]: value
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const estados = JSON.parse(localStorage.getItem('estados')) || {};
-    estados[formData.año] = formData;
-    localStorage.setItem('estados', JSON.stringify(estados));
-    alert('Estado de Resultado guardado exitosamente');
+    const balances = JSON.parse(localStorage.getItem('estados')) || {};
+    balances[formData.año] = formData;
+    localStorage.setItem('estados', JSON.stringify(balances));
+    alert('Estado guardado exitosamente');
     onSave(formData.año);
   };
 
   const handleClear = () => {
     setFormData({
-      año: formData.año, // Mantener el año seleccionado
-      ventas: 0,
-      costoVenta: 0,
-      utilidadBruta: 0,
-      administracion: 0,
-      gerenciaFinanciera: 0,
-      auditoriaInterna: 0,
-      gerenciaVentasMercadeo: 0,
-      divisionAvicola: 0,
-      direccion: 0,
-      cadenaSuministros: 0,
-      utilidadOperacion: 0,
-      gastosFinancieros: 0,
-      otrosGastosNoOperacionales: 0,
-      utilidadAntesImpuestosReserva: 0,
-      reservaLegal: 0,
-      impuestoRenta: 0,
-      cescGrandesContribuyentes: 0, // Reiniciar también el nuevo campo
-      utilidadAntesImpuesto: 0,
-      utilidadDistribuible: 0,
+      año: '',
+      ventas: "",
+      costoVenta: "",
+      utilidadBruta: "",
+      administracion: "",
+      gerenciaFinanciera: "",
+      auditoriaInterna: "",
+      gerenciaVentasMercadeo: "",
+      divisionAvicola: "",
+      direccion: "",
+      cadenaSuministros: "",
+      utilidadOperacion: "",
+      gastosFinancieros: "",
+      otrosGastosNoOperacionales: "",
+      utilidadAntesImpuestosReserva: "",
+      reservaLegal: "",
+      impuestoRenta: "",
+      cescGrandesContribuyentes: "",
+      utilidadAntesImpuesto: "",
+      utilidadDistribuible: "",
     });
   };
 
@@ -138,6 +98,7 @@ function AgregarEstadoDeResultado({ onSave }) {
             <option value="2020">2020</option>
             <option value="2019">2019</option>
           </select>
+          <button type="button" onClick={handleLoadData}>Cargar datos</button>
         </div>
 
         <h4>INGRESOS</h4>

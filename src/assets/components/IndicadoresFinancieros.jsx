@@ -1,6 +1,5 @@
 import "../css/IndicadoresFinancieros.css";
-import  { useState } from "react";
-import { balances, estados } from "./Datos"; // Importa los datos desde Datos.jsx
+import { useState } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
@@ -12,6 +11,10 @@ const IndicadoresFinancieros = () => {
   const handleAñoChange = (e) => {
     const año = e.target.value;
     setAñoSeleccionado(año);
+
+    // Cargar balances y estados desde localStorage
+    const balances = JSON.parse(localStorage.getItem('balances')) || {};
+    const estados = JSON.parse(localStorage.getItem('estados')) || {};
 
     if (balances[año]) {
       setBalanceData(balances[año]);
@@ -54,19 +57,19 @@ const IndicadoresFinancieros = () => {
   // Cálculos de los indicadores
   const razonDeLiquidez = balanceData
     ? (
-        balanceData.totalActivoCorriente / balanceData.totalPasivoCorriente
-      ).toFixed(2)
+      balanceData.totalActivoCorriente / balanceData.totalPasivoCorriente
+    ).toFixed(2)
     : null;
   const pruebaAcida = balanceData
     ? (
-        (balanceData.totalActivoCorriente - balanceData.inventarios) /
-        balanceData.totalPasivoCorriente
-      ).toFixed(2)
+      (balanceData.totalActivoCorriente - balanceData.inventarios) /
+      balanceData.totalPasivoCorriente
+    ).toFixed(2)
     : null;
   const capitalDeTrabajo = balanceData
     ? (
-        balanceData.totalActivoCorriente - balanceData.totalPasivoCorriente
-      ).toFixed(2)
+      balanceData.totalActivoCorriente - balanceData.totalPasivoCorriente
+    ).toFixed(2)
     : null;
   const razonDeEndeudamiento = balanceData
     ? (balanceData.totalPasivos / balanceData.totalActivos).toFixed(2)
@@ -94,8 +97,8 @@ const IndicadoresFinancieros = () => {
   const periodoPromedioPago =
     estadoData && balanceData
       ? ((balanceData.deudasComerciales / estadoData.costoVenta) * 365).toFixed(
-          2
-        )
+        2
+      )
       : null;
 
   return (

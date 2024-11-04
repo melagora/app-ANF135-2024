@@ -1,6 +1,5 @@
 import { useState } from "react";
 import '../css/Estado.css'; // Asegúrate de importar el mismo CSS
-import { balances, estados } from './Datos';// Importa los datos
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
@@ -14,14 +13,16 @@ function AnalisisVertical() {
     const año = e.target.value;
     setAñoSeleccionado(año);
 
-    // Cargar datos del balance general
+    // Cargar balances y estados desde localStorage
+    const balances = JSON.parse(localStorage.getItem('balances')) || {};
+    const estados = JSON.parse(localStorage.getItem('estados')) || {};
+
     if (balances[año]) {
       setBalanceData(balances[año]);
     } else {
       setBalanceData(null);
     }
 
-    // Cargar datos del estado de resultados
     if (estados[año]) {
       setEstadoData(estados[año]);
     } else {

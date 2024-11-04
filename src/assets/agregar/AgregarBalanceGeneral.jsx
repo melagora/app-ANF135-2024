@@ -3,173 +3,104 @@ import '../css/Agregar.css'; // Asegúrate de importar el CSS
 import { balances } from "../components/Datos";
 
 function AgregarBalanceGeneral({ onSave }) {
+  
   const [formData, setFormData] = useState({
-    año: '',
-    efectivo: 0,
-    inversionesCortoPlazo: 0,
-    deudoresComerciales: 0,
-    inventarios: 0,
-    pagosAnticipados: 0,
-    propiedadPlantaEquipo: 0,
-    activoBiologico: 0,
-    intangibles: 0,
-    inversionesLargoPlazo: 0,
-    proyectosProceso: 0,
-    deudasCortoPlazo: 0,
-    deudasComerciales: 0,
-    beneficiosEmpleados: 0,
-    impuestosPorPagar: 0,
-    dividendosPorPagar: 0,
-    deudasLargoPlazo: 0,
-    provisiones: 0,
-    capitalSocial: 0,
-    reservas: 0,
-    resultadosAcumulados: 0,
-    resultadosEjercicio: 0,
-    ajustesEfectosValuacion: 0,
+    año: "",
+    efectivo: "",
+    inversionesCortoPlazo: "",
+    deudoresComerciales: "",
+    inventarios: "",
+    pagosAnticipados: "",
+    propiedadPlantaEquipo: "",
+    activoBiologico: "",
+    intangibles: "",
+    inversionesLargoPlazo: "",
+    proyectosProceso: "",
+    deudasCortoPlazo: "",
+    deudasComerciales: "",
+    beneficiosEmpleados: "",
+    impuestosPorPagar: "",
+    dividendosPorPagar: "",
+    deudasLargoPlazo: "",
+    provisiones: "",
+    capitalSocial: "",
+    reservas: "",
+    resultadosAcumulados: "",
+    resultadosEjercicio: "",
+    ajustesEfectosValuacion: "",
+    totalActivoCorriente: "",
+    totalActivoNoCorriente: "",
+    totalActivos: "",
+    totalPasivoCorriente: "",
+    totalPasivoNoCorriente: "",
+    totalPasivos: "",
+    totalPatrimonio: "",
+    totalPasivosPatrimonio: "",
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name === 'año') {
-      const balances = JSON.parse(localStorage.getItem('balances')) || {};
-      const dataForYear = balances[value];
-      if (dataForYear) {
-        setFormData(dataForYear); // Carga los datos si existen
-      } else {
-        setFormData({
-          año: value,
-          efectivo: 0,
-          inversionesCortoPlazo: 0,
-          deudoresComerciales: 0,
-          inventarios: 0,
-          pagosAnticipados: 0,
-          propiedadPlantaEquipo: 0,
-          activoBiologico: 0,
-          intangibles: 0,
-          inversionesLargoPlazo: 0,
-          proyectosProceso: 0,
-          deudasCortoPlazo: 0,
-          deudasComerciales: 0,
-          beneficiosEmpleados: 0,
-          impuestosPorPagar: 0,
-          dividendosPorPagar: 0,
-          deudasLargoPlazo: 0,
-          provisiones: 0,
-          capitalSocial: 0,
-          reservas: 0,
-          resultadosAcumulados: 0,
-          resultadosEjercicio: 0,
-          ajustesEfectosValuacion: 0,
-        }); // Resetea los datos si no existen
-      }
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value === "" || isNaN(value) ? 0 : parseFloat(value),
-      });
-    }
-  };
-
   const handleLoadData = () => {
-    // Cargar datos del archivo data.jsx según el año seleccionado
-    const yearData = balances[formData.año]; // Accede a data según el año
+    const yearData = balances[formData.año];
     if (yearData) {
-      setFormData(yearData); // Establece los datos si existen
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        ...yearData
+      }));
     } else {
       alert("No se encontraron datos para el año seleccionado en data.jsx.");
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [name]: value
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-  
-    // Calcular los totales antes de guardar
-    const totalActivoCorriente =
-      formData.efectivo +
-      formData.inversionesCortoPlazo +
-      formData.deudoresComerciales +
-      formData.inventarios +
-      formData.pagosAnticipados;
-  
-    const totalActivoNoCorriente =
-      formData.propiedadPlantaEquipo +
-      formData.activoBiologico +
-      formData.intangibles +
-      formData.inversionesLargoPlazo +
-      formData.proyectosProceso;
-  
-    const totalActivos = totalActivoCorriente + totalActivoNoCorriente;
-  
-    const totalPasivoCorriente =
-      formData.deudasCortoPlazo +
-      formData.deudasComerciales +
-      formData.beneficiosEmpleados +
-      formData.impuestosPorPagar +
-      formData.dividendosPorPagar;
-  
-    const totalPasivoNoCorriente =
-      formData.deudasLargoPlazo +
-      formData.provisiones;
-  
-    const totalPasivos = totalPasivoCorriente + totalPasivoNoCorriente;
-  
-    const totalPatrimonio =
-      formData.capitalSocial +
-      formData.reservas +
-      formData.resultadosAcumulados +
-      formData.resultadosEjercicio +
-      formData.ajustesEfectosValuacion;
-  
-    const totalPasivosPatrimonio = totalPasivos + totalPatrimonio;
-  
-    // Actualizar formData con los totales
-    const updatedFormData = {
-      ...formData,
-      totalActivoCorriente,
-      totalActivoNoCorriente,
-      totalActivos,
-      totalPasivoCorriente,
-      totalPasivoNoCorriente,
-      totalPasivos,
-      totalPatrimonio,
-      totalPasivosPatrimonio
-    };
-  
     const balances = JSON.parse(localStorage.getItem('balances')) || {};
-    balances[updatedFormData.año] = updatedFormData;
+    balances[formData.año] = formData;
     localStorage.setItem('balances', JSON.stringify(balances));
     alert('Balance guardado exitosamente');
-    onSave(updatedFormData.año);
+    onSave(formData.año);
   };
 
   const handleClear = () => {
-    setFormData((prev) => ({
-      año: prev.año, // Mantener el año seleccionado
-      efectivo: 0,
-      inversionesCortoPlazo: 0,
-      deudoresComerciales: 0,
-      inventarios: 0,
-      pagosAnticipados: 0,
-      propiedadPlantaEquipo: 0,
-      activoBiologico: 0,
-      intangibles: 0,
-      inversionesLargoPlazo: 0,
-      proyectosProceso: 0,
-      deudasCortoPlazo: 0,
-      deudasComerciales: 0,
-      beneficiosEmpleados: 0,
-      impuestosPorPagar: 0,
-      dividendosPorPagar: 0,
-      deudasLargoPlazo: 0,
-      provisiones: 0,
-      capitalSocial: 0,
-      reservas: 0,
-      resultadosAcumulados: 0,
-      resultadosEjercicio: 0,
-      ajustesEfectosValuacion: 0,
-    }));
+    setFormData({
+      año: "",
+      efectivo: "",
+      inversionesCortoPlazo: "",
+      deudoresComerciales: "",
+      inventarios: "",
+      pagosAnticipados: "",
+      propiedadPlantaEquipo: "",
+      activoBiologico: "",
+      intangibles: "",
+      inversionesLargoPlazo: "",
+      proyectosProceso: "",
+      deudasCortoPlazo: "",
+      deudasComerciales: "",
+      beneficiosEmpleados: "",
+      impuestosPorPagar: "",
+      dividendosPorPagar: "",
+      deudasLargoPlazo: "",
+      provisiones: "",
+      capitalSocial: "",
+      reservas: "",
+      resultadosAcumulados: "",
+      resultadosEjercicio: "",
+      ajustesEfectosValuacion: "",
+      totalActivoCorriente: "",
+      totalActivoNoCorriente: "",
+      totalActivos: "",
+      totalPasivoCorriente: "",
+      totalPasivoNoCorriente: "",
+      totalPasivos: "",
+      totalPatrimonio: "",
+      totalPasivosPatrimonio: "",
+    });
   };
 
   // Función para formatear los números
@@ -177,44 +108,6 @@ function AgregarBalanceGeneral({ onSave }) {
     return parseFloat(numero).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   };
 
-  // Cálculo de totales
-  const totalActivoCorriente =
-    formData.efectivo +
-    formData.inversionesCortoPlazo +
-    formData.deudoresComerciales +
-    formData.inventarios +
-    formData.pagosAnticipados;
-
-  const totalActivoNoCorriente =
-    formData.propiedadPlantaEquipo +
-    formData.activoBiologico +
-    formData.intangibles +
-    formData.inversionesLargoPlazo +
-    formData.proyectosProceso;
-
-  const totalActivos = totalActivoCorriente + totalActivoNoCorriente;
-
-  const totalPasivoCorriente =
-    formData.deudasCortoPlazo +
-    formData.deudasComerciales +
-    formData.beneficiosEmpleados +
-    formData.impuestosPorPagar +
-    formData.dividendosPorPagar;
-
-  const totalPasivoNoCorriente =
-    formData.deudasLargoPlazo +
-    formData.provisiones;
-
-  const totalPasivos = totalPasivoCorriente + totalPasivoNoCorriente;
-
-  const totalPatrimonio =
-    formData.capitalSocial +
-    formData.reservas +
-    formData.resultadosAcumulados +
-    formData.resultadosEjercicio +
-    formData.ajustesEfectosValuacion;
-
-  const totalPasivosPatrimonio = totalPasivos + totalPatrimonio;
   return (
     <div className="agregar-container">
       <h3>Agregar Balance General</h3>
@@ -260,7 +153,7 @@ function AgregarBalanceGeneral({ onSave }) {
 
         {/* Total Activo Corriente */}
         <div className="totales">
-          <h5>TOTAL ACTIVO CORRIENTE: {formatearNumero(totalActivoCorriente)}</h5>
+          <h5>TOTAL ACTIVO CORRIENTE: {formatearNumero(formData.totalActivoCorriente)}</h5>
         </div>
 
         <h5>ACTIVO NO CORRIENTE</h5>
@@ -287,12 +180,12 @@ function AgregarBalanceGeneral({ onSave }) {
 
         {/* Total Activo No Corriente */}
         <div className="totales">
-          <h5>TOTAL ACTIVO NO CORRIENTE: {formatearNumero(totalActivoNoCorriente)}</h5>
+          <h5>TOTAL ACTIVO NO CORRIENTE: {formatearNumero(formData.totalActivoNoCorriente)}</h5>
         </div>
 
         {/* Total Activo */}
         <div className="totales">
-          <h5>TOTAL ACTIVO: {formatearNumero(totalActivos)}</h5>
+          <h5>TOTAL ACTIVO: {formatearNumero(formData.totalActivos)}</h5>
         </div>
 
         <h4>PASIVOS</h4>
@@ -320,7 +213,7 @@ function AgregarBalanceGeneral({ onSave }) {
 
         {/* Total Pasivo Corriente */}
         <div className="totales">
-          <h5>TOTAL PASIVO CORRIENTE: {formatearNumero(totalPasivoCorriente)}</h5>
+          <h5>TOTAL PASIVO CORRIENTE: {formatearNumero(formData.totalPasivoCorriente)}</h5>
         </div>
 
         <h5>PASIVO NO CORRIENTE</h5>
@@ -335,12 +228,12 @@ function AgregarBalanceGeneral({ onSave }) {
 
         {/* Total Pasivo No Corriente */}
         <div className="totales">
-          <h5>TOTAL PASIVO NO CORRIENTE: {formatearNumero(totalPasivoNoCorriente)}</h5>
+          <h5>TOTAL PASIVO NO CORRIENTE: {formatearNumero(formData.totalPasivoNoCorriente)}</h5>
         </div>
 
         {/* Total Pasivos */}
         <div className="totales">
-          <h5>TOTAL PASIVOS: {formatearNumero(totalPasivos)}</h5>
+          <h5>TOTAL PASIVOS: {formatearNumero(formData.totalPasivos)}</h5>
         </div>
 
         <h4>PATRIMONIO</h4>
@@ -367,12 +260,12 @@ function AgregarBalanceGeneral({ onSave }) {
 
         {/* Total Patrimonio */}
         <div className="totales">
-          <h5>TOTAL PATRIMONIO: {formatearNumero(totalPatrimonio)}</h5>
+          <h5>TOTAL PATRIMONIO: {formatearNumero(formData.totalPatrimonio)}</h5>
         </div>
 
         {/* Total Pasivos y Patrimonio */}
         <div className="totales">
-          <h5>TOTAL PASIVOS Y PATRIMONIO: {formatearNumero(totalPasivosPatrimonio)}</h5>
+          <h5>TOTAL PASIVOS Y PATRIMONIO: {formatearNumero(formData.totalPasivosPatrimonio)}</h5>
         </div>
 
         <div className="botones">

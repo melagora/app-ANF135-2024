@@ -1,45 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import '../css/Estado.css'; // Asegúrate de importar el CSS
-import { balances } from './Datos';// Importa los datos
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 function BalanceGeneral() {
-  const [añoSeleccionado, setAñoSeleccionado] = useState('');
+  const [añoSeleccionado, setAñoSeleccionado] = useState("");
   const [balanceData, setBalanceData] = useState(null);
 
+  // useEffect para cargar el balance del localStorage al iniciar el componente
+  useEffect(() => {
+    const balances = JSON.parse(localStorage.getItem('balances')) || {};
+    if (añoSeleccionado) {
+      setBalanceData(balances[añoSeleccionado] || null); // Cargar el balance para el año seleccionado
+    }
+  }, [añoSeleccionado]); // Dependencia en añoSeleccionado para actualizar balanceData
+
   const handleAñoChange = (e) => {
-    const año = e.target.value;
-    setAñoSeleccionado(año);
-
-    if (balances[año]) {
-      setBalanceData(balances[año]);
-    } else {
-      setBalanceData(null);
-    }
-  };
-
-  const descargarJson = () => {
-    if (!balanceData) {
-      alert('Selecciona un año para descargar el balance.');
-      return;
-    }
-
-    const data = { balance: balanceData };
-    const dataStr = JSON.stringify(data, null, 2);
-    const blob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `balance_general_${añoSeleccionado}.json`;
-    link.click();
-
-    URL.revokeObjectURL(url); // Liberar la URL del blob
+    setAñoSeleccionado(e.target.value);
   };
 
   const formatearNumero = (numero) => {
-    return parseFloat(numero).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return parseFloat(numero).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   };
 
   const generarPDF = () => {
@@ -65,6 +46,14 @@ function BalanceGeneral() {
 
       pdf.save(`BalanceGeneral_SARAM_${añoSeleccionado}.pdf`);
     });
+  };
+
+  const descargarJson = () => {
+    const dataStr = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(balanceData))}`;
+    const downloadAnchor = document.createElement("a");
+    downloadAnchor.href = dataStr;
+    downloadAnchor.download = `BalanceGeneral_${añoSeleccionado}.json`;
+    downloadAnchor.click();
   };
 
   return (

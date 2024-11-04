@@ -1,22 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import '../css/Estado.css'; // Asegúrate de importar el mismo CSS
-import { estados } from './Datos';// Importa los datos
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 function EstadoDeResultado() {
-  const [añoSeleccionado, setAñoSeleccionado] = useState('');
+  const [añoSeleccionado, setAñoSeleccionado] = useState("");
   const [estadoData, setEstadoData] = useState(null);
 
-  const handleAñoChange = (e) => {
-    const año = e.target.value;
-    setAñoSeleccionado(año);
-
-    if (estados[año]) {
-      setEstadoData(estados[año]);
-    } else {
-      setEstadoData(null);
+  // useEffect para cargar el balance del localStorage al iniciar el componente
+  useEffect(() => {
+    const balances = JSON.parse(localStorage.getItem('estados')) || {};
+    if (añoSeleccionado) {
+      setEstadoData(balances[añoSeleccionado] || null); // Cargar el balance para el año seleccionado
     }
+  }, [añoSeleccionado]); // Dependencia en añoSeleccionado para actualizar balanceData
+
+  const handleAñoChange = (e) => {
+    setAñoSeleccionado(e.target.value);
+  };
+
+  const formatearNumero = (numero) => {
+    return parseFloat(numero).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   };
 
   const generarPDF = () => {
@@ -40,32 +44,16 @@ function EstadoDeResultado() {
         heightLeft -= pageHeight;
       }
 
-      pdf.save(`BalanceGeneral_SARAM_${añoSeleccionado}.pdf`);
+      pdf.save(`EstadoResultado_SARAM_${añoSeleccionado}.pdf`);
     });
   };
 
   const descargarJson = () => {
-    if (!estadoData) {
-      alert('Selecciona un año para descargar el balance.');
-      return;
-    }
-
-    const data = { estados: estadoData };
-    const dataStr = JSON.stringify(data, null, 2);
-    const blob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `estado_resultado_${añoSeleccionado}.json`;
-    link.click();
-
-    URL.revokeObjectURL(url); // Liberar la URL del blob
-  };
-
-  // Función para formatear los números
-  const formatearNumero = (numero) => {
-    return parseFloat(numero).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const dataStr = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(estadoData))}`;
+    const downloadAnchor = document.createElement("a");
+    downloadAnchor.href = dataStr;
+    downloadAnchor.download = `EstadoResultado_${añoSeleccionado}.json`;
+    downloadAnchor.click();
   };
 
   return (
