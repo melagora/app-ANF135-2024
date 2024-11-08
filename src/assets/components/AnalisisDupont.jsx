@@ -100,8 +100,8 @@ const AnalisisDupont = () => {
             <p>Cifras expresadas en miles de dólares de los Estados Unidos de América</p>
           </div>
 
-          <div className="containerPorEstado">
-            <div className="">
+          <div  className="containerPorEstado">
+            <div style={{ paddingTop: "20px"}} className="">
               <p>Rendimiento sobre el Patrimonio (ROE)</p>
               <p>{roe}</p>
             </div>

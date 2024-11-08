@@ -80,3 +80,39 @@
     color: #555; /* Color gris para el texto de los elementos de la lista */
     margin-bottom: 5px; /* Espaciado entre los elementos de la lista */
 }
+
+.form-group, .json{
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.botonesOpciones{
+    display: flex;
+    justify-content: center;
+    align-items:end;
+    gap: 30px;
+}
+
+.form-group button, .json button{
+    margin-left: 10px;
+    width: 200px;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: white;
+    border: 2px solid #213547;
+    font-size: 16px;
+    font-weight: bold;
+    color: #213547;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  .form-group button:hover, .json button:hover{
+    background-color: #192937;
+    color: white;
+  }

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import '../css/Agregar.css'; // Reutilizando los mismos estilos
+import "../css/Agregar.css"; // Reutilizando los mismos estilos
 import { estados } from "../components/Datos";
 
 function AgregarEstadoDeResultado({ onSave }) {
   const [formData, setFormData] = useState({
-    año: '',
+    año: "",
     ventas: "",
     costoVenta: "",
     utilidadBruta: "",
@@ -29,9 +29,9 @@ function AgregarEstadoDeResultado({ onSave }) {
   const handleLoadData = () => {
     const yearData = estados[formData.año];
     if (yearData) {
-      setFormData(prevFormData => ({
+      setFormData((prevFormData) => ({
         ...prevFormData,
-        ...yearData
+        ...yearData,
       }));
     } else {
       alert("No se encontraron datos para el año seleccionado en data.jsx.");
@@ -40,24 +40,24 @@ function AgregarEstadoDeResultado({ onSave }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevFormData => ({
+    setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const balances = JSON.parse(localStorage.getItem('estados')) || {};
+    const balances = JSON.parse(localStorage.getItem("estados")) || {};
     balances[formData.año] = formData;
-    localStorage.setItem('estados', JSON.stringify(balances));
-    alert('Estado guardado exitosamente');
+    localStorage.setItem("estados", JSON.stringify(balances));
+    alert("Estado guardado exitosamente");
     onSave(formData.año);
   };
 
   const handleClear = () => {
     setFormData({
-      año: '',
+      año: "",
       ventas: "",
       costoVenta: "",
       utilidadBruta: "",
@@ -81,7 +81,10 @@ function AgregarEstadoDeResultado({ onSave }) {
   };
 
   const formatNumber = (num) => {
-    return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return num.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
   };
 
   return (
@@ -98,98 +101,228 @@ function AgregarEstadoDeResultado({ onSave }) {
             <option value="2020">2020</option>
             <option value="2019">2019</option>
           </select>
-          <button type="button" onClick={handleLoadData}>Cargar datos</button>
+          <button type="button" onClick={handleLoadData}>
+            Cargar datos
+          </button>
         </div>
 
-        <h4>INGRESOS</h4>
-        <label>
-          Ventas:
-          <input type="number" name="ventas" onChange={handleChange} value={formData.ventas} />
-        </label>
-        <label>
-          Costo de Venta:
-          <input type="number" name="costoVenta" onChange={handleChange} value={formData.costoVenta} />
-        </label>
-        <div className="totales">
-          <h5>Utilidad Bruta: {formatNumber(formData.utilidadBruta)}</h5>
+        <div className="json">
+          <div>
+            <h4>INGRESOS</h4>
+            <div>
+              <label>
+                Ventas:
+                <input
+                  type="number"
+                  name="ventas"
+                  onChange={handleChange}
+                  value={formData.ventas}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Costo de Venta:
+                <input
+                  type="number"
+                  name="costoVenta"
+                  onChange={handleChange}
+                  value={formData.costoVenta}
+                />
+              </label>
+            </div>
+            <div>
+              <div className="totales">
+                <h5>Utilidad Bruta: {formatNumber(formData.utilidadBruta)}</h5>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h4>GASTOS DE OPERACIÓN</h4>
+            <div>
+              <label>
+                Administración:
+                <input
+                  type="number"
+                  name="administracion"
+                  onChange={handleChange}
+                  value={formData.administracion}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Gerencia Financiera:
+                <input
+                  type="number"
+                  name="gerenciaFinanciera"
+                  onChange={handleChange}
+                  value={formData.gerenciaFinanciera}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Auditoría Interna:
+                <input
+                  type="number"
+                  name="auditoriaInterna"
+                  onChange={handleChange}
+                  value={formData.auditoriaInterna}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Gerencia Ventas y Mercadeo:
+                <input
+                  type="number"
+                  name="gerenciaVentasMercadeo"
+                  onChange={handleChange}
+                  value={formData.gerenciaVentasMercadeo}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                División Avícola:
+                <input
+                  type="number"
+                  name="divisionAvicola"
+                  onChange={handleChange}
+                  value={formData.divisionAvicola}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Dirección:
+                <input
+                  type="number"
+                  name="direccion"
+                  onChange={handleChange}
+                  value={formData.direccion}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Cadena de Suministros:
+                <input
+                  type="number"
+                  name="cadenaSuministros"
+                  onChange={handleChange}
+                  value={formData.cadenaSuministros}
+                />
+              </label>
+            </div>
+            <div>
+              <div className="totales">
+                <h5>
+                  Utilidad de Operación:{" "}
+                  {formatNumber(formData.utilidadOperacion)}
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h4>GASTOS NO OPERACIONALES</h4>
+            <div>
+              <label>
+                Financieros:
+                <input
+                  type="number"
+                  name="gastosFinancieros"
+                  onChange={handleChange}
+                  value={formData.gastosFinancieros}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Otros Gastos No Operacionales:
+                <input
+                  type="number"
+                  name="otrosGastosNoOperacionales"
+                  onChange={handleChange}
+                  value={formData.otrosGastosNoOperacionales}
+                />
+              </label>
+            </div>
+            <div>
+              <div className="totales">
+                <h5>
+                  Utilidad Antes de Impuestos y Reserva:{" "}
+                  {formatNumber(formData.utilidadAntesImpuestosReserva)}
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h4>RESERVA LEGAL</h4>
+            <div>
+              <label>
+                Reserva Legal:
+                <input
+                  type="number"
+                  name="reservaLegal"
+                  onChange={handleChange}
+                  value={formData.reservaLegal}
+                />
+              </label>
+            </div>
+          </div>
+          <div>
+            <h4>UTILIDAD ANTES DE IMPUESTO</h4>
+            <div>
+              <div className="totales">
+                <h5>
+                  Utilidad Antes de Impuesto:{" "}
+                  {formatNumber(formData.utilidadAntesImpuesto)}
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h4>IMPUESTO SOBRE LA RENTA</h4>
+            <div>
+              <label>
+                Impuesto sobre la Renta:
+                <input
+                  type="number"
+                  name="impuestoRenta"
+                  onChange={handleChange}
+                  value={formData.impuestoRenta}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                CESC GRANDES CONTRIBUYENTES: {/* Nuevo campo */}
+                <input
+                  type="number"
+                  name="cescGrandesContribuyentes"
+                  onChange={handleChange}
+                  value={formData.cescGrandesContribuyentes}
+                />
+              </label>
+            </div>
+            <div>
+              <div className="totales">
+                <h5>
+                  Utilidad Distribuible:{" "}
+                  {formatNumber(formData.utilidadDistribuible)}
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button type="submit">Guardar Estado de Resultado</button>
+            <button type="button" onClick={handleClear}>
+              Limpiar
+            </button>
+          </div>
         </div>
-
-        <h4>GASTOS DE OPERACIÓN</h4>
-        <label>
-          Administración:
-          <input type="number" name="administracion" onChange={handleChange} value={formData.administracion} />
-        </label>
-        <label>
-          Gerencia Financiera:
-          <input type="number" name="gerenciaFinanciera" onChange={handleChange} value={formData.gerenciaFinanciera} />
-        </label>
-        <label>
-          Auditoría Interna:
-          <input type="number" name="auditoriaInterna" onChange={handleChange} value={formData.auditoriaInterna} />
-        </label>
-        <label>
-          Gerencia Ventas y Mercadeo:
-          <input type="number" name="gerenciaVentasMercadeo" onChange={handleChange} value={formData.gerenciaVentasMercadeo} />
-        </label>
-        <label>
-          División Avícola:
-          <input type="number" name="divisionAvicola" onChange={handleChange} value={formData.divisionAvicola} />
-        </label>
-        <label>
-          Dirección:
-          <input type="number" name="direccion" onChange={handleChange} value={formData.direccion} />
-        </label>
-        <label>
-          Cadena de Suministros:
-          <input type="number" name="cadenaSuministros" onChange={handleChange} value={formData.cadenaSuministros} />
-        </label>
-
-        <div className="totales">
-          <h5>Utilidad de Operación: {formatNumber(formData.utilidadOperacion)}</h5>
-        </div>
-
-        <h4>GASTOS NO OPERACIONALES</h4>
-        <label>
-          Financieros:
-          <input type="number" name="gastosFinancieros" onChange={handleChange} value={formData.gastosFinancieros} />
-        </label>
-        <label>
-          Otros Gastos No Operacionales:
-          <input type="number" name="otrosGastosNoOperacionales" onChange={handleChange} value={formData.otrosGastosNoOperacionales} />
-        </label>
-
-        <div className="totales">
-          <h5>Utilidad Antes de Impuestos y Reserva: {formatNumber(formData.utilidadAntesImpuestosReserva)}</h5>
-        </div>
-
-        <h4>RESERVA LEGAL</h4>
-        <label>
-          Reserva Legal:
-          <input type="number" name="reservaLegal" onChange={handleChange} value={formData.reservaLegal} />
-        </label>
-
-        <h4>UTILIDAD ANTES DE IMPUESTO</h4>
-        <div className="totales">
-          <h5>Utilidad Antes de Impuesto: {formatNumber(formData.utilidadAntesImpuesto)}</h5>
-        </div>
-
-        <h4>IMPUESTO SOBRE LA RENTA</h4>
-        <label>
-          Impuesto sobre la Renta:
-          <input type="number" name="impuestoRenta" onChange={handleChange} value={formData.impuestoRenta} />
-        </label>
-
-        <label>
-          CESC GRANDES CONTRIBUYENTES: {/* Nuevo campo */}
-          <input type="number" name="cescGrandesContribuyentes" onChange={handleChange} value={formData.cescGrandesContribuyentes} />
-        </label>
-
-        <div className="totales">
-          <h5>Utilidad Distribuible: {formatNumber(formData.utilidadDistribuible)}</h5>
-        </div>
-
-        <button type="submit">Guardar Estado de Resultado</button>
-        <button type="button" onClick={handleClear}>Limpiar</button>
       </form>
     </div>
   );
