@@ -117,431 +117,585 @@ function AnalisisVertical() {
           </div>
           <div className="json">
             {/* Aquí va el contenido del balance general */}
-            <h4 style={{ paddingTop: "20px", textDecoration: "underline" }}>ACTIVOS</h4>
-            <h5>ACTIVO CORRIENTE</h5>
-            <ul>
-              <li>
-                Efectivo y Equivalentes al Efectivo:{" "}
-                ${formatearNumero(balanceData.efectivo)} (
+            <div>
+              <h4 style={{ paddingTop: "20px", textDecoration: "underline" }}>ACTIVOS</h4>
+              <h5>ACTIVO CORRIENTE</h5>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>
+                    Efectivo y Equivalentes al Efectivo:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.efectivo)} (
+                    {calcularPorcentaje(
+                      balanceData.efectivo,
+                      balanceData.totalActivos
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Inversiones Financieras a Corto Plazo:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.inversionesCortoPlazo)} (
+                    {calcularPorcentaje(
+                      balanceData.inversionesCortoPlazo,
+                      balanceData.totalActivos
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Deudores Comerciales y Otras Cuentas por Cobrar:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.deudoresComerciales)} (
+                    {calcularPorcentaje(
+                      balanceData.deudoresComerciales,
+                      balanceData.totalActivos
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Inventarios:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.inventarios)} (
+                    {calcularPorcentaje(
+                      balanceData.inventarios,
+                      balanceData.totalActivos
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Pagos Anticipados:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.pagosAnticipados)} (
+                    {calcularPorcentaje(
+                      balanceData.pagosAnticipados,
+                      balanceData.totalActivos
+                    )}
+                    )
+                  </span>
+                </li>
+              </ul>
+              <h5>
+                TOTAL ACTIVO CORRIENTE:{" "}
+                ${formatearNumero(balanceData.totalActivoCorriente)} (
                 {calcularPorcentaje(
-                  balanceData.efectivo,
+                  balanceData.totalActivoCorriente,
                   balanceData.totalActivos
                 )}
                 )
-              </li>
-              <li>
-                Inversiones Financieras a Corto Plazo:{" "}
-                ${formatearNumero(balanceData.inversionesCortoPlazo)} (
-                {calcularPorcentaje(
-                  balanceData.inversionesCortoPlazo,
-                  balanceData.totalActivos
-                )}
-                )
-              </li>
-              <li>
-                Deudores Comerciales y Otras Cuentas por Cobrar:{" "}
-                ${formatearNumero(balanceData.deudoresComerciales)} (
-                {calcularPorcentaje(
-                  balanceData.deudoresComerciales,
-                  balanceData.totalActivos
-                )}
-                )
-              </li>
-              <li>
-                Inventarios: ${formatearNumero(balanceData.inventarios)} (
-                {calcularPorcentaje(
-                  balanceData.inventarios,
-                  balanceData.totalActivos
-                )}
-                )
-              </li>
-              <li>
-                Pagos Anticipados:{" "}
-                ${formatearNumero(balanceData.pagosAnticipados)} (
-                {calcularPorcentaje(
-                  balanceData.pagosAnticipados,
-                  balanceData.totalActivos
-                )}
-                )
-              </li>
-            </ul>
-            <h5>
-              TOTAL ACTIVO CORRIENTE:{" "}
-              ${formatearNumero(balanceData.totalActivoCorriente)} (
-              {calcularPorcentaje(
-                balanceData.totalActivoCorriente,
-                balanceData.totalActivos
-              )}
-              )
-            </h5>
+              </h5>
 
-            <h5>ACTIVO NO CORRIENTE</h5>
-            <ul>
-              <li>
-                Propiedad, Planta y Equipo (neto):{" "}
-                ${formatearNumero(balanceData.propiedadPlantaEquipo)} (
+              <h5>ACTIVO NO CORRIENTE</h5>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>
+                    Propiedad, Planta y Equipo (neto):{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.propiedadPlantaEquipo)} (
+                    {calcularPorcentaje(
+                      balanceData.propiedadPlantaEquipo,
+                      balanceData.totalActivos
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Activo Biológico:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.activoBiologico)} (
+                    {calcularPorcentaje(
+                      balanceData.activoBiologico,
+                      balanceData.totalActivos
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Intangibles:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.intangibles)} (
+                    {calcularPorcentaje(
+                      balanceData.intangibles,
+                      balanceData.totalActivos
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Inversiones Financieras a Largo Plazo:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.inversionesLargoPlazo)} (
+                    {calcularPorcentaje(
+                      balanceData.inversionesLargoPlazo,
+                      balanceData.totalActivos
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Proyectos en Proceso:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.proyectosProceso)} (
+                    {calcularPorcentaje(
+                      balanceData.proyectosProceso,
+                      balanceData.totalActivos
+                    )}
+                    )
+                  </span>
+                </li>
+              </ul>
+              <h5>
+                TOTAL ACTIVO NO CORRIENTE:{" "}
+                ${formatearNumero(balanceData.totalActivoNoCorriente)} (
                 {calcularPorcentaje(
-                  balanceData.propiedadPlantaEquipo,
+                  balanceData.totalActivoNoCorriente,
                   balanceData.totalActivos
                 )}
                 )
-              </li>
-              <li>
-                Activo Biológico: ${formatearNumero(balanceData.activoBiologico)}{" "}
-                (
-                {calcularPorcentaje(
-                  balanceData.activoBiologico,
-                  balanceData.totalActivos
-                )}
-                )
-              </li>
-              <li>
-                Intangibles: ${formatearNumero(balanceData.intangibles)} (
-                {calcularPorcentaje(
-                  balanceData.intangibles,
-                  balanceData.totalActivos
-                )}
-                )
-              </li>
-              <li>
-                Inversiones Financieras a Largo Plazo:{" "}
-                ${formatearNumero(balanceData.inversionesLargoPlazo)} (
-                {calcularPorcentaje(
-                  balanceData.inversionesLargoPlazo,
-                  balanceData.totalActivos
-                )}
-                )
-              </li>
-              <li>
-                Proyectos en Proceso:{" "}
-                ${formatearNumero(balanceData.proyectosProceso)} (
-                {calcularPorcentaje(
-                  balanceData.proyectosProceso,
-                  balanceData.totalActivos
-                )}
-                )
-              </li>
-            </ul>
-            <h5>
-              TOTAL ACTIVO NO CORRIENTE:{" "}
-              ${formatearNumero(balanceData.totalActivoNoCorriente)} (
-              {calcularPorcentaje(
-                balanceData.totalActivoNoCorriente,
-                balanceData.totalActivos
-              )}
-              )
-            </h5>
+              </h5>
 
-            <h5 style={{textDecoration: "underline" }}>TOTAL ACTIVO: ${formatearNumero(balanceData.totalActivos)}</h5>
+              <h5 style={{ textDecoration: "underline" }}>TOTAL ACTIVO: ${formatearNumero(balanceData.totalActivos)}</h5>
 
-            <h4 style={{textDecoration: "underline" }}>PASIVOS</h4>
-            <h5>PASIVO CORRIENTE</h5>
-            <ul>
-              <li>
-                Deudas Financieras a Corto Plazo:{" "}
-                ${formatearNumero(balanceData.deudasCortoPlazo)} (
+              <h4 style={{ textDecoration: "underline" }}>PASIVOS</h4>
+              <h5>PASIVO CORRIENTE</h5>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>
+                    Deudas Financieras a Corto Plazo:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.deudasCortoPlazo)} (
+                    {calcularPorcentaje(
+                      balanceData.deudasCortoPlazo,
+                      balanceData.totalPasivos
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Deudas Comerciales y Otras Cuentas por Pagar a Corto Plazo:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.deudasComerciales)} (
+                    {calcularPorcentaje(
+                      balanceData.deudasComerciales,
+                      balanceData.totalPasivos
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Beneficios a Empleados a Corto Plazo:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.beneficiosEmpleados)} (
+                    {calcularPorcentaje(
+                      balanceData.beneficiosEmpleados,
+                      balanceData.totalPasivos
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Impuestos por Pagar:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.impuestosPorPagar)} (
+                    {calcularPorcentaje(
+                      balanceData.impuestosPorPagar,
+                      balanceData.totalPasivos
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Dividendos por Pagar:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.dividendosPorPagar)} (
+                    {calcularPorcentaje(
+                      balanceData.dividendosPorPagar,
+                      balanceData.totalPasivos
+                    )}
+                    )
+                  </span>
+                </li>
+              </ul>
+
+              <h5>
+                TOTAL PASIVO CORRIENTE:{" "}
+                ${formatearNumero(balanceData.totalPasivoCorriente)} (
                 {calcularPorcentaje(
-                  balanceData.deudasCortoPlazo,
+                  balanceData.totalPasivoCorriente,
                   balanceData.totalPasivos
                 )}
                 )
-              </li>
-              <li>
-                Deudas Comerciales y Otras Cuentas por Pagar a Corto Plazo:{" "}
-                ${formatearNumero(balanceData.deudasComerciales)} (
-                {calcularPorcentaje(
-                  balanceData.deudasComerciales,
-                  balanceData.totalPasivos
-                )}
-                )
-              </li>
-              <li>
-                Beneficios a Empleados a Corto Plazo:{" "}
-                ${formatearNumero(balanceData.beneficiosEmpleados)} (
-                {calcularPorcentaje(
-                  balanceData.beneficiosEmpleados,
-                  balanceData.totalPasivos
-                )}
-                )
-              </li>
-              <li>
-                Impuestos por Pagar:{" "}
-                ${formatearNumero(balanceData.impuestosPorPagar)} (
-                {calcularPorcentaje(
-                  balanceData.impuestosPorPagar,
-                  balanceData.totalPasivos
-                )}
-                )
-              </li>
-              <li>
-                Dividendos por Pagar:{" "}
-                ${formatearNumero(balanceData.dividendosPorPagar)} (
-                {calcularPorcentaje(
-                  balanceData.dividendosPorPagar,
-                  balanceData.totalPasivos
-                )}
-                )
-              </li>
-            </ul>
-            <h5>
-              TOTAL PASIVO CORRIENTE:{" "}
-              ${formatearNumero(balanceData.totalPasivoCorriente)} (
-              {calcularPorcentaje(
-                balanceData.totalPasivoCorriente,
-                balanceData.totalPasivos
-              )}
-              )
-            </h5>
+              </h5>
 
-            <h5>PASIVO NO CORRIENTE</h5>
-            <ul>
-              <li>
-                Deudas Financieras a Largo Plazo:{" "}
-                ${formatearNumero(balanceData.deudasLargoPlazo)} (
+              <h5>PASIVO NO CORRIENTE</h5>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>
+                    Deudas Financieras a Largo Plazo:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.deudasLargoPlazo)} (
+                    {calcularPorcentaje(
+                      balanceData.deudasLargoPlazo,
+                      balanceData.totalPasivos
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Provisiones y Otros Pasivos a Largo Plazo:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.provisiones)} (
+                    {calcularPorcentaje(
+                      balanceData.provisiones,
+                      balanceData.totalPasivos
+                    )}
+                    )
+                  </span>
+                </li>
+              </ul>
+
+              <h5>
+                TOTAL PASIVO NO CORRIENTE:{" "}
+                ${formatearNumero(balanceData.totalPasivoNoCorriente)} (
                 {calcularPorcentaje(
-                  balanceData.deudasLargoPlazo,
+                  balanceData.totalPasivoNoCorriente,
                   balanceData.totalPasivos
                 )}
                 )
-              </li>
-              <li>
-                Provisiones y Otros Pasivos a Largo Plazo:{" "}
-                ${formatearNumero(balanceData.provisiones)} (
-                {calcularPorcentaje(
-                  balanceData.provisiones,
-                  balanceData.totalPasivos
-                )}
-                )
-              </li>
-            </ul>
-            <h5>
-              TOTAL PASIVO NO CORRIENTE:{" "}
-              ${formatearNumero(balanceData.totalPasivoNoCorriente)} (
-              {calcularPorcentaje(
-                balanceData.totalPasivoNoCorriente,
-                balanceData.totalPasivos
-              )}
-              )
-            </h5>
+              </h5>
 
-            <h5 style={{textDecoration: "underline" }}>TOTAL PASIVO: ${formatearNumero(balanceData.totalPasivos)}</h5>
+              <h5 style={{ textDecoration: "underline" }}>TOTAL PASIVO: ${formatearNumero(balanceData.totalPasivos)}</h5>
 
-            <h4 style={{textDecoration: "underline" }}>PATRIMONIO</h4>
-            <ul>
-              <li>
-                Capital Social: ${formatearNumero(balanceData.capitalSocial)} (
-                {calcularPorcentaje(
-                  balanceData.capitalSocial,
-                  balanceData.totalPatrimonio
-                )}
-                )
-              </li>
-              <li>
-                Reservas: ${formatearNumero(balanceData.reservas)} (
-                {calcularPorcentaje(
-                  balanceData.reservas,
-                  balanceData.totalPatrimonio
-                )}
-                )
-              </li>
-              <li>
-                Resultados Acumulados:{" "}
-                ${formatearNumero(balanceData.resultadosAcumulados)} (
-                {calcularPorcentaje(
-                  balanceData.resultadosAcumulados,
-                  balanceData.totalPatrimonio
-                )}
-                )
-              </li>
-              <li>
-                Resultados del Ejercicio:{" "}
-                ${formatearNumero(balanceData.resultadosEjercicio)} (
-                {calcularPorcentaje(
-                  balanceData.resultadosEjercicio,
-                  balanceData.totalPatrimonio
-                )}
-                )
-              </li>
-              <li>
-                Ajustes y Efectos por Valuación y Cambio de Valor:{" "}
-                ${formatearNumero(balanceData.ajustesEfectosValuacion)} (
-                {calcularPorcentaje(
-                  balanceData.ajustesEfectosValuacion,
-                  balanceData.totalPatrimonio
-                )}
-                )
-              </li>{" "}
-            </ul>
-            <h5>
-              TOTAL PATRIMONIO: ${formatearNumero(balanceData.totalPatrimonio)}
-            </h5>
+              <h4 style={{ textDecoration: "underline" }}>PATRIMONIO</h4>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>
+                    Capital Social:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.capitalSocial)} (
+                    {calcularPorcentaje(
+                      balanceData.capitalSocial,
+                      balanceData.totalPatrimonio
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Reservas:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.reservas)} (
+                    {calcularPorcentaje(
+                      balanceData.reservas,
+                      balanceData.totalPatrimonio
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Resultados Acumulados:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.resultadosAcumulados)} (
+                    {calcularPorcentaje(
+                      balanceData.resultadosAcumulados,
+                      balanceData.totalPatrimonio
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Resultados del Ejercicio:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.resultadosEjercicio)} (
+                    {calcularPorcentaje(
+                      balanceData.resultadosEjercicio,
+                      balanceData.totalPatrimonio
+                    )}
+                    )
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Ajustes y Efectos por Valuación y Cambio de Valor:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.ajustesEfectosValuacion)} (
+                    {calcularPorcentaje(
+                      balanceData.ajustesEfectosValuacion,
+                      balanceData.totalPatrimonio
+                    )}
+                    )
+                  </span>
+                </li>
+              </ul>
 
-            <h4 style={{textDecoration: "underline" }}>
-              TOTAL PASIVO + PATRIMONIO:{" "}
-              ${formatearNumero(
-                balanceData.totalPasivos + balanceData.totalPatrimonio
-              )}
-            </h4>
+              <h5>
+                TOTAL PATRIMONIO: ${formatearNumero(balanceData.totalPatrimonio)}
+              </h5>
+
+              <h4 style={{ textDecoration: "underline" }}>
+                TOTAL PASIVO + PATRIMONIO:{" "}
+                ${formatearNumero(
+                  balanceData.totalPasivos + balanceData.totalPatrimonio
+                )}
+              </h4>
+            </div>
           </div>
         </div>
       ) : vista === "estado" && estadoData ? (
         <div id="pdfContent">
           <div className="json">
             {/* Aquí va el contenido del estado de resultados */}
-            <h4 style={{ paddingTop: "20px", textDecoration: "underline" }}>INGRESOS</h4>
-            <ul>
-              <li>
-                Ventas: ${formatearNumero(estadoData.ventas)} (
-                {calcularPorcentaje(estadoData.ventas, estadoData.ventas)})
-              </li>
-              <li>
-                Costo de Venta: ${formatearNumero(estadoData.costoVenta)} (
-                {calcularPorcentaje(estadoData.costoVenta, estadoData.ventas)})
-              </li>
-              <li>
-                Utilidad Bruta: ${formatearNumero(estadoData.utilidadBruta)} (
-                {calcularPorcentaje(
-                  estadoData.utilidadBruta,
-                  estadoData.ventas
-                )}
-                )
-              </li>
-            </ul>
-            <h4 style={{textDecoration: "underline" }}>GASTOS DE OPERACIÓN</h4>
-            <ul>
-              <li>
-                Administración: ${formatearNumero(estadoData.administracion)} (
-                {calcularPorcentaje(
-                  estadoData.administracion,
-                  estadoData.ventas
-                )}
-                )
-              </li>
-              <li>
-                Gerencia Financiera:{" "}
-                ${formatearNumero(estadoData.gerenciaFinanciera)} (
-                {calcularPorcentaje(
-                  estadoData.gerenciaFinanciera,
-                  estadoData.ventas
-                )}
-                )
-              </li>
-              <li>
-                Auditoría Interna:{" "}
-                ${formatearNumero(estadoData.auditoriaInterna)} (
-                {calcularPorcentaje(
-                  estadoData.auditoriaInterna,
-                  estadoData.ventas
-                )}
-                )
-              </li>
-              <li>
-                Gerencia Ventas y Mercadeo:{" "}
-                ${formatearNumero(estadoData.gerenciaVentasMercadeo)} (
-                {calcularPorcentaje(
-                  estadoData.gerenciaVentasMercadeo,
-                  estadoData.ventas
-                )}
-                )
-              </li>
-              <li>
-                División Avícola: ${formatearNumero(estadoData.divisionAvicola)}{" "}
-                (
-                {calcularPorcentaje(
-                  estadoData.divisionAvicola,
-                  estadoData.ventas
-                )}
-                )
-              </li>
-              <li>
-                Dirección: ${formatearNumero(estadoData.direccion)} (
-                {calcularPorcentaje(estadoData.direccion, estadoData.ventas)})
-              </li>
-              <li>
-                Cadena de Suministros:{" "}
-                ${formatearNumero(estadoData.cadenaSuministros)} (
-                {calcularPorcentaje(
-                  estadoData.cadenaSuministros,
-                  estadoData.ventas
-                )}
-                )
-              </li>
-            </ul>
-            <h4 style={{textDecoration: "underline" }}>
-              UTILIDAD DE OPERACIÓN:{" "}
-              ${formatearNumero(estadoData.utilidadOperacion)} (
-              {calcularPorcentaje(
-                estadoData.utilidadOperacion,
-                estadoData.ventas
-              )}
-              )
-            </h4>
-            <h4 style={{textDecoration: "underline" }}>GASTOS NO OPERACIONALES</h4>
-            <ul>
-              <li>
-                Gastos Financieros:{" "}
-                ${formatearNumero(estadoData.gastosFinancieros)} (
-                {calcularPorcentaje(
-                  estadoData.gastosFinancieros,
-                  estadoData.ventas
-                )}
-                )
-              </li>
-              <li>
-                Otros Gastos:{" "}
-                ${formatearNumero(estadoData.otrosGastosNoOperacionales)} (
-                {calcularPorcentaje(
-                  estadoData.otrosGastosNoOperacionales,
-                  estadoData.ventas
-                )}
-                )
-              </li>
-            </ul>
-            <h5>
-              Utilidad Antes de Impuestos y Reserva:{" "}
-              ${formatearNumero(estadoData.utilidadAntesImpuestosReserva)} (
-              {calcularPorcentaje(
-                estadoData.utilidadAntesImpuestosReserva,
-                estadoData.ventas
-              )}
-              )
-            </h5>
-            <h5>
-              Reserva Legal: ${formatearNumero(estadoData.reservaLegal)} (
-              {calcularPorcentaje(estadoData.reservaLegal, estadoData.ventas)})
-            </h5>
-            <h4>
-              UTILIDAD ANTES DE IMPUESTO:{" "}
-              ${formatearNumero(estadoData.utilidadAntesImpuesto)} (
-              {calcularPorcentaje(
-                estadoData.utilidadAntesImpuesto,
-                estadoData.ventas
-              )}
-              )
-            </h4>
-            <h4>
-              IMPUESTO SOBRE LA RENTA:{" "}
-              ${formatearNumero(estadoData.impuestoRenta)} (
-              {calcularPorcentaje(estadoData.impuestoRenta, estadoData.ventas)})
-            </h4>
-            <h4>
-              CESC grandes contribuyentes:{" "}
-              ${formatearNumero(estadoData.cescGrandesContribuyentes)} (
-              {calcularPorcentaje(
-                estadoData.cescGrandesContribuyentes,
-                estadoData.ventas
-              )}
-              )
-            </h4>
-            <h4>
-              UTILIDAD DISTRIBUIBLE:{" "}
-              ${formatearNumero(estadoData.utilidadDistribuible)} (
-              {calcularPorcentaje(
-                estadoData.utilidadDistribuible,
-                estadoData.ventas
-              )}
-              )
-            </h4>
+            <div>
+              <h4 style={{ paddingTop: "20px", textDecoration: "underline" }}>INGRESOS</h4>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>
+                    Ventas:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.ventas)} (
+                    {calcularPorcentaje(estadoData.ventas, estadoData.ventas)})
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Costo de Venta:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.costoVenta)} (
+                    {calcularPorcentaje(estadoData.costoVenta, estadoData.ventas)})
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Utilidad Bruta:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.utilidadBruta)} (
+                    {calcularPorcentaje(estadoData.utilidadBruta, estadoData.ventas)})
+                  </span>
+                </li>
+              </ul>
+
+              <h4 style={{ textDecoration: "underline" }}>GASTOS DE OPERACIÓN</h4>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>
+                    Administración:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.administracion)} (
+                    {calcularPorcentaje(estadoData.administracion, estadoData.ventas)})
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Gerencia Financiera:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.gerenciaFinanciera)} (
+                    {calcularPorcentaje(estadoData.gerenciaFinanciera, estadoData.ventas)})
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Auditoría Interna:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.auditoriaInterna)} (
+                    {calcularPorcentaje(estadoData.auditoriaInterna, estadoData.ventas)})
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Gerencia Ventas y Mercadeo:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.gerenciaVentasMercadeo)} (
+                    {calcularPorcentaje(estadoData.gerenciaVentasMercadeo, estadoData.ventas)})
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    División Avícola:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.divisionAvicola)} (
+                    {calcularPorcentaje(estadoData.divisionAvicola, estadoData.ventas)})
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Dirección:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.direccion)} (
+                    {calcularPorcentaje(estadoData.direccion, estadoData.ventas)})
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Cadena de Suministros:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.cadenaSuministros)} (
+                    {calcularPorcentaje(estadoData.cadenaSuministros, estadoData.ventas)})
+                  </span>
+                </li>
+              </ul>
+
+              <h4>
+                UTILIDAD DE OPERACIÓN:{" "}
+                ${formatearNumero(estadoData.utilidadOperacion)} (
+                {calcularPorcentaje(estadoData.utilidadOperacion, estadoData.ventas)})
+              </h4>
+
+              <h4 style={{ textDecoration: "underline" }}>GASTOS NO OPERACIONALES</h4>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>
+                    Gastos Financieros:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.gastosFinancieros)} (
+                    {calcularPorcentaje(estadoData.gastosFinancieros, estadoData.ventas)})
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    Otros Gastos:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.otrosGastosNoOperacionales)} (
+                    {calcularPorcentaje(estadoData.otrosGastosNoOperacionales, estadoData.ventas)})
+                  </span>
+                </li>
+              </ul>
+
+              <h5 className="alinear-derecha">
+                Utilidad Antes de Impuestos y Reserva:{" "}
+              </h5>
+
+              <ul>
+                <li className="alinear-derecha">
+                  <span>
+                    Utilidad Antes de Impuestos y Reserva:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.utilidadAntesImpuestosReserva)} (
+                    {calcularPorcentaje(estadoData.utilidadAntesImpuestosReserva, estadoData.ventas)})
+                  </span>
+                </li>
+              </ul>
+
+              <h5 className="alinear-derecha">
+                Reserva Legal:{" "}
+              </h5>
+
+              <ul>
+                <li className="alinear-derecha">
+                  <span>
+                    Reserva Legal:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.reservaLegal)} (
+                    {calcularPorcentaje(estadoData.reservaLegal, estadoData.ventas)})
+                  </span>
+                </li>
+              </ul>
+
+              <h5 className="alinear-derecha">
+                UTILIDAD ANTES DE IMPUESTO:{" "}
+              </h5>
+
+              <ul>
+                <li className="alinear-derecha">
+                  <span>
+                    UTILIDAD ANTES DE IMPUESTO:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.utilidadAntesImpuesto)} (
+                    {calcularPorcentaje(estadoData.utilidadAntesImpuesto, estadoData.ventas)})
+                  </span>
+                </li>
+              </ul>
+
+              <h5 className="alinear-derecha">
+                IMPUESTO SOBRE LA RENTA:{" "}
+              </h5>
+
+              <ul>
+                <li className="alinear-derecha">
+                  <span>
+                    IMPUESTO SOBRE LA RENTA:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.impuestoRenta)} (
+                    {calcularPorcentaje(estadoData.impuestoRenta, estadoData.ventas)})
+                  </span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>
+                    CESC grandes contribuyentes:{" "}
+                  </span>
+                  <span>
+                    ${formatearNumero(estadoData.cescGrandesContribuyentes)} (
+                    {calcularPorcentaje(estadoData.cescGrandesContribuyentes, estadoData.ventas)})
+                  </span>
+                </li>
+              </ul>
+
+              <h4 className="alinear-derecha" style={{ textDecoration: "underline" }}>
+                <span>
+                  UTILIDAD DISTRIBUIBLE:{" "}
+                </span>
+                <span>
+                  ${formatearNumero(estadoData.utilidadDistribuible)} (
+                  {calcularPorcentaje(estadoData.utilidadDistribuible, estadoData.ventas)})
+                </span>
+              </h4>
+            </div>
+
           </div>
         </div>
       ) : (
