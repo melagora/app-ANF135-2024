@@ -121,7 +121,7 @@ function AnalisisHorizontal() {
       </div>
 
       {(balanceDataActual && balanceDataComparativo) ||
-      (estadoDataActual && estadoDataComparativo) ? (
+        (estadoDataActual && estadoDataComparativo) ? (
         <div id="pdfContent">
           <div className="centrar">
             <h4>Saram S.A de C.V.</h4>
@@ -136,558 +136,383 @@ function AnalisisHorizontal() {
           </div>
           {tipoReporte === "Balance General" ? (
             <div className="json">
-              <h4 style={{ paddingTop: "20px", textDecoration: "underline" }}>ACTIVOS</h4>
-              <h5>ACTIVO CORRIENTE</h5>
-              <ul>
-                <li>
-                  Efectivo y Equivalentes al Efectivo:{" "}
-                  ${formatearNumero(balanceDataActual.efectivo)} -{" "}
-                  ${formatearNumero(balanceDataComparativo.efectivo)}
+              <div>
+                <h4 style={{ paddingTop: "20px", textDecoration: "underline" }}>ACTIVOS</h4>
+                <h5>ACTIVO CORRIENTE</h5>
+                <ul>
+                  <li>
+                    Efectivo y Equivalentes al Efectivo:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.efectivo)} - ${formatearNumero(balanceDataComparativo.efectivo)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.efectivo, balanceDataComparativo.efectivo).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.efectivo, balanceDataComparativo.efectivo).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Inversiones Financieras a Corto Plazo:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.inversionesCortoPlazo)} - ${formatearNumero(balanceDataComparativo.inversionesCortoPlazo)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.inversionesCortoPlazo, balanceDataComparativo.inversionesCortoPlazo).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.inversionesCortoPlazo, balanceDataComparativo.inversionesCortoPlazo).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Deudores Comerciales y Otras Cuentas por Cobrar:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.deudoresComerciales)} - ${formatearNumero(balanceDataComparativo.deudoresComerciales)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.deudoresComerciales, balanceDataComparativo.deudoresComerciales).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.deudoresComerciales, balanceDataComparativo.deudoresComerciales).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Inventarios:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.inventarios)} - ${formatearNumero(balanceDataComparativo.inventarios)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.inventarios, balanceDataComparativo.inventarios).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.inventarios, balanceDataComparativo.inventarios).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Pagos Anticipados:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.pagosAnticipados)} - ${formatearNumero(balanceDataComparativo.pagosAnticipados)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.pagosAnticipados, balanceDataComparativo.pagosAnticipados).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.pagosAnticipados, balanceDataComparativo.pagosAnticipados).variacionPorcentual})
+                    </span>
+                  </li>
+                </ul>
+                <h5>ACTIVO NO CORRIENTE</h5>
+                <ul>
+                  <li>
+                    Propiedad, Planta y Equipo (neto):{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.propiedadPlantaEquipo)} - ${formatearNumero(balanceDataComparativo.propiedadPlantaEquipo)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.propiedadPlantaEquipo, balanceDataComparativo.propiedadPlantaEquipo).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.propiedadPlantaEquipo, balanceDataComparativo.propiedadPlantaEquipo).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Activo Biológico:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.activoBiologico)} - ${formatearNumero(balanceDataComparativo.activoBiologico)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.activoBiologico, balanceDataComparativo.activoBiologico).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.activoBiologico, balanceDataComparativo.activoBiologico).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Intangibles:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.intangibles)} - ${formatearNumero(balanceDataComparativo.intangibles)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.intangibles, balanceDataComparativo.intangibles).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.intangibles, balanceDataComparativo.intangibles).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Inversiones Financieras a Largo Plazo:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.inversionesLargoPlazo)} - ${formatearNumero(balanceDataComparativo.inversionesLargoPlazo)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.inversionesLargoPlazo, balanceDataComparativo.inversionesLargoPlazo).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.inversionesLargoPlazo, balanceDataComparativo.inversionesLargoPlazo).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Proyectos en Proceso:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.proyectosProceso)} - ${formatearNumero(balanceDataComparativo.proyectosProceso)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.proyectosProceso, balanceDataComparativo.proyectosProceso).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.proyectosProceso, balanceDataComparativo.proyectosProceso).variacionPorcentual})
+                    </span>
+                  </li>
+                </ul>
+                <h5 style={{ textDecoration: "underline", textAlign: "center" }}>
+                  TOTAL ACTIVO: ${formatearNumero(balanceDataActual.totalActivos)}{" "}
+                  - ${formatearNumero(balanceDataComparativo.totalActivos)}
                   <br />* Variación:{" "}
                   {
                     calcularVariacion(
-                      balanceDataActual.efectivo,
-                      balanceDataComparativo.efectivo
+                      balanceDataActual.totalActivos,
+                      balanceDataComparativo.totalActivos
                     ).variacionAbsoluta
                   }{" "}
                   (
                   {
                     calcularVariacion(
-                      balanceDataActual.efectivo,
-                      balanceDataComparativo.efectivo
+                      balanceDataActual.totalActivos,
+                      balanceDataComparativo.totalActivos
                     ).variacionPorcentual
                   }
                   )
-                </li>
-                <li>
-                  Inversiones Financieras a Corto Plazo:{" "}
-                  ${formatearNumero(balanceDataActual.inversionesCortoPlazo)} -{" "}
-                  ${formatearNumero(
-                    balanceDataComparativo.inversionesCortoPlazo
-                  )}
+                </h5>
+                <h4 style={{ textDecoration: "underline" }}>PASIVOS</h4>
+                <h5>PASIVO CORRIENTE</h5>
+                <ul>
+                  <li>
+                    Deudas Financieras a Corto Plazo:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.deudasCortoPlazo)} - ${formatearNumero(balanceDataComparativo.deudasCortoPlazo)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.deudasCortoPlazo, balanceDataComparativo.deudasCortoPlazo).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.deudasCortoPlazo, balanceDataComparativo.deudasCortoPlazo).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Deudas Comerciales y Otras Cuentas por Pagar a Corto Plazo:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.deudasComerciales)} - ${formatearNumero(balanceDataComparativo.deudasComerciales)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.deudasComerciales, balanceDataComparativo.deudasComerciales).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.deudasComerciales, balanceDataComparativo.deudasComerciales).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Beneficios a Empleados a Corto Plazo:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.beneficiosEmpleados)} - ${formatearNumero(balanceDataComparativo.beneficiosEmpleados)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.beneficiosEmpleados, balanceDataComparativo.beneficiosEmpleados).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.beneficiosEmpleados, balanceDataComparativo.beneficiosEmpleados).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Impuestos por Pagar:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.impuestosPorPagar)} - ${formatearNumero(balanceDataComparativo.impuestosPorPagar)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.impuestosPorPagar, balanceDataComparativo.impuestosPorPagar).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.impuestosPorPagar, balanceDataComparativo.impuestosPorPagar).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Dividendos por Pagar:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.dividendosPorPagar)} - ${formatearNumero(balanceDataComparativo.dividendosPorPagar)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.dividendosPorPagar, balanceDataComparativo.dividendosPorPagar).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.dividendosPorPagar, balanceDataComparativo.dividendosPorPagar).variacionPorcentual})
+                    </span>
+                  </li>
+                </ul>
+                <h5>PASIVO NO CORRIENTE </h5>
+                <ul>
+                  <li>
+                    Deudas Financieras a Largo Plazo:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.deudasLargoPlazo)} - ${formatearNumero(balanceDataComparativo.deudasLargoPlazo)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.deudasLargoPlazo, balanceDataComparativo.deudasLargoPlazo).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.deudasLargoPlazo, balanceDataComparativo.deudasLargoPlazo).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Provisiones y Otros Pasivos a Largo Plazo:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.provisiones)} - ${formatearNumero(balanceDataComparativo.provisiones)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.provisiones, balanceDataComparativo.provisiones).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.provisiones, balanceDataComparativo.provisiones).variacionPorcentual})
+                    </span>
+                  </li>
+                </ul>
+                <h5 style={{ textAlign: "center", textDecoration: "underline" }}>
+                  TOTAL PASIVO: ${formatearNumero(balanceDataActual.totalPasivos)}{" "}
+                  - ${formatearNumero(balanceDataComparativo.totalPasivos)}
                   <br />* Variación:{" "}
                   {
                     calcularVariacion(
-                      balanceDataActual.inversionesCortoPlazo,
-                      balanceDataComparativo.inversionesCortoPlazo
+                      balanceDataActual.totalPasivos,
+                      balanceDataComparativo.totalPasivos
                     ).variacionAbsoluta
                   }{" "}
                   (
                   {
                     calcularVariacion(
-                      balanceDataActual.inversionesCortoPlazo,
-                      balanceDataComparativo.inversionesCortoPlazo
+                      balanceDataActual.totalPasivos,
+                      balanceDataComparativo.totalPasivos
                     ).variacionPorcentual
                   }
                   )
-                </li>
-                <li>
-                  Deudores Comerciales y Otras Cuentas por Cobrar:{" "}
-                  ${formatearNumero(balanceDataActual.deudoresComerciales)} -{" "}
-                  ${formatearNumero(balanceDataComparativo.deudoresComerciales)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.deudoresComerciales,
-                      balanceDataComparativo.deudoresComerciales
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.deudoresComerciales,
-                      balanceDataComparativo.deudoresComerciales
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-                <li>
-                  Inventarios: ${formatearNumero(balanceDataActual.inventarios)}{" "}
-                  - ${formatearNumero(balanceDataComparativo.inventarios)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.inventarios,
-                      balanceDataComparativo.inventarios
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.inventarios,
-                      balanceDataComparativo.inventarios
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-                <li>
-                  Pagos Anticipados:{" "}
-                  ${formatearNumero(balanceDataActual.pagosAnticipados)} -{" "}
-                  ${formatearNumero(balanceDataComparativo.pagosAnticipados)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.pagosAnticipados,
-                      balanceDataComparativo.pagosAnticipados
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.pagosAnticipados,
-                      balanceDataComparativo.pagosAnticipados
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-              </ul>
-              <h5>ACTIVO NO CORRIENTE</h5>
-              <ul>
-                <li>
-                  Propiedad, Planta y Equipo (neto):{" "}
-                  ${formatearNumero(balanceDataActual.propiedadPlantaEquipo)} -{" "}
-                  ${formatearNumero(
-                    balanceDataComparativo.propiedadPlantaEquipo
-                  )}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.propiedadPlantaEquipo,
-                      balanceDataComparativo.propiedadPlantaEquipo
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.propiedadPlantaEquipo,
-                      balanceDataComparativo.propiedadPlantaEquipo
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-                <li>
-                  Activo Biológico:{" "}
-                  ${formatearNumero(balanceDataActual.activoBiologico)} -{" "}
-                  ${formatearNumero(balanceDataComparativo.activoBiologico)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.activoBiologico,
-                      balanceDataComparativo.activoBiologico
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.activoBiologico,
-                      balanceDataComparativo.activoBiologico
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-                <li>
-                  Intangibles: ${formatearNumero(balanceDataActual.intangibles)}{" "}
-                  - ${formatearNumero(balanceDataComparativo.intangibles)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.intangibles,
-                      balanceDataComparativo.intangibles
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.intangibles,
-                      balanceDataComparativo.intangibles
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-                <li>
-                  Inversiones Financieras a Largo Plazo:{" "}
-                  ${formatearNumero(balanceDataActual.inversionesLargoPlazo)} -{" "}
-                  ${formatearNumero(
-                    balanceDataComparativo.inversionesLargoPlazo
-                  )}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.inversionesLargoPlazo,
-                      balanceDataComparativo.inversionesLargoPlazo
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.inversionesLargoPlazo,
-                      balanceDataComparativo.inversionesLargoPlazo
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-                <li>
-                  Proyectos en Proceso:{" "}
-                  ${formatearNumero(balanceDataActual.proyectosProceso)} -{" "}
-                  ${formatearNumero(balanceDataComparativo.proyectosProceso)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.proyectosProceso,
-                      balanceDataComparativo.proyectosProceso
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.proyectosProceso,
-                      balanceDataComparativo.proyectosProceso
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-              </ul>
-              <h5 style={{textDecoration: "underline", textAlign: "center"}}>
-                TOTAL ACTIVO: ${formatearNumero(balanceDataActual.totalActivos)}{" "}
-                - ${formatearNumero(balanceDataComparativo.totalActivos)}
-                <br />* Variación:{" "}
-                {
-                  calcularVariacion(
-                    balanceDataActual.totalActivos,
-                    balanceDataComparativo.totalActivos
-                  ).variacionAbsoluta
-                }{" "}
-                (
-                {
-                  calcularVariacion(
-                    balanceDataActual.totalActivos,
-                    balanceDataComparativo.totalActivos
-                  ).variacionPorcentual
-                }
-                )
-              </h5>
+                </h5>
 
-              <h4 style={{textDecoration: "underline" }}>PASIVOS</h4>
-              <h5>PASIVO CORRIENTE</h5>
-              <ul>
-                <li>
-                  Deudas Financieras a Corto Plazo:{" "}
-                  ${formatearNumero(balanceDataActual.deudasCortoPlazo)} -{" "}
-                  ${formatearNumero(balanceDataComparativo.deudasCortoPlazo)}
+                <h4>PATRIMONIO</h4>
+                <ul>
+                  <li>
+                    Capital Social:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.capitalSocial)} - ${formatearNumero(balanceDataComparativo.capitalSocial)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.capitalSocial, balanceDataComparativo.capitalSocial).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.capitalSocial, balanceDataComparativo.capitalSocial).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Reservas:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.reservas)} - ${formatearNumero(balanceDataComparativo.reservas)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.reservas, balanceDataComparativo.reservas).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.reservas, balanceDataComparativo.reservas).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Resultados Acumulados:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.resultadosAcumulados)} - ${formatearNumero(balanceDataComparativo.resultadosAcumulados)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.resultadosAcumulados, balanceDataComparativo.resultadosAcumulados).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.resultadosAcumulados, balanceDataComparativo.resultadosAcumulados).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Resultados del Ejercicio:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.resultadosEjercicio)} - ${formatearNumero(balanceDataComparativo.resultadosEjercicio)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.resultadosEjercicio, balanceDataComparativo.resultadosEjercicio).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.resultadosEjercicio, balanceDataComparativo.resultadosEjercicio).variacionPorcentual})
+                    </span>
+                  </li>
+                  <li>
+                    Ajustes y Efectos por Valuación y Cambio de Valor:{" "}
+                    <span style={{ float: "right" }}>
+                      ${formatearNumero(balanceDataActual.ajustesEfectosValuacion)} - ${formatearNumero(balanceDataComparativo.ajustesEfectosValuacion)}
+                    </span>
+                    <br />
+                    * Variación:{" "}
+                    <span style={{ float: "right" }}>
+                      {calcularVariacion(balanceDataActual.ajustesEfectosValuacion, balanceDataComparativo.ajustesEfectosValuacion).variacionAbsoluta} (
+                      {calcularVariacion(balanceDataActual.ajustesEfectosValuacion, balanceDataComparativo.ajustesEfectosValuacion).variacionPorcentual})
+                    </span>
+                  </li>
+                </ul>
+                <h5 style={{ textAlign: "center", textDecoration: "underline" }}>
+                  TOTAL PATRIMONIO:{" "}
+                  ${formatearNumero(balanceDataActual.totalPatrimonio)} -{" "}
+                  ${formatearNumero(balanceDataComparativo.totalPatrimonio)}
                   <br />* Variación:{" "}
                   {
                     calcularVariacion(
-                      balanceDataActual.deudasCortoPlazo,
-                      balanceDataComparativo.deudasCortoPlazo
+                      balanceDataActual.totalPatrimonio,
+                      balanceDataComparativo.totalPatrimonio
                     ).variacionAbsoluta
                   }{" "}
                   (
                   {
                     calcularVariacion(
-                      balanceDataActual.deudasCortoPlazo,
-                      balanceDataComparativo.deudasCortoPlazo
+                      balanceDataActual.totalPatrimonio,
+                      balanceDataComparativo.totalPatrimonio
                     ).variacionPorcentual
                   }
                   )
-                </li>
-                <li>
-                  Deudas Comerciales y Otras Cuentas por Pagar a Corto Plazo:{" "}
-                  ${formatearNumero(balanceDataActual.deudasComerciales)} -{" "}
-                  ${formatearNumero(balanceDataComparativo.deudasComerciales)}
+                </h5>
+                <h5 style={{ textAlign: "center", textDecoration: "underline" }}>
+                  TOTAL PASIVO + PATRIMONIO:{" "}
+                  ${formatearNumero(balanceDataActual.totalPasivosPatrimonio)} -{" "}
+                  ${formatearNumero(balanceDataComparativo.totalPasivosPatrimonio)}
                   <br />* Variación:{" "}
                   {
                     calcularVariacion(
-                      balanceDataActual.deudasComerciales,
-                      balanceDataComparativo.deudasComerciales
+                      balanceDataActual.totalPasivosPatrimonio,
+                      balanceDataComparativo.totalPasivosPatrimonio
                     ).variacionAbsoluta
                   }{" "}
                   (
                   {
                     calcularVariacion(
-                      balanceDataActual.deudasComerciales,
-                      balanceDataComparativo.deudasComerciales
+                      balanceDataActual.totalPasivosPatrimonio,
+                      balanceDataComparativo.totalPasivosPatrimonio
                     ).variacionPorcentual
                   }
                   )
-                </li>
-                <li>
-                  Beneficios a Empleados a Corto Plazo:{" "}
-                  ${formatearNumero(balanceDataActual.beneficiosEmpleados)} -{" "}
-                  ${formatearNumero(balanceDataComparativo.beneficiosEmpleados)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.beneficiosEmpleados,
-                      balanceDataComparativo.beneficiosEmpleados
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.beneficiosEmpleados,
-                      balanceDataComparativo.beneficiosEmpleados
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-                <li>
-                  Impuestos por Pagar:{" "}
-                  ${formatearNumero(balanceDataActual.impuestosPorPagar)} -{" "}
-                  ${formatearNumero(balanceDataComparativo.impuestosPorPagar)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.impuestosPorPagar,
-                      balanceDataComparativo.impuestosPorPagar
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.impuestosPorPagar,
-                      balanceDataComparativo.impuestosPorPagar
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-                <li>
-                  Dividendos por Pagar:{" "}
-                  ${formatearNumero(balanceDataActual.dividendosPorPagar)} -{" "}
-                  ${formatearNumero(balanceDataComparativo.dividendosPorPagar)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.dividendosPorPagar,
-                      balanceDataComparativo.dividendosPorPagar
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.dividendosPorPagar,
-                      balanceDataComparativo.dividendosPorPagar
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-              </ul>
-              <h5>PASIVO NO CORRIENTE </h5>
-              <ul>
-                <li>
-                  Deudas Financieras a Largo Plazo:{" "}
-                  ${formatearNumero(balanceDataActual.deudasLargoPlazo)} -{" "}
-                  ${formatearNumero(balanceDataComparativo.deudasLargoPlazo)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.deudasLargoPlazo,
-                      balanceDataComparativo.deudasLargoPlazo
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.deudasLargoPlazo,
-                      balanceDataComparativo.deudasLargoPlazo
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-                <li>
-                  Provisiones y Otros Pasivos a Largo Plazo:{" "}
-                  ${formatearNumero(balanceDataActual.provisiones)} -{" "}
-                  ${formatearNumero(balanceDataComparativo.provisiones)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.provisiones,
-                      balanceDataComparativo.provisiones
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.provisiones,
-                      balanceDataComparativo.provisiones
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-              </ul>
-              <h5 style={{ textAlign: "center", textDecoration: "underline" }}>
-                TOTAL PASIVO: ${formatearNumero(balanceDataActual.totalPasivos)}{" "}
-                - ${formatearNumero(balanceDataComparativo.totalPasivos)}
-                <br />* Variación:{" "}
-                {
-                  calcularVariacion(
-                    balanceDataActual.totalPasivos,
-                    balanceDataComparativo.totalPasivos
-                  ).variacionAbsoluta
-                }{" "}
-                (
-                {
-                  calcularVariacion(
-                    balanceDataActual.totalPasivos,
-                    balanceDataComparativo.totalPasivos
-                  ).variacionPorcentual
-                }
-                )
-              </h5>
-
-              <h4>PATRIMONIO</h4>
-              <ul>
-                <li>
-                  Capital Social:{" "}
-                  ${formatearNumero(balanceDataActual.capitalSocial)} -{" "}
-                  ${formatearNumero(balanceDataComparativo.capitalSocial)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.capitalSocial,
-                      balanceDataComparativo.capitalSocial
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.capitalSocial,
-                      balanceDataComparativo.capitalSocial
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-                <li>
-                  Reservas: ${formatearNumero(balanceDataActual.reservas)} -{" "}
-                  ${formatearNumero(balanceDataComparativo.reservas)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.reservas,
-                      balanceDataComparativo.reservas
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.reservas,
-                      balanceDataComparativo.reservas
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-                <li>
-                  Resultados Acumulados:{" "}
-                  ${formatearNumero(balanceDataActual.resultadosAcumulados)} -{" "}
-                  ${formatearNumero(balanceDataComparativo.resultadosAcumulados)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.resultadosAcumulados,
-                      balanceDataComparativo.resultadosAcumulados
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.resultadosAcumulados,
-                      balanceDataComparativo.resultadosAcumulados
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-                <li>
-                  Resultados del Ejercicio:{" "}
-                  ${formatearNumero(balanceDataActual.resultadosEjercicio)} -{" "}
-                  ${formatearNumero(balanceDataComparativo.resultadosEjercicio)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.resultadosEjercicio,
-                      balanceDataComparativo.resultadosEjercicio
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.resultadosEjercicio,
-                      balanceDataComparativo.resultadosEjercicio
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-                <li>
-                  Ajustes y Efectos por Valuación y Cambio de Valor:{" "}
-                  ${formatearNumero(balanceDataActual.ajustesEfectosValuacion)} -{" "}
-                  ${formatearNumero(
-                    balanceDataComparativo.ajustesEfectosValuacion
-                  )}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      balanceDataActual.ajustesEfectosValuacion,
-                      balanceDataComparativo.ajustesEfectosValuacion
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      balanceDataActual.ajustesEfectosValuacion,
-                      balanceDataComparativo.ajustesEfectosValuacion
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-              </ul>
-              <h5>
-                TOTAL PATRIMONIO:{" "}
-                ${formatearNumero(balanceDataActual.totalPatrimonio)} -{" "}
-                ${formatearNumero(balanceDataComparativo.totalPatrimonio)}
-                <br />* Variación:{" "}
-                {
-                  calcularVariacion(
-                    balanceDataActual.totalPatrimonio,
-                    balanceDataComparativo.totalPatrimonio
-                  ).variacionAbsoluta
-                }{" "}
-                (
-                {
-                  calcularVariacion(
-                    balanceDataActual.totalPatrimonio,
-                    balanceDataComparativo.totalPatrimonio
-                  ).variacionPorcentual
-                }
-                )
-              </h5>
-              <h5 style={{ textAlign: "center", textDecoration: "underline" }}>
-                TOTAL PASIVO + PATRIMONIO:{" "}
-                ${formatearNumero(balanceDataActual.totalPasivosPatrimonio)} -{" "}
-                ${formatearNumero(balanceDataComparativo.totalPasivosPatrimonio)}
-                <br />* Variación:{" "}
-                {
-                  calcularVariacion(
-                    balanceDataActual.totalPasivosPatrimonio,
-                    balanceDataComparativo.totalPasivosPatrimonio
-                  ).variacionAbsoluta
-                }{" "}
-                (
-                {
-                  calcularVariacion(
-                    balanceDataActual.totalPasivosPatrimonio,
-                    balanceDataComparativo.totalPasivosPatrimonio
-                  ).variacionPorcentual
-                }
-                )
-              </h5>
+                </h5>
+              </div>
             </div>
           ) : (
             <div>
-              <h4 style={{ paddingTop: "20px", textDecoration: "underline" }}>ESTADO DE RESULTADOS</h4>
-              <ul>
-                <li>
-                  Ingresos por Ventas:{" "}
+              <h4 style={{ paddingTop: "30px", textDecoration: "underline" }}>
+                INGRESOS
+              </h4>
+              <li>
+                Ingresos por Ventas:{" "}
+                <span style={{ float: "right" }}>
                   ${formatearNumero(estadoDataActual.ventas)} -{" "}
                   ${formatearNumero(estadoDataComparativo.ventas)}
-                  <br />* Variación:{" "}
+                </span>
+
+                <br />* Variación:{" "}
+                <span style={{ float: "right" }}>
                   {
                     calcularVariacion(
                       estadoDataActual.ventas,
@@ -698,182 +523,273 @@ function AnalisisHorizontal() {
                   {
                     calcularVariacion(
                       estadoDataActual.ventas,
-                      estadoDataComparativo.ingresosVentas
+                      estadoDataComparativo.ventas
                     ).variacionPorcentual
                   }
                   )
-                </li>
-                {/* Agrega los demás rubros de Estado de Resultados aquí */}
-                <li>
-                  Costo de Ventas:{" "}
-                  ${formatearNumero(estadoDataActual.costoVentas)} -{" "}
-                  ${formatearNumero(estadoDataComparativo.costoVentas)}
-                  <br />* Variación:{" "}
+                </span>
+              </li>
+              <li>
+                Costo de Ventas:{" "}
+                <span style={{ float: "right" }}>
+                  ${formatearNumero(estadoDataActual.costoVenta)} -{" "}
+                  ${formatearNumero(estadoDataComparativo.costoVenta)}
+                </span>
+                <br />* Variación:{" "}
+                <span style={{ float: "right" }}>
                   {
                     calcularVariacion(
-                      estadoDataActual.costoVentas,
-                      estadoDataComparativo.costoVentas
+                      estadoDataActual.costoVenta,
+                      estadoDataComparativo.costoVenta
                     ).variacionAbsoluta
                   }{" "}
                   (
                   {
                     calcularVariacion(
-                      estadoDataActual.costoVentas,
-                      estadoDataComparativo.costoVentas
+                      estadoDataActual.costoVenta,
+                      estadoDataComparativo.costoVenta
                     ).variacionPorcentual
                   }
                   )
+                </span>
+              </li>
+              <h5 >
+                Utilidad Bruta:{" "}
+                <span style={{ float: "right" }}>
+                  ${formatearNumero(estadoDataActual.utilidadBruta)} - ${formatearNumero(estadoDataComparativo.utilidadBruta)}
+                </span>
+                <br />
+                * Variación:{" "}
+                <span style={{ float: "right" }}>
+                  {calcularVariacion(estadoDataActual.utilidadBruta, estadoDataComparativo.utilidadBruta).variacionAbsoluta} (
+                  {calcularVariacion(estadoDataActual.utilidadBruta, estadoDataComparativo.utilidadBruta).variacionPorcentual})
+                </span>
+              </h5>
+              <h4 style={{ paddingTop: "30px", textDecoration: "underline" }}>
+                GASTOS DE OPERACIÓN
+              </h4>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>Administración:</span>
+                  <span>${formatearNumero(estadoDataActual.administracion)} - ${formatearNumero(estadoDataComparativo.administracion)}</span>
                 </li>
-
-                <li>
-                  Gastos de Operación:{" "}
-                  ${formatearNumero(estadoDataActual.gastosOperacion)} -{" "}
-                  ${formatearNumero(estadoDataComparativo.gastosOperacion)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      estadoDataActual.gastosOperacion,
-                      estadoDataComparativo.gastosOperacion
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      estadoDataActual.gastosOperacion,
-                      estadoDataComparativo.gastosOperacion
-                    ).variacionPorcentual
-                  }
-                  )
+                <li className="alinear-derecha">
+                  <span>Gerencia Financiera:</span>
+                  <span>${formatearNumero(estadoDataActual.gerenciaFinanciera)} - ${formatearNumero(estadoDataComparativo.gerenciaFinanciera)}</span>
                 </li>
-
-                <li>
-                  Gastos Financieros:{" "}
-                  ${formatearNumero(estadoDataActual.gastosFinancieros)} -{" "}
-                  ${formatearNumero(estadoDataComparativo.gastosFinancieros)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      estadoDataActual.gastosFinancieros,
-                      estadoDataComparativo.gastosFinancieros
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      estadoDataActual.gastosFinancieros,
-                      estadoDataComparativo.gastosFinancieros
-                    ).variacionPorcentual
-                  }
-                  )
+                <li className="alinear-derecha">
+                  <span>Auditoría Interna:</span>
+                  <span>${formatearNumero(estadoDataActual.auditoriaInterna)} - ${formatearNumero(estadoDataComparativo.auditoriaInterna)}</span>
                 </li>
-
-                <li>
-                  Ingresos Financieros:{" "}
-                  ${formatearNumero(estadoDataActual.ingresosFinancieros)} -{" "}
-                  ${formatearNumero(estadoDataComparativo.ingresosFinancieros)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      estadoDataActual.ingresosFinancieros,
-                      estadoDataComparativo.ingresosFinancieros
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      estadoDataActual.ingresosFinancieros,
-                      estadoDataComparativo.ingresosFinancieros
-                    ).variacionPorcentual
-                  }
-                  )
+                <li className="alinear-derecha">
+                  <span>Gerencia Ventas y Mercadeo:</span>
+                  <span>${formatearNumero(estadoDataActual.gerenciaVentasMercadeo)} - ${formatearNumero(estadoDataComparativo.gerenciaVentasMercadeo)}</span>
                 </li>
-
-                <li>
-                  Otros Ingresos:{" "}
-                  ${formatearNumero(estadoDataActual.otrosIngresos)} -{" "}
-                  ${formatearNumero(estadoDataComparativo.otrosIngresos)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      estadoDataActual.otrosIngresos,
-                      estadoDataComparativo.otrosIngresos
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      estadoDataActual.otrosIngresos,
-                      estadoDataComparativo.otrosIngresos
-                    ).variacionPorcentual
-                  }
-                  )
+                <li className="alinear-derecha">
+                  <span>División Avícola:</span>
+                  <span>${formatearNumero(estadoDataActual.divisionAvicola)} - ${formatearNumero(estadoDataComparativo.divisionAvicola)}</span>
                 </li>
-
-                <li>
-                  Utilidad Antes de Impuestos:{" "}
-                  ${formatearNumero(estadoDataActual.utilidadAntesImpuestos)} -{" "}
-                  ${formatearNumero(
-                    estadoDataComparativo.utilidadAntesImpuestos
-                  )}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      estadoDataActual.utilidadAntesImpuestos,
-                      estadoDataComparativo.utilidadAntesImpuestos
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      estadoDataActual.utilidadAntesImpuestos,
-                      estadoDataComparativo.utilidadAntesImpuestos
-                    ).variacionPorcentual
-                  }
-                  )
+                <li className="alinear-derecha">
+                  <span>Dirección:</span>
+                  <span>${formatearNumero(estadoDataActual.direccion)} - ${formatearNumero(estadoDataComparativo.direccion)}</span>
                 </li>
-
-                <li>
-                  Impuestos sobre la Renta:{" "}
-                  ${formatearNumero(estadoDataActual.impuestosRenta)} -{" "}
-                  ${formatearNumero(estadoDataComparativo.impuestosRenta)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      estadoDataActual.impuestosRenta,
-                      estadoDataComparativo.impuestosRenta
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      estadoDataActual.impuestosRenta,
-                      estadoDataComparativo.impuestosRenta
-                    ).variacionPorcentual
-                  }
-                  )
-                </li>
-
-                <li>
-                  Utilidad Neta:{" "}
-                  ${formatearNumero(estadoDataActual.utilidadNeta)} -{" "}
-                  ${formatearNumero(estadoDataComparativo.utilidadNeta)}
-                  <br />* Variación:{" "}
-                  {
-                    calcularVariacion(
-                      estadoDataActual.utilidadNeta,
-                      estadoDataComparativo.utilidadNeta
-                    ).variacionAbsoluta
-                  }{" "}
-                  (
-                  {
-                    calcularVariacion(
-                      estadoDataActual.utilidadNeta,
-                      estadoDataComparativo.utilidadNeta
-                    ).variacionPorcentual
-                  }
-                  )
+                <li className="alinear-derecha">
+                  <span>Cadena de Suministros:</span>
+                  <span>${formatearNumero(estadoDataActual.cadenaSuministros)} - ${formatearNumero(estadoDataComparativo.cadenaSuministros)}</span>
                 </li>
               </ul>
+              <h5 >
+                Utilidad de Operacion:{" "}
+                <span style={{ float: "right" }}>
+                  ${formatearNumero(estadoDataActual.utilidadOperacion)} - ${formatearNumero(estadoDataComparativo.utilidadOperacion)}
+                </span>
+                <br />
+                * Variación:{" "}
+                <span style={{ float: "right" }}>
+                  {calcularVariacion(estadoDataActual.utilidadOperacion, estadoDataComparativo.utilidadOperacion).variacionAbsoluta} (
+                  {calcularVariacion(estadoDataActual.utilidadOperacion, estadoDataComparativo.utilidadOperacion).variacionPorcentual})
+                </span>
+              </h5>
+              <h4 style={{ paddingTop: "30px", textDecoration: "underline" }}>
+                GASTOS NO OPERACIONALES
+              </h4>
+              <li>
+                Gastos Financieros:{" "}
+                <span style={{ float: "right" }}>
+                  ${formatearNumero(estadoDataActual.gastosFinancieros)} -{" "}
+                  ${formatearNumero(estadoDataComparativo.gastosFinancieros)}
+                </span>
+                <br />* Variación:{" "}
+                <span style={{ float: "right" }}>
+                  {
+                    calcularVariacion(
+                      estadoDataActual.gastosFinancieros,
+                      estadoDataComparativo.gastosFinancieros
+                    ).variacionAbsoluta
+                  }{" "}
+                  (
+                  {
+                    calcularVariacion(
+                      estadoDataActual.gastosFinancieros,
+                      estadoDataComparativo.gastosFinancieros
+                    ).variacionPorcentual
+                  }
+                  )
+                </span>
+              </li>
+              <li>
+                Otros Gastos No Operacionales:{" "}
+                <span style={{ float: "right" }}>
+                  ${formatearNumero(estadoDataActual.otrosGastosNoOperacionales)} -{" "}
+                  ${formatearNumero(estadoDataComparativo.otrosGastosNoOperacionales)}
+                </span>
+                <br />* Variación:{" "}
+                <span style={{ float: "right" }}>
+                  {
+                    calcularVariacion(
+                      estadoDataActual.otrosGastosNoOperacionales,
+                      estadoDataComparativo.otrosGastosNoOperacionales
+                    ).variacionAbsoluta
+                  }{" "}
+                  (
+                  {
+                    calcularVariacion(
+                      estadoDataActual.otrosGastosNoOperacionales,
+                      estadoDataComparativo.otrosGastosNoOperacionales
+                    ).variacionPorcentual
+                  }
+                  )
+                </span>
+              </li>
+              <h5 >
+                Utilidad Antes de Impuestos y Reserva:{" "}
+                <span style={{ float: "right" }}>
+                  ${formatearNumero(estadoDataActual.utilidadAntesImpuestosReserva)} - ${formatearNumero(estadoDataComparativo.utilidadAntesImpuestosReserva)}
+                </span>
+                <br />
+                * Variación:{" "}
+                <span style={{ float: "right" }}>
+                  {calcularVariacion(estadoDataActual.utilidadAntesImpuestosReserva, estadoDataComparativo.utilidadAntesImpuestosReserva).variacionAbsoluta} (
+                  {calcularVariacion(estadoDataActual.utilidadAntesImpuestosReserva, estadoDataComparativo.utilidadAntesImpuestosReserva).variacionPorcentual})
+                </span>
+              </h5>
+              <h4 style={{ paddingTop: "30px", textDecoration: "underline" }}>
+                RESERVA LEGAL
+              </h4>
+              <li>
+                Reserva Legal (7%):{" "}
+                <span style={{ float: "right" }}>
+                  ${formatearNumero(estadoDataActual.reservaLegal)} -{" "}
+                  ${formatearNumero(estadoDataComparativo.reservaLegal)}
+                </span>
+                <br />* Variación:{" "}
+                <span style={{ float: "right" }}>
+                  {
+                    calcularVariacion(
+                      estadoDataActual.reservaLegal,
+                      estadoDataComparativo.reservaLegal
+                    ).variacionAbsoluta
+                  }{" "}
+                  (
+                  {
+                    calcularVariacion(
+                      estadoDataActual.reservaLegal,
+                      estadoDataComparativo.reservaLegal
+                    ).variacionPorcentual
+                  }
+                  )
+                </span>
+              </li>
+              <h4 style={{ paddingTop: "30px", textDecoration: "underline" }}>
+                UTILIDAD ANTES DE IMPUESTO
+              </h4>
+              <li>
+                Utilidad Antes de Impuesto:{" "}
+                <span style={{ float: "right" }}>
+                  ${formatearNumero(estadoDataActual.utilidadAntesImpuesto)} -{" "}
+                  ${formatearNumero(estadoDataComparativo.utilidadAntesImpuesto)}
+                </span>
+                <br />* Variación:{" "}
+                <span style={{ float: "right" }}>
+                  {
+                    calcularVariacion(
+                      estadoDataActual.utilidadAntesImpuesto,
+                      estadoDataComparativo.utilidadAntesImpuesto
+                    ).variacionAbsoluta
+                  }{" "}
+                  (
+                  {
+                    calcularVariacion(
+                      estadoDataActual.utilidadAntesImpuesto,
+                      estadoDataComparativo.utilidadAntesImpuesto
+                    ).variacionPorcentual
+                  }
+                  )
+                </span>
+              </li>
+              <h4 style={{ paddingTop: "30px", textDecoration: "underline" }}>
+                IMPUESTO SOBRE LA RENTA
+              </h4>
+              <li>
+                Impuesto sobre la Renta:{" "}
+                <span style={{ float: "right" }}>
+                  ${formatearNumero(estadoDataActual.impuestoRenta)} -{" "}
+                  ${formatearNumero(estadoDataComparativo.impuestoRenta)}
+                </span>
+                <br />* Variación:{" "}
+                <span style={{ float: "right" }}>
+                  {
+                    calcularVariacion(
+                      estadoDataActual.impuestoRenta,
+                      estadoDataComparativo.impuestoRenta
+                    ).variacionAbsoluta
+                  }{" "}
+                  (
+                  {
+                    calcularVariacion(
+                      estadoDataActual.impuestoRenta,
+                      estadoDataComparativo.impuestoRenta
+                    ).variacionPorcentual
+                  }
+                  )
+                </span>
+              </li>
+              <li>
+                CESC grandes contribuyentes:{" "}
+                <span style={{ float: "right" }}>
+                  ${formatearNumero(estadoDataActual.cescGrandesContribuyentes)} -{" "}
+                  ${formatearNumero(estadoDataComparativo.cescGrandesContribuyentes)}
+                </span>
+                <br />* Variación:{" "}
+                <span style={{ float: "right" }}>
+                  {
+                    calcularVariacion(
+                      estadoDataActual.cescGrandesContribuyentes,
+                      estadoDataComparativo.cescGrandesContribuyentes
+                    ).variacionAbsoluta
+                  }{" "}
+                  (
+                  {
+                    calcularVariacion(
+                      estadoDataActual.cescGrandesContribuyentes,
+                      estadoDataComparativo.cescGrandesContribuyentes
+                    ).variacionPorcentual
+                  }
+                  )
+                </span>
+              </li>
+              <h5 >
+                Utilidad Distribuible:{" "}
+                <span style={{ float: "right" }}>
+                  ${formatearNumero(estadoDataActual.utilidadDistribuible)} - ${formatearNumero(estadoDataComparativo.utilidadDistribuible)}
+                </span>
+                <br />
+                * Variación:{" "}
+                <span style={{ float: "right" }}>
+                  {calcularVariacion(estadoDataActual.utilidadDistribuible, estadoDataComparativo.utilidadDistribuible).variacionAbsoluta} (
+                  {calcularVariacion(estadoDataActual.utilidadDistribuible, estadoDataComparativo.utilidadDistribuible).variacionPorcentual})
+                </span>
+              </h5>
             </div>
           )}
         </div>

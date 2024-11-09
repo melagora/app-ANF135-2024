@@ -200,152 +200,150 @@ function AgregarBalanceGeneral({ onSave }) {
                 </h5>
               </div>
             </div>
-          </div>
-          <div>
-            <h5>ACTIVO NO CORRIENTE</h5>
             <div>
-              <label>
-                Propiedad, Planta y Equipo (neto):
-                <input
-                  type="number"
-                  name="propiedadPlantaEquipo"
-                  onChange={handleChange}
-                  value={formData.propiedadPlantaEquipo}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Activo Biológico:
-                <input
-                  type="number"
-                  name="activoBiologico"
-                  onChange={handleChange}
-                  value={formData.activoBiologico}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Intangibles:
-                <input
-                  type="number"
-                  name="intangibles"
-                  onChange={handleChange}
-                  value={formData.intangibles}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Inversiones Financieras a Largo Plazo:
-                <input
-                  type="number"
-                  name="inversionesLargoPlazo"
-                  onChange={handleChange}
-                  value={formData.inversionesLargoPlazo}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Proyectos en Proceso:
-                <input
-                  type="number"
-                  name="proyectosProceso"
-                  onChange={handleChange}
-                  value={formData.proyectosProceso}
-                />
-              </label>
-            </div>
-            <div>
-              {/* Total Activo No Corriente */}
-              <div className="totales">
-                <h5>
-                  TOTAL ACTIVO NO CORRIENTE:{" "}
-                  {formatearNumero(formData.totalActivoNoCorriente)}
-                </h5>
+              <h5>ACTIVO NO CORRIENTE</h5>
+              <div>
+                <label>
+                  Propiedad, Planta y Equipo (neto):
+                  <input
+                    type="number"
+                    name="propiedadPlantaEquipo"
+                    onChange={handleChange}
+                    value={formData.propiedadPlantaEquipo}
+                  />
+                </label>
+              </div>
+              <div>
+                <label>
+                  Activo Biológico:
+                  <input
+                    type="number"
+                    name="activoBiologico"
+                    onChange={handleChange}
+                    value={formData.activoBiologico}
+                  />
+                </label>
+              </div>
+              <div>
+                <label>
+                  Intangibles:
+                  <input
+                    type="number"
+                    name="intangibles"
+                    onChange={handleChange}
+                    value={formData.intangibles}
+                  />
+                </label>
+              </div>
+              <div>
+                <label>
+                  Inversiones Financieras a Largo Plazo:
+                  <input
+                    type="number"
+                    name="inversionesLargoPlazo"
+                    onChange={handleChange}
+                    value={formData.inversionesLargoPlazo}
+                  />
+                </label>
+              </div>
+              <div>
+                <label>
+                  Proyectos en Proceso:
+                  <input
+                    type="number"
+                    name="proyectosProceso"
+                    onChange={handleChange}
+                    value={formData.proyectosProceso}
+                  />
+                </label>
+              </div>
+              <div>
+                {/* Total Activo No Corriente */}
+                <div className="totales">
+                  <h5>
+                    TOTAL ACTIVO NO CORRIENTE:{" "}
+                    {formatearNumero(formData.totalActivoNoCorriente)}
+                  </h5>
+                </div>
+              </div>
+              <div>
+                {/* Total Activo */}
+                <div className="totales">
+                  <h5>TOTAL ACTIVO: {formatearNumero(formData.totalActivos)}</h5>
+                </div>
               </div>
             </div>
             <div>
-              {/* Total Activo */}
-              <div className="totales">
-                <h5>TOTAL ACTIVO: {formatearNumero(formData.totalActivos)}</h5>
-              </div>
-            </div>
-          </div>
-          <div>
             <h4>PASIVOS</h4>
           </div>
-
           <div>
-            <h5>PASIVO CORRIENTE</h5>
-            <div>
-              <label>
-                Deudas Financieras a Corto Plazo:
-                <input
-                  type="number"
-                  name="deudasCortoPlazo"
-                  onChange={handleChange}
-                  value={formData.deudasCortoPlazo}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Deudas Comerciales y Otras Cuentas por Pagar:
-                <input
-                  type="number"
-                  name="deudasComerciales"
-                  onChange={handleChange}
-                  value={formData.deudasComerciales}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Beneficios a Empleados:
-                <input
-                  type="number"
-                  name="beneficiosEmpleados"
-                  onChange={handleChange}
-                  value={formData.beneficiosEmpleados}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Impuestos por Pagar:
-                <input
-                  type="number"
-                  name="impuestosPorPagar"
-                  onChange={handleChange}
-                  value={formData.impuestosPorPagar}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Dividendos por Pagar:
-                <input
-                  type="number"
-                  name="dividendosPorPagar"
-                  onChange={handleChange}
-                  value={formData.dividendosPorPagar}
-                />
-              </label>
-            </div>
-            <div>
-              {/* Total Pasivo Corriente */}
-              <div className="totales">
-                <h5>
-                  TOTAL PASIVO CORRIENTE:{" "}
-                  {formatearNumero(formData.totalPasivoCorriente)}
-                </h5>
+            <>
+              <h5>PASIVO CORRIENTE</h5>
+              <div>
+                <label>
+                  Deudas Financieras a Corto Plazo:
+                  <input
+                    type="number"
+                    name="deudasCortoPlazo"
+                    onChange={handleChange}
+                    value={formData.deudasCortoPlazo}
+                  />
+                </label>
               </div>
-            </div>
-          </div>
-          <div>
+              <div>
+                <label>
+                  Deudas Comerciales y Otras Cuentas por Pagar:
+                  <input
+                    type="number"
+                    name="deudasComerciales"
+                    onChange={handleChange}
+                    value={formData.deudasComerciales}
+                  />
+                </label>
+              </div>
+              <div>
+                <label>
+                  Beneficios a Empleados:
+                  <input
+                    type="number"
+                    name="beneficiosEmpleados"
+                    onChange={handleChange}
+                    value={formData.beneficiosEmpleados}
+                  />
+                </label>
+              </div>
+              <div>
+                <label>
+                  Impuestos por Pagar:
+                  <input
+                    type="number"
+                    name="impuestosPorPagar"
+                    onChange={handleChange}
+                    value={formData.impuestosPorPagar}
+                  />
+                </label>
+              </div>
+              <div>
+                <label>
+                  Dividendos por Pagar:
+                  <input
+                    type="number"
+                    name="dividendosPorPagar"
+                    onChange={handleChange}
+                    value={formData.dividendosPorPagar}
+                  />
+                </label>
+              </div>
+              <div>
+                {/* Total Pasivo Corriente */}
+                <div className="totales">
+                  <h5>
+                    TOTAL PASIVO CORRIENTE:{" "}
+                    {formatearNumero(formData.totalPasivoCorriente)}
+                  </h5>
+                </div>
+              </div>
+            </>
             <h5>PASIVO NO CORRIENTE</h5>
             <div>
               <label>
@@ -460,12 +458,12 @@ function AgregarBalanceGeneral({ onSave }) {
               </div>
             </div>
           </div>
-
           <div className="botones">
             <button type="submit">Guardar Balance</button>
             <button type="button" onClick={handleClear}>
               Limpiar Campos
             </button>
+          </div>
           </div>
         </div>
       </form>

@@ -81,6 +81,12 @@
     margin-bottom: 5px; /* Espaciado entre los elementos de la lista */
 }
 
+.alinear-derecha {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }  
+
 .form-group, .json{
     display: flex;
     gap: 30px;

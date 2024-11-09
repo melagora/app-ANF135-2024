@@ -66,7 +66,6 @@ function EstadoDeResultado() {
       <div className="form-group">
         <div className="botonesOpciones">
           <div>
-            {" "}
             <label>Seleccionar Año:</label>
             <select onChange={handleAñoChange} value={añoSeleccionado}>
               <option value="">-- Seleccionar Año --</option>
@@ -78,7 +77,6 @@ function EstadoDeResultado() {
             </select>
           </div>
           <div>
-            {/* Mostrar el botón solo si se ha seleccionado un año */}
             {añoSeleccionado && (
               <button onClick={generarPDF}>Generar PDF</button>
             )}
@@ -101,98 +99,106 @@ function EstadoDeResultado() {
           </div>
 
           <div className="json">
-            <h4 style={{ paddingTop: "30px", textDecoration: "underline" }}>
-              INGRESOS
-            </h4>
-            <ul>
-              <li>Ventas: ${formatearNumero(estadoData.ventas)}</li>
-              <li>Costo de Venta: ${formatearNumero(estadoData.costoVenta)}</li>
-            </ul>
-            <h5>
-              Utilidad Bruta: ${formatearNumero(estadoData.utilidadBruta)}
-            </h5>
+            <div>
+              <h4 style={{ paddingTop: "30px", textDecoration: "underline" }}>
+                INGRESOS
+              </h4>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>Ventas:</span>
+                  <span>${formatearNumero(estadoData.ventas)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Costo de Venta:</span>
+                  <span>${formatearNumero(estadoData.costoVenta)}</span>
+                </li>
+              </ul>
+              <h5 className="alinear-derecha">
+                <span>Utilidad Bruta:</span>
+                <span>${formatearNumero(estadoData.utilidadBruta)}</span>
+              </h5>
+              <h4 style={{ textDecoration: "underline" }}>GASTOS DE OPERACIÓN</h4>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>Administración:</span>
+                  <span>${formatearNumero(estadoData.administracion)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Gerencia Financiera:</span>
+                  <span>${formatearNumero(estadoData.gerenciaFinanciera)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Auditoría Interna:</span>
+                  <span>${formatearNumero(estadoData.auditoriaInterna)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Gerencia Ventas y Mercadeo:</span>
+                  <span>${formatearNumero(estadoData.gerenciaVentasMercadeo)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>División Avícola:</span>
+                  <span>${formatearNumero(estadoData.divisionAvicola)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Dirección:</span>
+                  <span>${formatearNumero(estadoData.direccion)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Cadena de Suministros:</span>
+                  <span>${formatearNumero(estadoData.cadenaSuministros)}</span>
+                </li>
+              </ul>
+              <h5 className="alinear-derecha">
+                <span>Utilidad de Operación:</span>
+                <span>${formatearNumero(estadoData.utilidadOperacion)}</span>
+              </h5>
 
-            <h4 style={{ textDecoration: "underline" }}>GASTOS DE OPERACIÓN</h4>
-            <ul>
-              <li>
-                Administración: ${formatearNumero(estadoData.administracion)}
-              </li>
-              <li>
-                Gerencia Financiera: $
-                {formatearNumero(estadoData.gerenciaFinanciera)}
-              </li>
-              <li>
-                Auditoría Interna: $
-                {formatearNumero(estadoData.auditoriaInterna)}
-              </li>
-              <li>
-                Gerencia Ventas y Mercadeo: $
-                {formatearNumero(estadoData.gerenciaVentasMercadeo)}
-              </li>
-              <li>
-                División Avícola: ${formatearNumero(estadoData.divisionAvicola)}
-              </li>
-              <li>Dirección: ${formatearNumero(estadoData.direccion)}</li>
-              <li>
-                Cadena de Suministros: $
-                {formatearNumero(estadoData.cadenaSuministros)}
-              </li>
-            </ul>
-            <h5>
-              Utilidad de Operación: $
-              {formatearNumero(estadoData.utilidadOperacion)}
-            </h5>
+              <h4 style={{ textDecoration: "underline" }}>GASTOS NO OPERACIONALES</h4>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>Gastos Financieros:</span>
+                  <span>${formatearNumero(estadoData.gastosFinancieros)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Otros Gastos No Operacionales:</span>
+                  <span>${formatearNumero(estadoData.otrosGastosNoOperacionales)}</span>
+                </li>
+              </ul>
+              <h5 className="alinear-derecha">
+                <span>Utilidad Antes de Impuestos y Reserva:</span>
+                <span>${formatearNumero(estadoData.utilidadAntesImpuestosReserva)}</span>
+              </h5>
 
-            <h4 style={{ textDecoration: "underline" }}>
-              GASTOS NO OPERACIONALES
-            </h4>
-            <ul>
-              <li>
-                Gastos Financieros: $
-                {formatearNumero(estadoData.gastosFinancieros)}
-              </li>
-              <li>
-                Otros Gastos No Operacionales: $
-                {formatearNumero(estadoData.otrosGastosNoOperacionales)}
-              </li>
-            </ul>
-            <h5>
-              Utilidad Antes de Impuestos y Reserva: $
-              {formatearNumero(estadoData.utilidadAntesImpuestosReserva)}
-            </h5>
+              <h4 style={{ textDecoration: "underline" }}>RESERVA LEGAL</h4>
+              <h5 className="alinear-derecha">
+                <span>Reserva Legal (7%):</span>
+                <span>${formatearNumero(estadoData.reservaLegal)}</span>
+              </h5>
 
-            <h4 style={{ textDecoration: "underline" }}>RESERVA LEGAL</h4>
-            <h5>
-              Reserva Legal (7%): ${formatearNumero(estadoData.reservaLegal)}
-            </h5>
+              <h4 style={{ textDecoration: "underline" }}>UTILIDAD ANTES DE IMPUESTO</h4>
+              <h5 className="alinear-derecha">
+                <span>Utilidad Antes de Impuesto:</span>
+                <span>${formatearNumero(estadoData.utilidadAntesImpuesto)}</span>
+              </h5>
 
-            <h4 style={{ textDecoration: "underline" }}>
-              UTILIDAD ANTES DE IMPUESTO
-            </h4>
-            <h5>
-              Utilidad Antes de Impuesto: $
-              {formatearNumero(estadoData.utilidadAntesImpuesto)}
-            </h5>
+              <h4 style={{ textDecoration: "underline" }}>IMPUESTO SOBRE LA RENTA</h4>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>Impuesto sobre la Renta:</span>
+                  <span>${formatearNumero(estadoData.impuestoRenta)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>CESC grandes contribuyentes:</span>
+                  <span>${formatearNumero(estadoData.cescGrandesContribuyentes)}</span>
+                </li>
+              </ul>
+              <h5 className="alinear-derecha">
+                <span>Utilidad Distribuible:</span>
+                <span>${formatearNumero(estadoData.utilidadDistribuible)}</span>
+              </h5>
 
-            <h4 style={{ textDecoration: "underline" }}>
-              IMPUESTO SOBRE LA RENTA
-            </h4>
-            <ul>
-              <li>
-                Impuesto sobre la Renta: $
-                {formatearNumero(estadoData.impuestoRenta)}
-              </li>
-              <li>
-                CESC grandes contribuyentes: $
-                {formatearNumero(estadoData.cescGrandesContribuyentes)}
-              </li>
-            </ul>
-            <h5>
-              Utilidad Distribuible: $
-              {formatearNumero(estadoData.utilidadDistribuible)}
-            </h5>
-
-            <button onClick={descargarJson}>Descargar JSON</button>
+              <button onClick={descargarJson}>Descargar JSON</button>
+            </div>
           </div>
         </div>
       ) : (

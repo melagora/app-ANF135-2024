@@ -77,13 +77,13 @@ function BalanceGeneral() {
             </select>
           </div>
           <div>
-{/* Mostrar el botón solo si se ha seleccionado un año */}
-{añoSeleccionado && <button onClick={generarPDF}>Generar PDF</button>}
-      
+            {/* Mostrar el botón solo si se ha seleccionado un año */}
+            {añoSeleccionado && <button onClick={generarPDF}>Generar PDF</button>}
+
           </div>
         </div>
 
-        </div>
+      </div>
 
       {añoSeleccionado && balanceData ? (
         <div id="pdfContent">
@@ -99,134 +99,146 @@ function BalanceGeneral() {
             </h5>
           </div>
           <div className="json">
-            <h4 style={{ paddingTop: "20px", textDecoration: "underline" }}>
-              ACTIVOS
-            </h4>{" "}
-            <h5>ACTIVO CORRIENTE</h5>
-            <ul>
-              <li>
-                Efectivo y Equivalentes al Efectivo: $
-                {formatearNumero(balanceData.efectivo)}
-              </li>
-              <li>
-                Inversiones Financieras a Corto Plazo: $
-                {formatearNumero(balanceData.inversionesCortoPlazo)}
-              </li>
-              <li>
-                Deudores Comerciales y Otras Cuentas por Cobrar: $
-                {formatearNumero(balanceData.deudoresComerciales)}
-              </li>
-              <li>Inventarios: ${formatearNumero(balanceData.inventarios)}</li>
-              <li>
-                Pagos Anticipados: $
-                {formatearNumero(balanceData.pagosAnticipados)}
-              </li>
-            </ul>
-            <h5>
-              TOTAL ACTIVO CORRIENTE: $
-              {formatearNumero(balanceData.totalActivoCorriente)}
-            </h5>
-            <h5>ACTIVO NO CORRIENTE</h5>
-            <ul>
-              <li>
-                Propiedad, Planta y Equipo (neto): $
-                {formatearNumero(balanceData.propiedadPlantaEquipo)}
-              </li>
-              <li>
-                Activo Biológico: $
-                {formatearNumero(balanceData.activoBiologico)}
-              </li>
-              <li>Intangibles: ${formatearNumero(balanceData.intangibles)}</li>
-              <li>
-                Inversiones Financieras a Largo Plazo: $
-                {formatearNumero(balanceData.inversionesLargoPlazo)}
-              </li>
-              <li>
-                Proyectos en Proceso: $
-                {formatearNumero(balanceData.proyectosProceso)}
-              </li>
-            </ul>
-            <h5>
-              TOTAL ACTIVO NO CORRIENTE: $
-              {formatearNumero(balanceData.totalActivoNoCorriente)}
-            </h5>
-            <h5 style={{ textDecoration: "underline" }}>
-              TOTAL ACTIVO: ${formatearNumero(balanceData.totalActivos)}
-            </h5>
-            <h4 style={{ textDecoration: "underline" }}>PASIVOS</h4>
-            <h5>PASIVO CORRIENTE</h5>
-            <ul>
-              <li>
-                Deudas Financieras a Corto Plazo: $
-                {formatearNumero(balanceData.deudasCortoPlazo)}
-              </li>
-              <li>
-                Deudas Comerciales y Otras Cuentas por Pagar a Corto Plazo: $
-                {formatearNumero(balanceData.deudasComerciales)}
-              </li>
-              <li>
-                Beneficios a Empleados a Corto Plazo: $
-                {formatearNumero(balanceData.beneficiosEmpleados)}
-              </li>
-              <li>
-                Impuestos por Pagar: $
-                {formatearNumero(balanceData.impuestosPorPagar)}
-              </li>
-              <li>
-                Dividendos por Pagar: $
-                {formatearNumero(balanceData.dividendosPorPagar)}
-              </li>
-            </ul>
-            <h5>
-              <marker>
-                TOTAL PASIVO CORRIENTE: $
-                {formatearNumero(balanceData.totalPasivoCorriente)}
-              </marker>
-            </h5>
-            <h5>PASIVO NO CORRIENTE</h5>
-            <ul>
-              <li>
-                Deudas Financieras a Largo Plazo: $
-                {formatearNumero(balanceData.deudasLargoPlazo)}
-              </li>
-              <li>
-                Provisiones y Otros Pasivos a Largo Plazo: $
-                {formatearNumero(balanceData.provisiones)}
-              </li>
-            </ul>
-            <h5>
-              TOTAL PASIVO NO CORRIENTE: $
-              {formatearNumero(balanceData.totalPasivoNoCorriente)}
-            </h5>
-            <h5 style={{ textDecoration: "underline" }}>
-              TOTAL PASIVO: ${formatearNumero(balanceData.totalPasivos)}
-            </h5>
-            <h4 style={{ textDecoration: "underline" }}>PATRIMONIO</h4>
-            <ul>
-              <li>
-                Capital Social: ${formatearNumero(balanceData.capitalSocial)}
-              </li>
-              <li>Reservas: ${formatearNumero(balanceData.reservas)}</li>
-              <li>
-                Resultados Acumulados: $
-                {formatearNumero(balanceData.resultadosAcumulados)}
-              </li>
-              <li>
-                Resultados del Ejercicio: $
-                {formatearNumero(balanceData.resultadosEjercicio)}
-              </li>
-              <li>
-                Ajustes y Efectos por Valuación y Cambio de Valor: $
-                {formatearNumero(balanceData.ajustesEfectosValuacion)}
-              </li>
-            </ul>
-            <h5 style={{ textDecoration: "underline" }}>
-              TOTAL PATRIMONIO: ${formatearNumero(balanceData.totalPatrimonio)}
-            </h5>
-            <h5 style={{ textDecoration: "underline" }}>
-              TOTAL PASIVO Y PATRIMONIO: $
-              {formatearNumero(balanceData.totalPasivosPatrimonio)}
-            </h5>
+            <div>
+              <h4 style={{ paddingTop: "20px", textDecoration: "underline" }}>
+                ACTIVOS
+              </h4>{" "}
+              <h5>ACTIVO CORRIENTE</h5>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>Efectivo y Equivalentes al Efectivo:</span>
+                  <span>${formatearNumero(balanceData.efectivo)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Inversiones Financieras a Corto Plazo:</span>
+                  <span>${formatearNumero(balanceData.inversionesCortoPlazo)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Deudores Comerciales y Otras Cuentas por Cobrar:</span>
+                  <span>${formatearNumero(balanceData.deudoresComerciales)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Inventarios:</span>
+                  <span>${formatearNumero(balanceData.inventarios)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Pagos Anticipados:</span>
+                  <span>${formatearNumero(balanceData.pagosAnticipados)}</span>
+                </li>
+              </ul>
+              <h5>
+                TOTAL ACTIVO CORRIENTE: $
+                {formatearNumero(balanceData.totalActivoCorriente)}
+              </h5>
+              <h5>ACTIVO NO CORRIENTE</h5>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>Propiedad, Planta y Equipo (neto):</span>
+                  <span>${formatearNumero(balanceData.propiedadPlantaEquipo)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Activo Biológico:</span>
+                  <span>${formatearNumero(balanceData.activoBiologico)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Intangibles:</span>
+                  <span>${formatearNumero(balanceData.intangibles)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Inversiones Financieras a Largo Plazo:</span>
+                  <span>${formatearNumero(balanceData.inversionesLargoPlazo)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Proyectos en Proceso:</span>
+                  <span>${formatearNumero(balanceData.proyectosProceso)}</span>
+                </li>
+              </ul>
+              <h5>
+                TOTAL ACTIVO NO CORRIENTE: $
+                {formatearNumero(balanceData.totalActivoNoCorriente)}
+              </h5>
+              <h5 style={{ textDecoration: "underline" }}>
+                TOTAL ACTIVO: ${formatearNumero(balanceData.totalActivos)}
+              </h5>
+              <h4 style={{ textDecoration: "underline" }}>PASIVOS</h4>
+              <h5>PASIVO CORRIENTE</h5>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>Deudas Financieras a Corto Plazo:</span>
+                  <span>${formatearNumero(balanceData.deudasCortoPlazo)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Deudas Comerciales y Otras Cuentas por Pagar a Corto Plazo:</span>
+                  <span>${formatearNumero(balanceData.deudasComerciales)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Beneficios a Empleados a Corto Plazo:</span>
+                  <span>${formatearNumero(balanceData.beneficiosEmpleados)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Impuestos por Pagar:</span>
+                  <span>${formatearNumero(balanceData.impuestosPorPagar)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Dividendos por Pagar:</span>
+                  <span>${formatearNumero(balanceData.dividendosPorPagar)}</span>
+                </li>
+              </ul>
+              <h5>
+                <marker>
+                  TOTAL PASIVO CORRIENTE: $
+                  {formatearNumero(balanceData.totalPasivoCorriente)}
+                </marker>
+              </h5>
+              <h5>PASIVO NO CORRIENTE</h5>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>Deudas Financieras a Largo Plazo:</span>
+                  <span>${formatearNumero(balanceData.deudasLargoPlazo)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Provisiones y Otros Pasivos a Largo Plazo:</span>
+                  <span>${formatearNumero(balanceData.provisiones)}</span>
+                </li>
+              </ul>
+              <h5>
+                TOTAL PASIVO NO CORRIENTE: $
+                {formatearNumero(balanceData.totalPasivoNoCorriente)}
+              </h5>
+              <h5 style={{ textDecoration: "underline" }}>
+                TOTAL PASIVO: ${formatearNumero(balanceData.totalPasivos)}
+              </h5>
+              <h4 style={{ textDecoration: "underline" }}>PATRIMONIO</h4>
+              <ul>
+                <li className="alinear-derecha">
+                  <span>Capital Social:</span>
+                  <span>${formatearNumero(balanceData.capitalSocial)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Reservas:</span>
+                  <span>${formatearNumero(balanceData.reservas)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Resultados Acumulados:</span>
+                  <span>${formatearNumero(balanceData.resultadosAcumulados)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Resultados del Ejercicio:</span>
+                  <span>${formatearNumero(balanceData.resultadosEjercicio)}</span>
+                </li>
+                <li className="alinear-derecha">
+                  <span>Ajustes y Efectos por Valuación y Cambio de Valor:</span>
+                  <span>${formatearNumero(balanceData.ajustesEfectosValuacion)}</span>
+                </li>
+              </ul>
+              <h5 style={{ textDecoration: "underline" }}>
+                TOTAL PATRIMONIO: ${formatearNumero(balanceData.totalPatrimonio)}
+              </h5>
+              <h5 style={{ textDecoration: "underline" }}>
+                TOTAL PASIVO Y PATRIMONIO: $
+                {formatearNumero(balanceData.totalPasivosPatrimonio)}
+              </h5>
+            </div>
             <button onClick={descargarJson}>Descargar JSON</button>
           </div>
         </div>

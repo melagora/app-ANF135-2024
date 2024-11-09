@@ -136,8 +136,7 @@ function AgregarEstadoDeResultado({ onSave }) {
                 <h5>Utilidad Bruta: {formatNumber(formData.utilidadBruta)}</h5>
               </div>
             </div>
-          </div>
-          <div>
+
             <h4>GASTOS DE OPERACIÓN</h4>
             <div>
               <label>
@@ -224,8 +223,6 @@ function AgregarEstadoDeResultado({ onSave }) {
                 </h5>
               </div>
             </div>
-          </div>
-          <div>
             <h4>GASTOS NO OPERACIONALES</h4>
             <div>
               <label>
@@ -237,8 +234,6 @@ function AgregarEstadoDeResultado({ onSave }) {
                   value={formData.gastosFinancieros}
                 />
               </label>
-            </div>
-            <div>
               <label>
                 Otros Gastos No Operacionales:
                 <input
@@ -257,8 +252,6 @@ function AgregarEstadoDeResultado({ onSave }) {
                 </h5>
               </div>
             </div>
-          </div>
-          <div>
             <h4>RESERVA LEGAL</h4>
             <div>
               <label>
@@ -271,8 +264,6 @@ function AgregarEstadoDeResultado({ onSave }) {
                 />
               </label>
             </div>
-          </div>
-          <div>
             <h4>UTILIDAD ANTES DE IMPUESTO</h4>
             <div>
               <div className="totales">
@@ -282,8 +273,6 @@ function AgregarEstadoDeResultado({ onSave }) {
                 </h5>
               </div>
             </div>
-          </div>
-          <div>
             <h4>IMPUESTO SOBRE LA RENTA</h4>
             <div>
               <label>
@@ -295,8 +284,6 @@ function AgregarEstadoDeResultado({ onSave }) {
                   value={formData.impuestoRenta}
                 />
               </label>
-            </div>
-            <div>
               <label>
                 CESC GRANDES CONTRIBUYENTES: {/* Nuevo campo */}
                 <input
