@@ -13,8 +13,8 @@ const IndicadoresFinancieros = () => {
     setAñoSeleccionado(año);
 
     // Cargar balances y estados desde localStorage
-    const balances = JSON.parse(localStorage.getItem('balances')) || {};
-    const estados = JSON.parse(localStorage.getItem('estados')) || {};
+    const balances = JSON.parse(localStorage.getItem("balances")) || {};
+    const estados = JSON.parse(localStorage.getItem("estados")) || {};
 
     if (balances[año]) {
       setBalanceData(balances[año]);
@@ -28,48 +28,54 @@ const IndicadoresFinancieros = () => {
       setEstadoData(null);
     }
   };
-
+  const [generandoPDF, setGenerandoPDF] = useState(false);
   const generarPDF = () => {
-    const input = document.getElementById("pdfContent");
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      const imgWidth = 190;
-      const pageHeight = 295;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
+    setGenerandoPDF(true);
+    setTimeout(() => {
+      const input = document.getElementById("pdfContent");
+      html2canvas(input).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
 
-      pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+        const pdf = new jsPDF();
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const margin = 10;
+        const contentWidth = pageWidth - 2 * margin;
+        const contentHeight = pageHeight - 2 * margin;
+        let imgWidth = contentWidth;
+        let imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
+        if (imgHeight > contentHeight) {
+          imgHeight = contentHeight;
+          imgWidth = (canvas.width * imgHeight) / canvas.height;
+        }
 
-      pdf.save(`IndicadoresFinancieros_SARAM_${añoSeleccionado}.pdf`);
-    });
+        const positionX = (pageWidth - imgWidth) / 2;
+        const positionY = (pageHeight - imgHeight) / 2;
+
+        pdf.addImage(imgData, "PNG", positionX, positionY, imgWidth, imgHeight);
+        pdf.save(`AnalisisDupont_SARAM_${añoSeleccionado}.pdf`);
+        setGenerandoPDF(false);
+      });
+    }, 300);
   };
 
   // Cálculos de los indicadores
   const razonDeLiquidez = balanceData
     ? (
-      balanceData.totalActivoCorriente / balanceData.totalPasivoCorriente
-    ).toFixed(2)
+        balanceData.totalActivoCorriente / balanceData.totalPasivoCorriente
+      ).toFixed(2)
     : null;
   const pruebaAcida = balanceData
     ? (
-      (balanceData.totalActivoCorriente - balanceData.inventarios) /
-      balanceData.totalPasivoCorriente
-    ).toFixed(2)
+        (balanceData.totalActivoCorriente - balanceData.inventarios) /
+        balanceData.totalPasivoCorriente
+      ).toFixed(2)
     : null;
   const capitalDeTrabajo = balanceData
     ? (
-      balanceData.totalActivoCorriente - balanceData.totalPasivoCorriente
-    ).toFixed(2)
+        balanceData.totalActivoCorriente - balanceData.totalPasivoCorriente
+      ).toFixed(2)
     : null;
   const razonDeEndeudamiento = balanceData
     ? (balanceData.totalPasivos / balanceData.totalActivos).toFixed(2)
@@ -97,8 +103,8 @@ const IndicadoresFinancieros = () => {
   const periodoPromedioPago =
     estadoData && balanceData
       ? ((balanceData.deudasComerciales / estadoData.costoVenta) * 365).toFixed(
-        2
-      )
+          2
+        )
       : null;
 
   return (
@@ -119,9 +125,7 @@ const IndicadoresFinancieros = () => {
             <option value="2019">2019</option>
           </select>
           {/* Mostrar el botón solo si se ha seleccionado un año */}
-          {añoSeleccionado && (
-            <button onClick={generarPDF}>Generar PDF</button>
-          )}
+          {añoSeleccionado && <button onClick={generarPDF}>Generar PDF</button>}
         </div>
       </div>
 
@@ -179,6 +183,20 @@ const IndicadoresFinancieros = () => {
               <p>Rotación de activos totales: {rotacionActivosTotales}%</p>
               <p>Período promedio de cobro: {periodoPromedioCobro} días</p>
               <p>Período promedio de pago: {periodoPromedioPago} días</p>
+            </div>
+          </div>
+          <div className={generandoPDF ? "firmas" : "firmas oculto"}>
+            <div>
+              <p>_______________</p>
+              <p>Firma1</p>
+            </div>
+            <div>
+              <p>_______________</p>
+              <p>Firma2</p>
+            </div>
+            <div>
+              <p>_______________</p>
+              <p>Firma3</p>
             </div>
           </div>
         </div>

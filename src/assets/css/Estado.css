@@ -1,5 +1,7 @@
+
 /* Estilos generales para el contenedor del balance general */
 .estado-container {
+    padding-top: 40px;
     max-width: 75%;
     margin: 20px auto;
     padding: 20px;
@@ -121,4 +123,14 @@
   .form-group button:hover, .json button:hover{
     background-color: #192937;
     color: white;
+  }
+
+  .firmas{
+    display: flex;
+    width: 100%;
+    justify-content:space-between;
+  }
+
+  .oculto {
+    display: none;
   }

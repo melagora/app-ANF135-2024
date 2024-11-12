@@ -26,29 +26,36 @@ function BalanceGeneral() {
     });
   };
 
+  const [generandoPDF, setGenerandoPDF] = useState(false);
   const generarPDF = () => {
-    const input = document.getElementById("pdfContent");
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      const imgWidth = 190;
-      const pageHeight = 295;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
+    setGenerandoPDF(true);
+    setTimeout(() => {
+      const input = document.getElementById("pdfContent");
+      html2canvas(input).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
 
-      pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+        const pdf = new jsPDF();
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const margin = 10;
+        const contentWidth = pageWidth - 2 * margin;
+        const contentHeight = pageHeight - 2 * margin;
+        let imgWidth = contentWidth;
+        let imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
+        if (imgHeight > contentHeight) {
+          imgHeight = contentHeight;
+          imgWidth = (canvas.width * imgHeight) / canvas.height;
+        }
 
-      pdf.save(`BalanceGeneral_SARAM_${añoSeleccionado}.pdf`);
-    });
+        const positionX = (pageWidth - imgWidth) / 2;
+        const positionY = (pageHeight - imgHeight) / 2;
+
+        pdf.addImage(imgData, "PNG", positionX, positionY, imgWidth, imgHeight);
+        pdf.save(`BalanceGeneral_SARAM_${añoSeleccionado}.pdf`);
+        setGenerandoPDF(false);
+      });
+    }, 300);
   };
 
   const descargarJson = () => {
@@ -78,11 +85,11 @@ function BalanceGeneral() {
           </div>
           <div>
             {/* Mostrar el botón solo si se ha seleccionado un año */}
-            {añoSeleccionado && <button onClick={generarPDF}>Generar PDF</button>}
-
+            {añoSeleccionado && (
+              <button onClick={generarPDF}>Generar PDF</button>
+            )}
           </div>
         </div>
-
       </div>
 
       {añoSeleccionado && balanceData ? (
@@ -111,11 +118,15 @@ function BalanceGeneral() {
                 </li>
                 <li className="alinear-derecha">
                   <span>Inversiones Financieras a Corto Plazo:</span>
-                  <span>${formatearNumero(balanceData.inversionesCortoPlazo)}</span>
+                  <span>
+                    ${formatearNumero(balanceData.inversionesCortoPlazo)}
+                  </span>
                 </li>
                 <li className="alinear-derecha">
                   <span>Deudores Comerciales y Otras Cuentas por Cobrar:</span>
-                  <span>${formatearNumero(balanceData.deudoresComerciales)}</span>
+                  <span>
+                    ${formatearNumero(balanceData.deudoresComerciales)}
+                  </span>
                 </li>
                 <li className="alinear-derecha">
                   <span>Inventarios:</span>
@@ -134,7 +145,9 @@ function BalanceGeneral() {
               <ul>
                 <li className="alinear-derecha">
                   <span>Propiedad, Planta y Equipo (neto):</span>
-                  <span>${formatearNumero(balanceData.propiedadPlantaEquipo)}</span>
+                  <span>
+                    ${formatearNumero(balanceData.propiedadPlantaEquipo)}
+                  </span>
                 </li>
                 <li className="alinear-derecha">
                   <span>Activo Biológico:</span>
@@ -146,7 +159,9 @@ function BalanceGeneral() {
                 </li>
                 <li className="alinear-derecha">
                   <span>Inversiones Financieras a Largo Plazo:</span>
-                  <span>${formatearNumero(balanceData.inversionesLargoPlazo)}</span>
+                  <span>
+                    ${formatearNumero(balanceData.inversionesLargoPlazo)}
+                  </span>
                 </li>
                 <li className="alinear-derecha">
                   <span>Proyectos en Proceso:</span>
@@ -168,12 +183,16 @@ function BalanceGeneral() {
                   <span>${formatearNumero(balanceData.deudasCortoPlazo)}</span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>Deudas Comerciales y Otras Cuentas por Pagar a Corto Plazo:</span>
+                  <span>
+                    Deudas Comerciales y Otras Cuentas por Pagar a Corto Plazo:
+                  </span>
                   <span>${formatearNumero(balanceData.deudasComerciales)}</span>
                 </li>
                 <li className="alinear-derecha">
                   <span>Beneficios a Empleados a Corto Plazo:</span>
-                  <span>${formatearNumero(balanceData.beneficiosEmpleados)}</span>
+                  <span>
+                    ${formatearNumero(balanceData.beneficiosEmpleados)}
+                  </span>
                 </li>
                 <li className="alinear-derecha">
                   <span>Impuestos por Pagar:</span>
@@ -181,7 +200,9 @@ function BalanceGeneral() {
                 </li>
                 <li className="alinear-derecha">
                   <span>Dividendos por Pagar:</span>
-                  <span>${formatearNumero(balanceData.dividendosPorPagar)}</span>
+                  <span>
+                    ${formatearNumero(balanceData.dividendosPorPagar)}
+                  </span>
                 </li>
               </ul>
               <h5>
@@ -220,26 +241,55 @@ function BalanceGeneral() {
                 </li>
                 <li className="alinear-derecha">
                   <span>Resultados Acumulados:</span>
-                  <span>${formatearNumero(balanceData.resultadosAcumulados)}</span>
+                  <span>
+                    ${formatearNumero(balanceData.resultadosAcumulados)}
+                  </span>
                 </li>
                 <li className="alinear-derecha">
                   <span>Resultados del Ejercicio:</span>
-                  <span>${formatearNumero(balanceData.resultadosEjercicio)}</span>
+                  <span>
+                    ${formatearNumero(balanceData.resultadosEjercicio)}
+                  </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>Ajustes y Efectos por Valuación y Cambio de Valor:</span>
-                  <span>${formatearNumero(balanceData.ajustesEfectosValuacion)}</span>
+                  <span>
+                    Ajustes y Efectos por Valuación y Cambio de Valor:
+                  </span>
+                  <span>
+                    ${formatearNumero(balanceData.ajustesEfectosValuacion)}
+                  </span>
                 </li>
               </ul>
               <h5 style={{ textDecoration: "underline" }}>
-                TOTAL PATRIMONIO: ${formatearNumero(balanceData.totalPatrimonio)}
+                TOTAL PATRIMONIO: $
+                {formatearNumero(balanceData.totalPatrimonio)}
               </h5>
               <h5 style={{ textDecoration: "underline" }}>
                 TOTAL PASIVO Y PATRIMONIO: $
                 {formatearNumero(balanceData.totalPasivosPatrimonio)}
               </h5>
             </div>
-            <button onClick={descargarJson}>Descargar JSON</button>
+            <div
+              className={
+                generandoPDF ? "descargarJson oculto" : "descargarJson"
+              }
+            >
+              <button onClick={descargarJson}>Descargar JSON</button>
+            </div>
+          </div>
+          <div className={generandoPDF ? "firmas" : "firmas oculto"}>
+            <div>
+              <p>_______________</p>
+              <p>Firma1</p>
+            </div>
+            <div>
+              <p>_______________</p>
+              <p>Firma2</p>
+            </div>
+            <div>
+              <p>_______________</p>
+              <p>Firma3</p>
+            </div>
           </div>
         </div>
       ) : (

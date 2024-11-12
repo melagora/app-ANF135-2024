@@ -8,10 +8,6 @@
   padding-top: 50px;
 }
 
-.info{
-
-}
-
 a {
   font-weight: 500;
   color: #ffffff;
@@ -87,8 +83,7 @@ nav {
 
 body {
   margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
+  padding-top: 60px;
 }
 
 h1 {

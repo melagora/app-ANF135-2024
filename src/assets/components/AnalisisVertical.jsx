@@ -30,29 +30,36 @@ function AnalisisVertical() {
     }
   };
 
+  const [generandoPDF, setGenerandoPDF] = useState(false);
   const generarPDF = () => {
-    const input = document.getElementById("pdfContent");
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      const imgWidth = 190;
-      const pageHeight = 295;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
+    setGenerandoPDF(true);
+    setTimeout(() => {
+      const input = document.getElementById("pdfContent");
+      html2canvas(input).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
 
-      pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+        const pdf = new jsPDF();
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const margin = 10;
+        const contentWidth = pageWidth - 2 * margin;
+        const contentHeight = pageHeight - 2 * margin;
+        let imgWidth = contentWidth;
+        let imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
+        if (imgHeight > contentHeight) {
+          imgHeight = contentHeight;
+          imgWidth = (canvas.width * imgHeight) / canvas.height;
+        }
 
-      pdf.save(`BalanceGeneral_SARAM_${añoSeleccionado}.pdf`);
-    });
+        const positionX = (pageWidth - imgWidth) / 2;
+        const positionY = (pageHeight - imgHeight) / 2;
+
+        pdf.addImage(imgData, "PNG", positionX, positionY, imgWidth, imgHeight);
+        pdf.save(`AnalisisDupont_SARAM_${añoSeleccionado}.pdf`);
+        setGenerandoPDF(false);
+      });
+    }, 300);
   };
 
   // Función para formatear los números
@@ -118,13 +125,13 @@ function AnalisisVertical() {
           <div className="json">
             {/* Aquí va el contenido del balance general */}
             <div>
-              <h4 style={{ paddingTop: "20px", textDecoration: "underline" }}>ACTIVOS</h4>
+              <h4 style={{ paddingTop: "20px", textDecoration: "underline" }}>
+                ACTIVOS
+              </h4>
               <h5>ACTIVO CORRIENTE</h5>
               <ul>
                 <li className="alinear-derecha">
-                  <span>
-                    Efectivo y Equivalentes al Efectivo:{" "}
-                  </span>
+                  <span>Efectivo y Equivalentes al Efectivo: </span>
                   <span>
                     ${formatearNumero(balanceData.efectivo)} (
                     {calcularPorcentaje(
@@ -135,9 +142,7 @@ function AnalisisVertical() {
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Inversiones Financieras a Corto Plazo:{" "}
-                  </span>
+                  <span>Inversiones Financieras a Corto Plazo: </span>
                   <span>
                     ${formatearNumero(balanceData.inversionesCortoPlazo)} (
                     {calcularPorcentaje(
@@ -148,9 +153,7 @@ function AnalisisVertical() {
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Deudores Comerciales y Otras Cuentas por Cobrar:{" "}
-                  </span>
+                  <span>Deudores Comerciales y Otras Cuentas por Cobrar: </span>
                   <span>
                     ${formatearNumero(balanceData.deudoresComerciales)} (
                     {calcularPorcentaje(
@@ -161,9 +164,7 @@ function AnalisisVertical() {
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Inventarios:{" "}
-                  </span>
+                  <span>Inventarios: </span>
                   <span>
                     ${formatearNumero(balanceData.inventarios)} (
                     {calcularPorcentaje(
@@ -174,9 +175,7 @@ function AnalisisVertical() {
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Pagos Anticipados:{" "}
-                  </span>
+                  <span>Pagos Anticipados: </span>
                   <span>
                     ${formatearNumero(balanceData.pagosAnticipados)} (
                     {calcularPorcentaje(
@@ -188,8 +187,8 @@ function AnalisisVertical() {
                 </li>
               </ul>
               <h5>
-                TOTAL ACTIVO CORRIENTE:{" "}
-                ${formatearNumero(balanceData.totalActivoCorriente)} (
+                TOTAL ACTIVO CORRIENTE: $
+                {formatearNumero(balanceData.totalActivoCorriente)} (
                 {calcularPorcentaje(
                   balanceData.totalActivoCorriente,
                   balanceData.totalActivos
@@ -200,9 +199,7 @@ function AnalisisVertical() {
               <h5>ACTIVO NO CORRIENTE</h5>
               <ul>
                 <li className="alinear-derecha">
-                  <span>
-                    Propiedad, Planta y Equipo (neto):{" "}
-                  </span>
+                  <span>Propiedad, Planta y Equipo (neto): </span>
                   <span>
                     ${formatearNumero(balanceData.propiedadPlantaEquipo)} (
                     {calcularPorcentaje(
@@ -213,9 +210,7 @@ function AnalisisVertical() {
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Activo Biológico:{" "}
-                  </span>
+                  <span>Activo Biológico: </span>
                   <span>
                     ${formatearNumero(balanceData.activoBiologico)} (
                     {calcularPorcentaje(
@@ -226,9 +221,7 @@ function AnalisisVertical() {
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Intangibles:{" "}
-                  </span>
+                  <span>Intangibles: </span>
                   <span>
                     ${formatearNumero(balanceData.intangibles)} (
                     {calcularPorcentaje(
@@ -239,9 +232,7 @@ function AnalisisVertical() {
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Inversiones Financieras a Largo Plazo:{" "}
-                  </span>
+                  <span>Inversiones Financieras a Largo Plazo: </span>
                   <span>
                     ${formatearNumero(balanceData.inversionesLargoPlazo)} (
                     {calcularPorcentaje(
@@ -252,9 +243,7 @@ function AnalisisVertical() {
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Proyectos en Proceso:{" "}
-                  </span>
+                  <span>Proyectos en Proceso: </span>
                   <span>
                     ${formatearNumero(balanceData.proyectosProceso)} (
                     {calcularPorcentaje(
@@ -266,8 +255,8 @@ function AnalisisVertical() {
                 </li>
               </ul>
               <h5>
-                TOTAL ACTIVO NO CORRIENTE:{" "}
-                ${formatearNumero(balanceData.totalActivoNoCorriente)} (
+                TOTAL ACTIVO NO CORRIENTE: $
+                {formatearNumero(balanceData.totalActivoNoCorriente)} (
                 {calcularPorcentaje(
                   balanceData.totalActivoNoCorriente,
                   balanceData.totalActivos
@@ -275,15 +264,15 @@ function AnalisisVertical() {
                 )
               </h5>
 
-              <h5 style={{ textDecoration: "underline" }}>TOTAL ACTIVO: ${formatearNumero(balanceData.totalActivos)}</h5>
+              <h5 style={{ textDecoration: "underline" }}>
+                TOTAL ACTIVO: ${formatearNumero(balanceData.totalActivos)}
+              </h5>
 
               <h4 style={{ textDecoration: "underline" }}>PASIVOS</h4>
               <h5>PASIVO CORRIENTE</h5>
               <ul>
                 <li className="alinear-derecha">
-                  <span>
-                    Deudas Financieras a Corto Plazo:{" "}
-                  </span>
+                  <span>Deudas Financieras a Corto Plazo: </span>
                   <span>
                     ${formatearNumero(balanceData.deudasCortoPlazo)} (
                     {calcularPorcentaje(
@@ -307,9 +296,7 @@ function AnalisisVertical() {
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Beneficios a Empleados a Corto Plazo:{" "}
-                  </span>
+                  <span>Beneficios a Empleados a Corto Plazo: </span>
                   <span>
                     ${formatearNumero(balanceData.beneficiosEmpleados)} (
                     {calcularPorcentaje(
@@ -320,9 +307,7 @@ function AnalisisVertical() {
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Impuestos por Pagar:{" "}
-                  </span>
+                  <span>Impuestos por Pagar: </span>
                   <span>
                     ${formatearNumero(balanceData.impuestosPorPagar)} (
                     {calcularPorcentaje(
@@ -333,9 +318,7 @@ function AnalisisVertical() {
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Dividendos por Pagar:{" "}
-                  </span>
+                  <span>Dividendos por Pagar: </span>
                   <span>
                     ${formatearNumero(balanceData.dividendosPorPagar)} (
                     {calcularPorcentaje(
@@ -348,8 +331,8 @@ function AnalisisVertical() {
               </ul>
 
               <h5>
-                TOTAL PASIVO CORRIENTE:{" "}
-                ${formatearNumero(balanceData.totalPasivoCorriente)} (
+                TOTAL PASIVO CORRIENTE: $
+                {formatearNumero(balanceData.totalPasivoCorriente)} (
                 {calcularPorcentaje(
                   balanceData.totalPasivoCorriente,
                   balanceData.totalPasivos
@@ -360,9 +343,7 @@ function AnalisisVertical() {
               <h5>PASIVO NO CORRIENTE</h5>
               <ul>
                 <li className="alinear-derecha">
-                  <span>
-                    Deudas Financieras a Largo Plazo:{" "}
-                  </span>
+                  <span>Deudas Financieras a Largo Plazo: </span>
                   <span>
                     ${formatearNumero(balanceData.deudasLargoPlazo)} (
                     {calcularPorcentaje(
@@ -373,9 +354,7 @@ function AnalisisVertical() {
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Provisiones y Otros Pasivos a Largo Plazo:{" "}
-                  </span>
+                  <span>Provisiones y Otros Pasivos a Largo Plazo: </span>
                   <span>
                     ${formatearNumero(balanceData.provisiones)} (
                     {calcularPorcentaje(
@@ -388,8 +367,8 @@ function AnalisisVertical() {
               </ul>
 
               <h5>
-                TOTAL PASIVO NO CORRIENTE:{" "}
-                ${formatearNumero(balanceData.totalPasivoNoCorriente)} (
+                TOTAL PASIVO NO CORRIENTE: $
+                {formatearNumero(balanceData.totalPasivoNoCorriente)} (
                 {calcularPorcentaje(
                   balanceData.totalPasivoNoCorriente,
                   balanceData.totalPasivos
@@ -397,14 +376,14 @@ function AnalisisVertical() {
                 )
               </h5>
 
-              <h5 style={{ textDecoration: "underline" }}>TOTAL PASIVO: ${formatearNumero(balanceData.totalPasivos)}</h5>
+              <h5 style={{ textDecoration: "underline" }}>
+                TOTAL PASIVO: ${formatearNumero(balanceData.totalPasivos)}
+              </h5>
 
               <h4 style={{ textDecoration: "underline" }}>PATRIMONIO</h4>
               <ul>
                 <li className="alinear-derecha">
-                  <span>
-                    Capital Social:{" "}
-                  </span>
+                  <span>Capital Social: </span>
                   <span>
                     ${formatearNumero(balanceData.capitalSocial)} (
                     {calcularPorcentaje(
@@ -415,9 +394,7 @@ function AnalisisVertical() {
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Reservas:{" "}
-                  </span>
+                  <span>Reservas: </span>
                   <span>
                     ${formatearNumero(balanceData.reservas)} (
                     {calcularPorcentaje(
@@ -428,9 +405,7 @@ function AnalisisVertical() {
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Resultados Acumulados:{" "}
-                  </span>
+                  <span>Resultados Acumulados: </span>
                   <span>
                     ${formatearNumero(balanceData.resultadosAcumulados)} (
                     {calcularPorcentaje(
@@ -441,9 +416,7 @@ function AnalisisVertical() {
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Resultados del Ejercicio:{" "}
-                  </span>
+                  <span>Resultados del Ejercicio: </span>
                   <span>
                     ${formatearNumero(balanceData.resultadosEjercicio)} (
                     {calcularPorcentaje(
@@ -469,145 +442,205 @@ function AnalisisVertical() {
               </ul>
 
               <h5>
-                TOTAL PATRIMONIO: ${formatearNumero(balanceData.totalPatrimonio)}
+                TOTAL PATRIMONIO: $
+                {formatearNumero(balanceData.totalPatrimonio)}
               </h5>
 
               <h4 style={{ textDecoration: "underline" }}>
-                TOTAL PASIVO + PATRIMONIO:{" "}
-                ${formatearNumero(
+                TOTAL PASIVO + PATRIMONIO: $
+                {formatearNumero(
                   balanceData.totalPasivos + balanceData.totalPatrimonio
                 )}
               </h4>
             </div>
           </div>
+          <div className={generandoPDF ? "firmas" : "firmas oculto"}>
+            <div>
+              <p>_______________</p>
+              <p>Firma1</p>
+            </div>
+            <div>
+              <p>_______________</p>
+              <p>Firma2</p>
+            </div>
+            <div>
+              <p>_______________</p>
+              <p>Firma3</p>
+            </div>
+          </div>
         </div>
       ) : vista === "estado" && estadoData ? (
         <div id="pdfContent">
+          <div className="centrar">
+            <h4>Saram S.A de C.V.</h4>
+            <h4>
+              {vista === "balance"
+                ? "Análisis Vertical del Balance General"
+                : "Análisis Vertical del Estado de Resultado"}
+            </h4>
+            <h5>
+              Del 1 de enero hasta el 31 de diciembre del {añoSeleccionado}
+            </h5>
+            <h5>
+              Cifras expresadas en miles de dólares de los Estados Unidos de
+              América
+            </h5>
+          </div>
           <div className="json">
             {/* Aquí va el contenido del estado de resultados */}
             <div>
-              <h4 style={{ paddingTop: "20px", textDecoration: "underline" }}>INGRESOS</h4>
+              <h4 style={{ paddingTop: "20px", textDecoration: "underline" }}>
+                INGRESOS
+              </h4>
               <ul>
                 <li className="alinear-derecha">
-                  <span>
-                    Ventas:{" "}
-                  </span>
+                  <span>Ventas: </span>
                   <span>
                     ${formatearNumero(estadoData.ventas)} (
                     {calcularPorcentaje(estadoData.ventas, estadoData.ventas)})
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Costo de Venta:{" "}
-                  </span>
+                  <span>Costo de Venta: </span>
                   <span>
                     ${formatearNumero(estadoData.costoVenta)} (
-                    {calcularPorcentaje(estadoData.costoVenta, estadoData.ventas)})
+                    {calcularPorcentaje(
+                      estadoData.costoVenta,
+                      estadoData.ventas
+                    )}
+                    )
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Utilidad Bruta:{" "}
-                  </span>
+                  <span>Utilidad Bruta: </span>
                   <span>
                     ${formatearNumero(estadoData.utilidadBruta)} (
-                    {calcularPorcentaje(estadoData.utilidadBruta, estadoData.ventas)})
+                    {calcularPorcentaje(
+                      estadoData.utilidadBruta,
+                      estadoData.ventas
+                    )}
+                    )
                   </span>
                 </li>
               </ul>
 
-              <h4 style={{ textDecoration: "underline" }}>GASTOS DE OPERACIÓN</h4>
+              <h4 style={{ textDecoration: "underline" }}>
+                GASTOS DE OPERACIÓN
+              </h4>
               <ul>
                 <li className="alinear-derecha">
-                  <span>
-                    Administración:{" "}
-                  </span>
+                  <span>Administración: </span>
                   <span>
                     ${formatearNumero(estadoData.administracion)} (
-                    {calcularPorcentaje(estadoData.administracion, estadoData.ventas)})
+                    {calcularPorcentaje(
+                      estadoData.administracion,
+                      estadoData.ventas
+                    )}
+                    )
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Gerencia Financiera:{" "}
-                  </span>
+                  <span>Gerencia Financiera: </span>
                   <span>
                     ${formatearNumero(estadoData.gerenciaFinanciera)} (
-                    {calcularPorcentaje(estadoData.gerenciaFinanciera, estadoData.ventas)})
+                    {calcularPorcentaje(
+                      estadoData.gerenciaFinanciera,
+                      estadoData.ventas
+                    )}
+                    )
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Auditoría Interna:{" "}
-                  </span>
+                  <span>Auditoría Interna: </span>
                   <span>
                     ${formatearNumero(estadoData.auditoriaInterna)} (
-                    {calcularPorcentaje(estadoData.auditoriaInterna, estadoData.ventas)})
+                    {calcularPorcentaje(
+                      estadoData.auditoriaInterna,
+                      estadoData.ventas
+                    )}
+                    )
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Gerencia Ventas y Mercadeo:{" "}
-                  </span>
+                  <span>Gerencia Ventas y Mercadeo: </span>
                   <span>
                     ${formatearNumero(estadoData.gerenciaVentasMercadeo)} (
-                    {calcularPorcentaje(estadoData.gerenciaVentasMercadeo, estadoData.ventas)})
+                    {calcularPorcentaje(
+                      estadoData.gerenciaVentasMercadeo,
+                      estadoData.ventas
+                    )}
+                    )
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    División Avícola:{" "}
-                  </span>
+                  <span>División Avícola: </span>
                   <span>
                     ${formatearNumero(estadoData.divisionAvicola)} (
-                    {calcularPorcentaje(estadoData.divisionAvicola, estadoData.ventas)})
+                    {calcularPorcentaje(
+                      estadoData.divisionAvicola,
+                      estadoData.ventas
+                    )}
+                    )
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Dirección:{" "}
-                  </span>
+                  <span>Dirección: </span>
                   <span>
                     ${formatearNumero(estadoData.direccion)} (
-                    {calcularPorcentaje(estadoData.direccion, estadoData.ventas)})
+                    {calcularPorcentaje(
+                      estadoData.direccion,
+                      estadoData.ventas
+                    )}
+                    )
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Cadena de Suministros:{" "}
-                  </span>
+                  <span>Cadena de Suministros: </span>
                   <span>
                     ${formatearNumero(estadoData.cadenaSuministros)} (
-                    {calcularPorcentaje(estadoData.cadenaSuministros, estadoData.ventas)})
+                    {calcularPorcentaje(
+                      estadoData.cadenaSuministros,
+                      estadoData.ventas
+                    )}
+                    )
                   </span>
                 </li>
               </ul>
 
               <h4>
-                UTILIDAD DE OPERACIÓN:{" "}
-                ${formatearNumero(estadoData.utilidadOperacion)} (
-                {calcularPorcentaje(estadoData.utilidadOperacion, estadoData.ventas)})
+                UTILIDAD DE OPERACIÓN: $
+                {formatearNumero(estadoData.utilidadOperacion)} (
+                {calcularPorcentaje(
+                  estadoData.utilidadOperacion,
+                  estadoData.ventas
+                )}
+                )
               </h4>
 
-              <h4 style={{ textDecoration: "underline" }}>GASTOS NO OPERACIONALES</h4>
+              <h4 style={{ textDecoration: "underline" }}>
+                GASTOS NO OPERACIONALES
+              </h4>
               <ul>
                 <li className="alinear-derecha">
-                  <span>
-                    Gastos Financieros:{" "}
-                  </span>
+                  <span>Gastos Financieros: </span>
                   <span>
                     ${formatearNumero(estadoData.gastosFinancieros)} (
-                    {calcularPorcentaje(estadoData.gastosFinancieros, estadoData.ventas)})
+                    {calcularPorcentaje(
+                      estadoData.gastosFinancieros,
+                      estadoData.ventas
+                    )}
+                    )
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    Otros Gastos:{" "}
-                  </span>
+                  <span>Otros Gastos: </span>
                   <span>
                     ${formatearNumero(estadoData.otrosGastosNoOperacionales)} (
-                    {calcularPorcentaje(estadoData.otrosGastosNoOperacionales, estadoData.ventas)})
+                    {calcularPorcentaje(
+                      estadoData.otrosGastosNoOperacionales,
+                      estadoData.ventas
+                    )}
+                    )
                   </span>
                 </li>
               </ul>
@@ -618,84 +651,107 @@ function AnalisisVertical() {
 
               <ul>
                 <li className="alinear-derecha">
+                  <span>Utilidad Antes de Impuestos y Reserva: </span>
                   <span>
-                    Utilidad Antes de Impuestos y Reserva:{" "}
-                  </span>
-                  <span>
-                    ${formatearNumero(estadoData.utilidadAntesImpuestosReserva)} (
-                    {calcularPorcentaje(estadoData.utilidadAntesImpuestosReserva, estadoData.ventas)})
+                    ${formatearNumero(estadoData.utilidadAntesImpuestosReserva)}{" "}
+                    (
+                    {calcularPorcentaje(
+                      estadoData.utilidadAntesImpuestosReserva,
+                      estadoData.ventas
+                    )}
+                    )
                   </span>
                 </li>
               </ul>
 
-              <h5 className="alinear-derecha">
-                Reserva Legal:{" "}
-              </h5>
+              <h5 className="alinear-derecha">Reserva Legal: </h5>
 
               <ul>
                 <li className="alinear-derecha">
-                  <span>
-                    Reserva Legal:{" "}
-                  </span>
+                  <span>Reserva Legal: </span>
                   <span>
                     ${formatearNumero(estadoData.reservaLegal)} (
-                    {calcularPorcentaje(estadoData.reservaLegal, estadoData.ventas)})
+                    {calcularPorcentaje(
+                      estadoData.reservaLegal,
+                      estadoData.ventas
+                    )}
+                    )
                   </span>
                 </li>
               </ul>
 
-              <h5 className="alinear-derecha">
-                UTILIDAD ANTES DE IMPUESTO:{" "}
-              </h5>
+              <h5 className="alinear-derecha">UTILIDAD ANTES DE IMPUESTO: </h5>
 
               <ul>
                 <li className="alinear-derecha">
-                  <span>
-                    UTILIDAD ANTES DE IMPUESTO:{" "}
-                  </span>
+                  <span>UTILIDAD ANTES DE IMPUESTO: </span>
                   <span>
                     ${formatearNumero(estadoData.utilidadAntesImpuesto)} (
-                    {calcularPorcentaje(estadoData.utilidadAntesImpuesto, estadoData.ventas)})
+                    {calcularPorcentaje(
+                      estadoData.utilidadAntesImpuesto,
+                      estadoData.ventas
+                    )}
+                    )
                   </span>
                 </li>
               </ul>
 
-              <h5 className="alinear-derecha">
-                IMPUESTO SOBRE LA RENTA:{" "}
-              </h5>
+              <h5 className="alinear-derecha">IMPUESTO SOBRE LA RENTA: </h5>
 
               <ul>
                 <li className="alinear-derecha">
-                  <span>
-                    IMPUESTO SOBRE LA RENTA:{" "}
-                  </span>
+                  <span>IMPUESTO SOBRE LA RENTA: </span>
                   <span>
                     ${formatearNumero(estadoData.impuestoRenta)} (
-                    {calcularPorcentaje(estadoData.impuestoRenta, estadoData.ventas)})
+                    {calcularPorcentaje(
+                      estadoData.impuestoRenta,
+                      estadoData.ventas
+                    )}
+                    )
                   </span>
                 </li>
                 <li className="alinear-derecha">
-                  <span>
-                    CESC grandes contribuyentes:{" "}
-                  </span>
+                  <span>CESC grandes contribuyentes: </span>
                   <span>
                     ${formatearNumero(estadoData.cescGrandesContribuyentes)} (
-                    {calcularPorcentaje(estadoData.cescGrandesContribuyentes, estadoData.ventas)})
+                    {calcularPorcentaje(
+                      estadoData.cescGrandesContribuyentes,
+                      estadoData.ventas
+                    )}
+                    )
                   </span>
                 </li>
               </ul>
 
-              <h4 className="alinear-derecha" style={{ textDecoration: "underline" }}>
-                <span>
-                  UTILIDAD DISTRIBUIBLE:{" "}
-                </span>
+              <h4
+                className="alinear-derecha"
+                style={{ textDecoration: "underline" }}
+              >
+                <span>UTILIDAD DISTRIBUIBLE: </span>
                 <span>
                   ${formatearNumero(estadoData.utilidadDistribuible)} (
-                  {calcularPorcentaje(estadoData.utilidadDistribuible, estadoData.ventas)})
+                  {calcularPorcentaje(
+                    estadoData.utilidadDistribuible,
+                    estadoData.ventas
+                  )}
+                  )
                 </span>
               </h4>
             </div>
-
+          </div>
+          <div className={generandoPDF ? "firmas" : "firmas oculto"}>
+            <div>
+              <p>_______________</p>
+              <p>Firma1</p>
+            </div>
+            <div>
+              <p>_______________</p>
+              <p>Firma2</p>
+            </div>
+            <div>
+              <p>_______________</p>
+              <p>Firma3</p>
+            </div>
           </div>
         </div>
       ) : (

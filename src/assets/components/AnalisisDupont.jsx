@@ -13,8 +13,8 @@ const AnalisisDupont = () => {
     setAñoSeleccionado(año);
 
     // Cargar balances y estados desde localStorage
-    const balances = JSON.parse(localStorage.getItem('balances')) || {};
-    const estados = JSON.parse(localStorage.getItem('estados')) || {};
+    const balances = JSON.parse(localStorage.getItem("balances")) || {};
+    const estados = JSON.parse(localStorage.getItem("estados")) || {};
 
     if (balances[año]) {
       setBalanceData(balances[año]);
@@ -29,29 +29,36 @@ const AnalisisDupont = () => {
     }
   };
 
+  const [generandoPDF, setGenerandoPDF] = useState(false);
   const generarPDF = () => {
-    const input = document.getElementById("pdfContent");
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      const imgWidth = 190;
-      const pageHeight = 295;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
+    setGenerandoPDF(true);
+    setTimeout(() => {
+      const input = document.getElementById("pdfContent");
+      html2canvas(input).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
 
-      pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+        const pdf = new jsPDF();
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const margin = 10;
+        const contentWidth = pageWidth - 2 * margin;
+        const contentHeight = pageHeight - 2 * margin;
+        let imgWidth = contentWidth;
+        let imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
+        if (imgHeight > contentHeight) {
+          imgHeight = contentHeight;
+          imgWidth = (canvas.width * imgHeight) / canvas.height;
+        }
 
-      pdf.save(`AnalisisDupont_SARAM_${añoSeleccionado}.pdf`);
-    });
+        const positionX = (pageWidth - imgWidth) / 2;
+        const positionY = (pageHeight - imgHeight) / 2;
+
+        pdf.addImage(imgData, "PNG", positionX, positionY, imgWidth, imgHeight);
+        pdf.save(`AnalisisDupont_SARAM_${añoSeleccionado}.pdf`);
+        setGenerandoPDF(false);
+      });
+    }, 300);
   };
 
   // Cálculos para el análisis DuPont
@@ -61,12 +68,17 @@ const AnalisisDupont = () => {
   const patrimonio = balanceData ? balanceData.capitalSocial : 0;
 
   const margenUtilidadNeta = ventas ? (utilidadNeta / ventas).toFixed(4) : null;
-  const rotacionActivos = activosTotales ? (ventas / activosTotales).toFixed(4) : null;
-  const apalancamiento = patrimonio ? (activosTotales / patrimonio).toFixed(4) : null;
-
-  const roe = margenUtilidadNeta && rotacionActivos && apalancamiento
-    ? (margenUtilidadNeta * rotacionActivos * apalancamiento).toFixed(4)
+  const rotacionActivos = activosTotales
+    ? (ventas / activosTotales).toFixed(4)
     : null;
+  const apalancamiento = patrimonio
+    ? (activosTotales / patrimonio).toFixed(4)
+    : null;
+
+  const roe =
+    margenUtilidadNeta && rotacionActivos && apalancamiento
+      ? (margenUtilidadNeta * rotacionActivos * apalancamiento).toFixed(4)
+      : null;
 
   return (
     <div className="info">
@@ -85,9 +97,7 @@ const AnalisisDupont = () => {
             <option value="2020">2020</option>
             <option value="2019">2019</option>
           </select>
-          {añoSeleccionado && (
-            <button onClick={generarPDF}>Generar PDF</button>
-          )}
+          {añoSeleccionado && <button onClick={generarPDF}>Generar PDF</button>}
         </div>
       </div>
 
@@ -97,17 +107,24 @@ const AnalisisDupont = () => {
             <p>SARAM S.A de C.V.</p>
             <p>Análisis DuPont</p>
             <p>Del 1 de enero hasta el 31 de diciembre del {añoSeleccionado}</p>
-            <p>Cifras expresadas en miles de dólares de los Estados Unidos de América</p>
+            <p>
+              Cifras expresadas en miles de dólares de los Estados Unidos de
+              América
+            </p>
           </div>
 
-          <div  className="containerPorEstado">
-            <div style={{ paddingTop: "20px"}} className="">
+          <div className="containerPorEstado">
+            <div style={{ paddingTop: "20px" }} className="">
               <p>Rendimiento sobre el Patrimonio (ROE)</p>
               <p>{roe}</p>
             </div>
             <div className="">
               <p>Rendimiento sobre los Activos Totales (ROA)</p>
-              <p>{(roe && rotacionActivos) ? (roe / rotacionActivos).toFixed(4) : 0}</p>
+              <p>
+                {roe && rotacionActivos
+                  ? (roe / rotacionActivos).toFixed(4)
+                  : 0}
+              </p>
             </div>
             <div className="">
               <p>Margen de Utilidad Neta</p>
@@ -138,11 +155,23 @@ const AnalisisDupont = () => {
               <p>${patrimonio.toLocaleString()}</p>
             </div>
           </div>
+          <div className={generandoPDF ? "firmas" : "firmas oculto"}>
+            <div>
+              <p>_______________</p>
+              <p>Firma1</p>
+            </div>
+            <div>
+              <p>_______________</p>
+              <p>Firma2</p>
+            </div>
+            <div>
+              <p>_______________</p>
+              <p>Firma3</p>
+            </div>
+          </div>
         </div>
       ) : (
-        <p>
-          Por favor, selecciona un año para ver el Análisis DuPont.
-        </p>
+        <p>Por favor, selecciona un año para ver el Análisis DuPont.</p>
       )}
     </div>
   );

@@ -26,29 +26,36 @@ function EstadoDeResultado() {
     });
   };
 
+  const [generandoPDF, setGenerandoPDF] = useState(false);
   const generarPDF = () => {
-    const input = document.getElementById("pdfContent");
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      const imgWidth = 190;
-      const pageHeight = 295;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
+    setGenerandoPDF(true);
+    setTimeout(() => {
+      const input = document.getElementById("pdfContent");
+      html2canvas(input).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
 
-      pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+        const pdf = new jsPDF();
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const margin = 10;
+        const contentWidth = pageWidth - 2 * margin;
+        const contentHeight = pageHeight - 2 * margin;
+        let imgWidth = contentWidth;
+        let imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
+        if (imgHeight > contentHeight) {
+          imgHeight = contentHeight;
+          imgWidth = (canvas.width * imgHeight) / canvas.height;
+        }
 
-      pdf.save(`EstadoResultado_SARAM_${añoSeleccionado}.pdf`);
-    });
+        const positionX = (pageWidth - imgWidth) / 2;
+        const positionY = (pageHeight - imgHeight) / 2;
+
+        pdf.addImage(imgData, "PNG", positionX, positionY, imgWidth, imgHeight);
+        pdf.save(`EstadoResultado_SARAM_${añoSeleccionado}.pdf`);
+        setGenerandoPDF(false);
+      });
+    }, 300);
   };
 
   const descargarJson = () => {
@@ -117,7 +124,9 @@ function EstadoDeResultado() {
                 <span>Utilidad Bruta:</span>
                 <span>${formatearNumero(estadoData.utilidadBruta)}</span>
               </h5>
-              <h4 style={{ textDecoration: "underline" }}>GASTOS DE OPERACIÓN</h4>
+              <h4 style={{ textDecoration: "underline" }}>
+                GASTOS DE OPERACIÓN
+              </h4>
               <ul>
                 <li className="alinear-derecha">
                   <span>Administración:</span>
@@ -133,7 +142,9 @@ function EstadoDeResultado() {
                 </li>
                 <li className="alinear-derecha">
                   <span>Gerencia Ventas y Mercadeo:</span>
-                  <span>${formatearNumero(estadoData.gerenciaVentasMercadeo)}</span>
+                  <span>
+                    ${formatearNumero(estadoData.gerenciaVentasMercadeo)}
+                  </span>
                 </li>
                 <li className="alinear-derecha">
                   <span>División Avícola:</span>
@@ -153,7 +164,9 @@ function EstadoDeResultado() {
                 <span>${formatearNumero(estadoData.utilidadOperacion)}</span>
               </h5>
 
-              <h4 style={{ textDecoration: "underline" }}>GASTOS NO OPERACIONALES</h4>
+              <h4 style={{ textDecoration: "underline" }}>
+                GASTOS NO OPERACIONALES
+              </h4>
               <ul>
                 <li className="alinear-derecha">
                   <span>Gastos Financieros:</span>
@@ -161,12 +174,16 @@ function EstadoDeResultado() {
                 </li>
                 <li className="alinear-derecha">
                   <span>Otros Gastos No Operacionales:</span>
-                  <span>${formatearNumero(estadoData.otrosGastosNoOperacionales)}</span>
+                  <span>
+                    ${formatearNumero(estadoData.otrosGastosNoOperacionales)}
+                  </span>
                 </li>
               </ul>
               <h5 className="alinear-derecha">
                 <span>Utilidad Antes de Impuestos y Reserva:</span>
-                <span>${formatearNumero(estadoData.utilidadAntesImpuestosReserva)}</span>
+                <span>
+                  ${formatearNumero(estadoData.utilidadAntesImpuestosReserva)}
+                </span>
               </h5>
 
               <h4 style={{ textDecoration: "underline" }}>RESERVA LEGAL</h4>
@@ -175,13 +192,19 @@ function EstadoDeResultado() {
                 <span>${formatearNumero(estadoData.reservaLegal)}</span>
               </h5>
 
-              <h4 style={{ textDecoration: "underline" }}>UTILIDAD ANTES DE IMPUESTO</h4>
+              <h4 style={{ textDecoration: "underline" }}>
+                UTILIDAD ANTES DE IMPUESTO
+              </h4>
               <h5 className="alinear-derecha">
                 <span>Utilidad Antes de Impuesto:</span>
-                <span>${formatearNumero(estadoData.utilidadAntesImpuesto)}</span>
+                <span>
+                  ${formatearNumero(estadoData.utilidadAntesImpuesto)}
+                </span>
               </h5>
 
-              <h4 style={{ textDecoration: "underline" }}>IMPUESTO SOBRE LA RENTA</h4>
+              <h4 style={{ textDecoration: "underline" }}>
+                IMPUESTO SOBRE LA RENTA
+              </h4>
               <ul>
                 <li className="alinear-derecha">
                   <span>Impuesto sobre la Renta:</span>
@@ -189,15 +212,37 @@ function EstadoDeResultado() {
                 </li>
                 <li className="alinear-derecha">
                   <span>CESC grandes contribuyentes:</span>
-                  <span>${formatearNumero(estadoData.cescGrandesContribuyentes)}</span>
+                  <span>
+                    ${formatearNumero(estadoData.cescGrandesContribuyentes)}
+                  </span>
                 </li>
               </ul>
               <h5 className="alinear-derecha">
                 <span>Utilidad Distribuible:</span>
                 <span>${formatearNumero(estadoData.utilidadDistribuible)}</span>
               </h5>
-
+            </div>
+            <div
+              className={
+                generandoPDF ? "descargarJson oculto" : "descargarJson"
+              }
+            >
               <button onClick={descargarJson}>Descargar JSON</button>
+            </div>
+
+            <div className={generandoPDF ? "firmas" : "firmas oculto"}>
+              <div>
+                <p>_______________</p>
+                <p>Firma1</p>
+              </div>
+              <div>
+                <p>_______________</p>
+                <p>Firma2</p>
+              </div>
+              <div>
+                <p>_______________</p>
+                <p>Firma3</p>
+              </div>
             </div>
           </div>
         </div>
