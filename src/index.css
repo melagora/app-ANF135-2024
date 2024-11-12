@@ -164,9 +164,11 @@ footer h5 {
   nav{
     display: flex;
     flex-direction: column;
+    justify-items: center;
+    justify-content: center;
     align-items: center;
   }
-  
+
   .titulo p {
     font-size: 30px;
   }
@@ -174,9 +176,5 @@ footer h5 {
   .menu ul{
     font-size: 15px;
     gap: 25px;
-  }
-
-  .integrantes2{
-    flex-direction: column;
   }
 }

@@ -31,15 +31,18 @@ p {
   .divGeneral {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .divGeneral1 {
-    align-items: center;
-    justify-content: center;
-    width: 300px;
+    width: 350px;
   }
 
   .divGeneral2{
-    align-items: center;
+    align-items:flex-start;
+    margin: 0px;
+    padding: 0px;
+    padding-right: 20px;
   }
 }
