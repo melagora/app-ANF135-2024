@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import "../Widgets/informacionfinanciera.css"; // Importa el archivo CSS
 
 export default function InformacionFinanciera() {
   const [activeSection, setActiveSection] = useState(null);
@@ -8,9 +9,9 @@ export default function InformacionFinanciera() {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container1 container mt-5">
       
-      <div className="d-flex flex-column gap-1">
+      <div className=" d-flex flex-column gap-1">
         {/* Balance General */}
         <button
           className="btn btn-primary w-100"

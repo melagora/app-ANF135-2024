@@ -7,11 +7,11 @@ export default function Inicio() {
     <div className="info">
       <h1>Información Financiera</h1>
       <div className="container text-center">
-        <div className="row">
-          <div className="col-5">
+        <div className="divGeneral row">
+          <div className="divGeneral1 col-5">
           <img src={Finanza} alt="Logo" className="img-fluid my-3" />
           </div>
-          <div className="col-7">
+          <div className="divGeneral2 col-7">
             <InformacionFinanciera />
           </div>
         </div>

@@ -83,7 +83,7 @@ nav {
 
 body {
   margin: 0;
-  padding-top: 60px;
+  padding-top: 30px;
 }
 
 h1 {
@@ -140,9 +140,43 @@ footer ul li {
   font-size: 16px; /* Tamaño de texto */
 }
 
+.integrantes2{
+  justify-content: center;
+  display: flex;
+}
+
 footer h5 {
   margin: 10px 0 0 0; /* Espaciado superior */
   font-size: 14px; /* Tamaño de texto del copyright */
   font-weight: normal; /* Texto normal, sin negritas */
   opacity: 0.8; /* Un poco de transparencia */
+}
+
+
+/* adaptación para dispositivos de pantallas en laptos y pantallas de mayor pixelaje*/
+@media only screen and (max-width: 600px) {
+
+  body {
+    margin: 0;
+    padding-top: 100px;
+  }
+  
+  nav{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .titulo p {
+    font-size: 30px;
+  }
+
+  .menu ul{
+    font-size: 15px;
+    gap: 25px;
+  }
+
+  .integrantes2{
+    flex-direction: column;
+  }
 }
