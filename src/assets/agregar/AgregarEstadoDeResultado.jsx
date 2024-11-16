@@ -5,25 +5,25 @@ import { estados } from "../components/Datos";
 function AgregarEstadoDeResultado({ onSave }) {
   const [formData, setFormData] = useState({
     año: "",
-    ventas: "",
-    costoVenta: "",
-    utilidadBruta: "",
-    administracion: "",
-    gerenciaFinanciera: "",
-    auditoriaInterna: "",
-    gerenciaVentasMercadeo: "",
-    divisionAvicola: "",
-    direccion: "",
-    cadenaSuministros: "",
-    utilidadOperacion: "",
-    gastosFinancieros: "",
-    otrosGastosNoOperacionales: "",
-    utilidadAntesImpuestosReserva: "",
-    reservaLegal: "",
-    impuestoRenta: "",
-    cescGrandesContribuyentes: "",
-    utilidadAntesImpuesto: "",
-    utilidadDistribuible: "",
+    ventas: 0,
+    costoVenta: 0,
+    utilidadBruta: 0,
+    administracion: 0,
+    gerenciaFinanciera: 0,
+    auditoriaInterna: 0,
+    gerenciaVentasMercadeo: 0,
+    divisionAvicola: 0,
+    direccion: 0,
+    cadenaSuministros: 0,
+    utilidadOperacion: 0,
+    gastosFinancieros: 0,
+    otrosGastosNoOperacionales: 0,
+    utilidadAntesImpuestosReserva: 0,
+    reservaLegal: 0,
+    impuestoRenta: 0,
+    cescGrandesContribuyentes: 0,
+    utilidadAntesImpuesto: 0,
+    utilidadDistribuible: 0,
   });
 
   const handleLoadData = () => {
@@ -38,12 +38,70 @@ function AgregarEstadoDeResultado({ onSave }) {
     }
   };
 
+  const calculateTotals = (updatedData) => {
+    const utilidadBruta = parseFloat((updatedData.ventas - updatedData.costoVenta).toFixed(2));
+  
+    const gastosOperacion = parseFloat(
+      (
+        updatedData.administracion +
+        updatedData.gerenciaFinanciera +
+        updatedData.auditoriaInterna +
+        updatedData.gerenciaVentasMercadeo +
+        updatedData.divisionAvicola +
+        updatedData.direccion +
+        updatedData.cadenaSuministros
+      ).toFixed(2)
+    );
+  
+    const utilidadOperacion = parseFloat((utilidadBruta - gastosOperacion).toFixed(2));
+  
+    const utilidadAntesImpuestosReserva = parseFloat(
+      (
+        utilidadOperacion -
+        updatedData.gastosFinancieros -
+        updatedData.otrosGastosNoOperacionales
+      ).toFixed(2)
+    );
+  
+    const utilidadAntesImpuesto = parseFloat(
+      (utilidadAntesImpuestosReserva - updatedData.reservaLegal).toFixed(2)
+    );
+  
+    const utilidadDistribuible = parseFloat(
+      (
+        utilidadAntesImpuesto -
+        updatedData.impuestoRenta -
+        updatedData.cescGrandesContribuyentes
+      ).toFixed(2)
+    );
+  
+    return {
+      utilidadBruta,
+      utilidadOperacion,
+      utilidadAntesImpuestosReserva,
+      utilidadAntesImpuesto,
+      utilidadDistribuible,
+    };
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+    const numericValue = parseFloat(value) || 0;
+
+    // Actualizamos el estado
+    setFormData((prevFormData) => {
+      const updatedData = {
+        ...prevFormData,
+        [name]: numericValue,
+      };
+
+      const totals = calculateTotals(updatedData);
+
+      return {
+        ...updatedData,
+        ...totals,
+      };
+    });
   };
 
   const handleSubmit = (e) => {
@@ -58,25 +116,25 @@ function AgregarEstadoDeResultado({ onSave }) {
   const handleClear = () => {
     setFormData({
       año: "",
-      ventas: "",
-      costoVenta: "",
-      utilidadBruta: "",
-      administracion: "",
-      gerenciaFinanciera: "",
-      auditoriaInterna: "",
-      gerenciaVentasMercadeo: "",
-      divisionAvicola: "",
-      direccion: "",
-      cadenaSuministros: "",
-      utilidadOperacion: "",
-      gastosFinancieros: "",
-      otrosGastosNoOperacionales: "",
-      utilidadAntesImpuestosReserva: "",
-      reservaLegal: "",
-      impuestoRenta: "",
-      cescGrandesContribuyentes: "",
-      utilidadAntesImpuesto: "",
-      utilidadDistribuible: "",
+      ventas: 0,
+      costoVenta: 0,
+      utilidadBruta: 0,
+      administracion: 0,
+      gerenciaFinanciera: 0,
+      auditoriaInterna: 0,
+      gerenciaVentasMercadeo: 0,
+      divisionAvicola: 0,
+      direccion: 0,
+      cadenaSuministros: 0,
+      utilidadOperacion: 0,
+      gastosFinancieros: 0,
+      otrosGastosNoOperacionales: 0,
+      utilidadAntesImpuestosReserva: 0,
+      reservaLegal: 0,
+      impuestoRenta: 0,
+      cescGrandesContribuyentes: 0,
+      utilidadAntesImpuesto: 0,
+      utilidadDistribuible: 0,
     });
   };
 
