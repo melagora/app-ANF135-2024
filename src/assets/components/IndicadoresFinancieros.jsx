@@ -106,6 +106,7 @@ const IndicadoresFinancieros = () => {
           2
         )
       : null;
+      
 
   return (
     <div className="info">
@@ -157,7 +158,7 @@ const IndicadoresFinancieros = () => {
               <p>Índices de Endeudamiento o Apalancamiento</p>
             </div>
             <div className="infoContainer">
-              <p>Razón de endeudamiento: {razonDeEndeudamiento}</p>
+              <p>Razón de endeudamiento: {razonDeEndeudamiento} ({(razonDeEndeudamiento*100).toFixed(2)}%)</p>
               <p>
                 Razón deuda-capital patrimonial: {razonDeudaCapitalPatrimonial}%
               </p>
@@ -169,9 +170,9 @@ const IndicadoresFinancieros = () => {
               <p>Índices de Rentabilidad</p>
             </div>
             <div className="infoContainer">
-              <p>Margen de utilidad bruta: {margenUtilidadBruta}</p>
-              <p>Margen de utilidad operativa: {margenUtilidadOperativa}</p>
-              <p>Margen de utilidad neta: {margenUtilidadNeta}</p>
+              <p>Margen de utilidad bruta: {margenUtilidadBruta} ({(margenUtilidadBruta*100).toFixed(2)}%)</p>
+              <p>Margen de utilidad operativa: {margenUtilidadOperativa} ({(margenUtilidadOperativa*100).toFixed(2)}%)</p>
+              <p>Margen de utilidad neta: {margenUtilidadNeta} ({(margenUtilidadNeta*100).toFixed(2)}%)</p>
             </div>
           </div>
 

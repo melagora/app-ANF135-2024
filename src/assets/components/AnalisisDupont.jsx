@@ -116,19 +116,21 @@ const AnalisisDupont = () => {
           <div className="containerPorEstado">
             <div style={{ paddingTop: "20px" }} className="">
               <p>Rendimiento sobre el Patrimonio (ROE)</p>
-              <p>{roe}</p>
+              <p>{roe} ({roe*100}%)</p>
             </div>
             <div className="">
               <p>Rendimiento sobre los Activos Totales (ROA)</p>
               <p>
                 {roe && rotacionActivos
                   ? (roe / rotacionActivos).toFixed(4)
-                  : 0}
+                  : 0} ({roe && rotacionActivos
+                    ? ((roe / rotacionActivos).toFixed(4)*100)
+                    : 0}%)
               </p>
             </div>
             <div className="">
               <p>Margen de Utilidad Neta</p>
-              <p>{margenUtilidadNeta}</p>
+              <p>{margenUtilidadNeta} ({margenUtilidadNeta*100}%)</p>
             </div>
             <div className="">
               <p>Utilidad Neta</p>
@@ -140,7 +142,7 @@ const AnalisisDupont = () => {
             </div>
             <div className="">
               <p>Rotación de los Activos Totales</p>
-              <p>{rotacionActivos}</p>
+              <p>{rotacionActivos} (${((rotacionActivos*1).toFixed(2))})</p>
             </div>
             <div className="">
               <p>Multiplicador de Apalancamiento Financiero (MAF)</p>
